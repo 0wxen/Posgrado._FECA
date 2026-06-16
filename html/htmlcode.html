@@ -92,6 +92,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 24px;
       }
 
       /* --- Logos --- */
@@ -101,19 +102,32 @@
         gap: 0;
         text-decoration: none;
         flex-shrink: 0;
+        min-width: 0;
       }
 
       /* Ajusta estos valores con los tamaños reales de tus imágenes */
       .logo-ujed-img {
         height: 52px;
         width: auto;
+        max-width: 128px;
+        object-fit: contain;
         display: block;
+        flex-shrink: 0;
       }
 
       .logo-feca-img {
         height: 38px;
         width: auto;
+        max-width: 96px;
+        object-fit: contain;
         display: block;
+        flex-shrink: 0;
+      }
+
+      .logo-feca-block {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
       }
 
       .logo-divider {
@@ -225,16 +239,17 @@
       /* ===================== MAIN ===================== */
       main {
         min-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 60px 40px;
+        padding: 60px 0;
       }
 
       main p {
+        width: 100%;
+        margin: 0;
         color: var(--gris-claro);
         font-size: 13px;
         letter-spacing: 0.12em;
+        line-height: 1.8;
+        text-align: center;
         text-transform: uppercase;
       }
 
@@ -442,14 +457,20 @@
         }
         .header-main .inner {
           flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
           padding-top: 12px;
           padding-bottom: 12px;
           gap: 10px;
         }
+        .header-logos {
+          justify-content: center;
+          width: 100%;
+        }
         nav {
+          justify-content: center;
           flex-wrap: wrap;
           gap: 4px;
+          width: 100%;
         }
         .footer {
           padding: 40px 0 0;
@@ -465,6 +486,19 @@
       }
 
       @media (max-width: 480px) {
+        .logo-ujed-img {
+          height: 44px;
+          max-width: 108px;
+        }
+        .logo-feca-img {
+          height: 32px;
+          max-width: 82px;
+        }
+        .logo-divider,
+        .logo-section-divider {
+          height: 36px;
+          margin: 0 10px;
+        }
         .footer-grid {
           grid-template-columns: 1fr;
         }
@@ -529,7 +563,6 @@
               class="logo-feca-img"
               alt="Logo FECA"
             />
-            <div class="logo-divider" aria-hidden="true"></div>
           </div>
 
           <div class="logo-section-divider" aria-hidden="true"></div>
@@ -564,7 +597,8 @@
 
     <!-- ===== CONTENIDO PRINCIPAL ===== -->
     <main>
-      <p>
+      <div class="inner">
+        <p>
         La herramienta para el futuro que tu deseas. Convocatorias Convocatoria
         Abierta Maestría Economía CONVOCATORIA MAESTRÍA EN ECONOMÍA CICLO A-2025
         Maestría en Economía DESCARGA LA CONVOCATORIA MÁS INFORMACIÓN
@@ -582,7 +616,8 @@
         Previous Next Investigación Siempre buscamos contribuir al desarrollo de
         nuestra región Cuerpos Académicos Grupos Disciplinares Publicaciones
         Nuestra vida en la División de Estudios de Posgrado volver al inicio
-      </p>
+        </p>
+      </div>
     </main>
 
     <!-- ===== FOOTER ===== -->
