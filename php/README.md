@@ -49,7 +49,7 @@ La contraseña puede cambiarse después con `PGPASSWORD`.
 Credenciales temporales de desarrollo:
 
 - Usuario: `admin`
-- Contraseña: `cambiar-esta-clave`
+- Contraseña: `Owen1234`
 
 Antes de publicar, cambia esas credenciales con variables de entorno:
 

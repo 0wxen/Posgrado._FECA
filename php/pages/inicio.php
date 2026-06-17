@@ -1,18 +1,13 @@
+<?php
+require_once __DIR__ . '/../includes/content.php';
+$latestItems = fetch_public_content(['noticia', 'convocatoria', 'publicacion', 'documento', 'imagen'], 6);
+?>
+<p class="page-kicker">Inicio</p>
+<h1>Division de Estudios de Posgrado FECA</h1>
 <p>
-  La herramienta para el futuro que tu deseas. Convocatorias Convocatoria
-  Abierta Maestría Economía CONVOCATORIA MAESTRÍA EN ECONOMÍA CICLO A-2025
-  Maestría en Economía DESCARGA LA CONVOCATORIA MÁS INFORMACIÓN Convocatoria
-  Abierta CicloA 2025 CONVOCATORIA CICLO A-2025 Maestría en Gestión de Negocios
-  DESCARGA LA CONVOCATORIA Maestría en Gestión Pública DESCARGA LA CONVOCATORIA
-  Maestría en Estrategias Contables DESCARGA LA CONVOCATORIA Especialidad en
-  Administración de Hospitales DESCARGA LA CONVOCATORIA MÁS INFORMACIÓN Nuestras
-  Noticias Abierta la convocatoria para el Ciclo A-2025 para ME Nuevo programa
-  de posgrado: Maestría en Economía Abierta la convocatoria para el Ciclo A-2025
-  para MGN, MGP, MEC y EAH Nosotros Mensaje del Director Dr. José Ramón Duarte
-  Carranza Conoce más Mensaje de la Jefa de Posgrado Dra. Jessica Yocaste
-  Castañeda Galván Conoce más Oferta Educativa Conoce nuestra oferta educativa y
-  encuentra el programa que se alinee con tus expectativas para el futuro
-  Previous Next Investigación Siempre buscamos contribuir al desarrollo de
-  nuestra región Cuerpos Académicos Grupos Disciplinares Publicaciones Nuestra
-  vida en la División de Estudios de Posgrado volver al inicio
+  La herramienta para el futuro que tu deseas. Consulta convocatorias,
+  noticias, documentos e imagenes publicados por la Division de Estudios de
+  Posgrado de la Facultad de Economia, Contaduria y Administracion.
 </p>
+<h2>Contenido reciente</h2>
+<?php render_content_list($latestItems); ?>

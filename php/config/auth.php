@@ -10,7 +10,7 @@ function admin_user(): string {
 }
 
 function admin_password(): string {
-  return getenv('ADMIN_PASSWORD') ?: 'cambiar-esta-clave';
+  return getenv('ADMIN_PASSWORD') ?: 'Owen1234';
 }
 
 function is_admin_logged_in(): bool {

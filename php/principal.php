@@ -301,6 +301,42 @@ function nav_symbol(string $currentPage, string $page): string {
         text-transform: uppercase;
       }
 
+      .content-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .content-card {
+        display: grid;
+        gap: 10px;
+        padding: 18px;
+        background: #fff;
+        border-left: 4px solid var(--rojo);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+      }
+
+      .content-card .page-kicker {
+        margin: 0;
+      }
+
+      .content-image {
+        width: min(520px, 100%);
+        max-height: 360px;
+        object-fit: contain;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .content-file-link {
+        color: var(--rojo);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .content-file-link:hover {
+        text-decoration: underline;
+      }
+
       .logo-division-img {
         display: block;
         height: 44px;
