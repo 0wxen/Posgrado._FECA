@@ -18,7 +18,6 @@ Si no se manda `page`, se carga `inicio`.
 ## Base de datos
 
 - `config/database.php`: conexión PostgreSQL con PDO.
-- `conexion.php`: compatibilidad con archivos existentes que usan `$conexion`.
 - `tools/probar_conexion.php`: página simple para comprobar que PHP conecta con PostgreSQL.
 - `tools/iniciar_servidor_php.bat`: inicia el servidor local con XAMPP PHP.
 - `database/schema.sql`: tablas iniciales para contenidos cargados desde el panel.
