@@ -18,6 +18,9 @@ Si no se manda `page`, se carga `inicio`.
 ## Base de datos
 
 - `config/database.php`: conexión PostgreSQL con PDO.
+- `conexion.php`: compatibilidad con archivos existentes que usan `$conexion`.
+- `tools/probar_conexion.php`: página simple para comprobar que PHP conecta con PostgreSQL.
+- `tools/iniciar_servidor_php.bat`: inicia el servidor local con XAMPP PHP.
 - `database/schema.sql`: tablas iniciales para contenidos cargados desde el panel.
 
 Variables de entorno recomendadas:
@@ -27,6 +30,14 @@ Variables de entorno recomendadas:
 - `PGDATABASE`
 - `PGUSER`
 - `PGPASSWORD`
+
+En desarrollo se integró la configuración local recibida:
+
+- Base de datos: `posgrado_Feca`
+- Usuario: `postgres`
+- Puerto: `5432`
+
+La contraseña puede cambiarse después con `PGPASSWORD`.
 
 ## Administración
 

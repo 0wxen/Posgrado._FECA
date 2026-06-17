@@ -7,6 +7,12 @@ $pages = [
   'comunidad' => ['title' => 'Comunidad', 'file' => 'comunidad.php'],
   'blog' => ['title' => 'Blog', 'file' => 'blog.php'],
   'contacto' => ['title' => 'Contacto', 'file' => 'contacto.php'],
+  'aviso_privacidad' => ['title' => 'Aviso de Privacidad', 'file' => 'aviso_privacidad.php'],
+  'terminos' => ['title' => 'Términos de Uso', 'file' => 'terminos.php'],
+  'mapa_sitio' => ['title' => 'Mapa del Sitio', 'file' => 'mapa_sitio.php'],
+  'transparencia' => ['title' => 'Transparencia', 'file' => 'transparencia.php'],
+  'convocatorias' => ['title' => 'Convocatorias', 'file' => 'convocatorias.php'],
+  'publicaciones' => ['title' => 'Publicaciones', 'file' => 'publicaciones.php'],
 ];
 
 $currentPage = $_GET['page'] ?? 'inicio';
@@ -742,12 +748,12 @@ function nav_symbol(string $currentPage, string $page): string {
           <div class="footer-col">
             <div class="footer-col-title">Secciones</div>
             <ul>
-              <li><a href="/nosotros">Nosotros</a></li>
-              <li><a href="#oferta-educativa">Oferta Educativa</a></li>
-              <li><a href="#investigacion">Investigación</a></li>
-              <li><a href="/comunidad">Comunidad</a></li>
-              <li><a href="/blog">Blog</a></li>
-              <li><a href="/contacto">Contacto</a></li>
+              <li><a href="principal.php?page=nosotros">Nosotros</a></li>
+              <li><a href="principal.php?page=oferta_educativa">Oferta Educativa</a></li>
+              <li><a href="principal.php?page=investigacion">Investigación</a></li>
+              <li><a href="principal.php?page=comunidad">Comunidad</a></li>
+              <li><a href="principal.php?page=blog">Blog</a></li>
+              <li><a href="principal.php?page=contacto">Contacto</a></li>
             </ul>
           </div>
 
@@ -755,21 +761,16 @@ function nav_symbol(string $currentPage, string $page): string {
           <div class="footer-col">
             <div class="footer-col-title">Enlaces rápidos</div>
             <ul>
-              <li><a href="/aviso-privacidad">Aviso de Privacidad</a></li>
-              <li><a href="/transparencia">Transparencia</a></li>
-              <li>
-                <a
-                  href="https://www.google.com/maps/place/UJED+-+Facultad+de+Economia,+Contaduría+y+Administración/@24.0234569,-104.6793856,17z/data=!3m1!4b1!4m6!3m5!1s0x869bb7f067cb1235:0xb5d719340666bc79!8m2!3d24.0234569!4d-104.6793856!16s%2Fg%2F1tgcmqw1?entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D"
-                  >Mapa del Sitio</a
-                >
-              </li>
+              <li><a href="principal.php?page=aviso_privacidad">Aviso de Privacidad</a></li>
+              <li><a href="principal.php?page=transparencia">Transparencia</a></li>
+              <li><a href="principal.php?page=mapa_sitio">Mapa del Sitio</a></li>
               <li>
                 <a href="https://ujed.mx" target="_blank" rel="noopener"
                   >Directorio UJED</a
                 >
               </li>
-              <li><a href="/convocatorias">Convocatorias</a></li>
-              <li><a href="/publicaciones">Publicaciones</a></li>
+              <li><a href="principal.php?page=convocatorias">Convocatorias</a></li>
+              <li><a href="principal.php?page=publicaciones">Publicaciones</a></li>
             </ul>
           </div>
         </div>
@@ -781,12 +782,9 @@ function nav_symbol(string $currentPage, string $page): string {
             derechos reservados.</span
           >
           <div class="footer-bottom-links">
-            <a href="/aviso-privacidad">Aviso de Privacidad</a>
-            <a href="/terminos">Términos de Uso</a>
-            <a
-              href="https://www.google.com/maps/place/UJED+-+Facultad+de+Economia,+Contaduría+y+Administración/@24.0234569,-104.6819605,17z/data=!3m1!4b1!4m6!3m5!1s0x869bb7f067cb1235:0xb5d719340666bc79!8m2!3d24.0234569!4d-104.6793856!16s%2Fg%2F1tgcmqw1?entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D"
-              >Mapa del Sitio</a
-            >
+            <a href="principal.php?page=aviso_privacidad">Aviso de Privacidad</a>
+            <a href="principal.php?page=terminos">Términos de Uso</a>
+            <a href="principal.php?page=mapa_sitio">Mapa del Sitio</a>
           </div>
         </div>
       </div>
