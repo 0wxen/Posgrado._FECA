@@ -642,7 +642,7 @@ function nav_symbol(string $currentPage, string $page): string {
           aria-label="Inicio — División de Estudios de Posgrado FECA UJED"
         >
           <img
-            src="../División de Estudios de Posgrado – FECA UJED – División de Estudios de Posgrado de la Facultad de Economía, Contaduría y Administración_files/Logo_Institucional-UJED.png"
+            src="../assets/img/logo-ujed.png"
             class="logo-ujed-img"
             alt="Logo UJED"
           />
@@ -651,7 +651,7 @@ function nav_symbol(string $currentPage, string $page): string {
           <!-- Logo FECA -->
           <div class="logo-feca-block">
             <img
-              src="../División de Estudios de Posgrado – FECA UJED – División de Estudios de Posgrado de la Facultad de Economía, Contaduría y Administración_files/FECA-Logotipo.png"
+              src="../assets/img/logo-feca.png"
               class="logo-feca-img"
               alt="Logo FECA"
             />
@@ -662,7 +662,7 @@ function nav_symbol(string $currentPage, string $page): string {
           <!-- División de Estudios de Posgrado -->
           <div class="logo-division-block">
             <img
-              src="../División de Estudios de Posgrado – FECA UJED – División de Estudios de Posgrado de la Facultad de Economía, Contaduría y Administración_files/Logo-AZUL-DEP-UJED-2022-03_Mesa-de-trabajo-1.png"
+              src="../assets/img/logo-dep-azul.png"
               class="logo-division-img"
               alt="División de Estudios de Posgrado FECA UJED"
             />
@@ -711,7 +711,7 @@ function nav_symbol(string $currentPage, string $page): string {
             <div class="footer-brand-logos">
               <!-- Logo División de Estudios de Posgrado versión blanca -->
               <img
-                src="../División de Estudios de Posgrado – FECA UJED – División de Estudios de Posgrado de la Facultad de Economía, Contaduría y Administración_files/Logo-DEP-Blanco-01.png"
+                src="../assets/img/logo-dep-blanco.png"
                 style="
                   height: 44px;
                   width: auto;
