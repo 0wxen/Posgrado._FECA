@@ -35,6 +35,15 @@ function cargarPagina(nombre) {
     })
     .then(html => {
       contenido.innerHTML = html;
+      // Los scripts inyectados via innerHTML no se ejecutan; hay que recrearlos
+      contenido.querySelectorAll('script').forEach(function (viejo) {
+        var nuevo = document.createElement('script');
+        Array.from(viejo.attributes).forEach(function (a) {
+          nuevo.setAttribute(a.name, a.value);
+        });
+        nuevo.textContent = viejo.textContent;
+        viejo.parentNode.replaceChild(nuevo, viejo);
+      });
       const pageId = nombre.replace('.php', '');
       actualizarNavActivo(pageId);
     })
