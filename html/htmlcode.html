@@ -259,11 +259,9 @@
         min-height: 540px;
         display: flex;
         align-items: center;
-        background:
-          linear-gradient(90deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.55) 100%),
-          url('../assets/img/hero-bg.jpg') center / cover no-repeat;
-        background-color: var(--rojo-oscuro);
+        background: linear-gradient(135deg, #0c0304 0%, var(--rojo-oscuro) 55%, #160407 100%);
         overflow: hidden;
+        isolation: isolate;
       }
       .hero::after {
         content: '';
@@ -272,15 +270,80 @@
         left: 0;
         right: 0;
         height: 4px;
+        z-index: 3;
         background: linear-gradient(90deg, var(--rojo-oscuro) 0%, var(--rojo) 50%, var(--dorado) 100%);
       }
       .hero-inner {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         max-width: 1400px;
         margin: 0 auto;
-        padding: 90px 40px;
+        padding: 80px 40px;
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 56px;
+      }
+      .hero-content { flex: 1; min-width: 0; }
+
+      /* Marco galería (derecha) */
+      .hero-gallery {
+        flex: 0 0 420px;
+        position: relative;
+        height: 420px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.12),
+          0 0 0 5px rgba(255,255,255,0.04),
+          0 32px 80px rgba(0,0,0,0.65);
+      }
+
+      /* ===== HERO SLIDESHOW ===== */
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.9s ease;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .hero-slide.activo { opacity: 1; }
+
+      /* Barra de progreso tipo Stories */
+      .hero-progress {
+        position: absolute;
+        top: 16px;
+        left: 24px;
+        right: 24px;
+        display: flex;
+        gap: 5px;
+        z-index: 2;
+      }
+      .hero-progress-bar {
+        flex: 1;
+        height: 3px;
+        background: rgba(255,255,255,0.25);
+        border-radius: 2px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .hero-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #fff;
+        border-radius: 2px;
+      }
+      .hero-progress-fill.completo { width: 100%; }
+      @keyframes hero-progress-run {
+        from { width: 0%; }
+        to   { width: 100%; }
+      }
+      .hero-progress-fill.corriendo {
+        animation: hero-progress-run 5s linear forwards;
       }
       .hero-kicker {
         display: block;
@@ -1796,6 +1859,10 @@
         .directivos-grid { grid-template-columns: 1fr; }
         .galeria-grid { grid-template-columns: repeat(2, 1fr); }
         .galeria-item--large { grid-column: span 1; aspect-ratio: 4 / 3; }
+      }
+      @media (max-width: 960px) {
+        .hero-gallery { display: none; }
+        .hero-inner { justify-content: flex-start; gap: 0; }
       }
       @media (max-width: 640px) {
         .hero-inner { padding: 60px 20px; }

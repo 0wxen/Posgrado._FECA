@@ -6,35 +6,61 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
 <!-- ===== HERO ===== -->
 <section class="hero">
+
+  <!-- Barra de progreso (una por imagen) -->
+  <div class="hero-progress" role="group" aria-label="Progreso del banner">
+    <div class="hero-progress-bar" title="Imagen 1"><div class="hero-progress-fill corriendo"></div></div>
+    <div class="hero-progress-bar" title="Imagen 2"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar" title="Imagen 3"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar" title="Imagen 4"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar" title="Imagen 5"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar" title="Imagen 6"><div class="hero-progress-fill"></div></div>
+  </div>
+
   <div class="hero-inner">
-    <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-    <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
-    <p class="hero-desc">
-      Formamos líderes con excelencia académica, investigación y compromiso
-      para el desarrollo de la sociedad.
-    </p>
-    <div class="hero-actions">
-      <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
-        <i class="ti ti-file-text"></i> Ver Convocatorias
-      </a>
-      <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
-        Conoce más
-      </a>
+
+    <!-- Contenido textual (izquierda) -->
+    <div class="hero-content">
+      <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+      <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
+      <p class="hero-desc">
+        Formamos líderes con excelencia académica, investigación y compromiso
+        para el desarrollo de la sociedad.
+      </p>
+      <div class="hero-actions">
+        <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
+          <i class="ti ti-file-text"></i> Ver Convocatorias
+        </a>
+        <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
+          Conoce más
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">5+</div>
+          <div class="hero-stat-label">Programas de Posgrado</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">25+</div>
+          <div class="hero-stat-label">Años de Trayectoria</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">PNPC</div>
+          <div class="hero-stat-label">Reconocimiento Nacional</div>
+        </div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div>
-        <div class="hero-stat-num">5+</div>
-        <div class="hero-stat-label">Programas de Posgrado</div>
-      </div>
-      <div>
-        <div class="hero-stat-num">25+</div>
-        <div class="hero-stat-label">Años de Trayectoria</div>
-      </div>
-      <div>
-        <div class="hero-stat-num">PNPC</div>
-        <div class="hero-stat-label">Reconocimiento Nacional</div>
-      </div>
+
+    <!-- Marco de imágenes (derecha) -->
+    <div class="hero-gallery">
+      <div class="hero-slide activo" style="background-image: url('../assets/img/blog-destacado.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('../assets/img/convocatoria-a2025.png');"></div>
+      <div class="hero-slide" style="background-image: url('../assets/img/convocatoria-me.png');"></div>
+      <div class="hero-slide" style="background-image: url('../assets/img/organigrama.png');"></div>
+      <div class="hero-slide" style="background-image: url('../assets/img/logo-feca.png'); background-size: contain; background-color: #fff;"></div>
+      <div class="hero-slide" style="background-image: url('../assets/img/logo-ujed.png'); background-size: contain; background-color: #fff;"></div>
     </div>
+
   </div>
 </section>
 
@@ -273,6 +299,47 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var DURATION = 5000;
+  var slides   = document.querySelectorAll('.hero-gallery .hero-slide');
+  var fills    = document.querySelectorAll('.hero-progress-fill');
+  var bars     = document.querySelectorAll('.hero-progress-bar');
+  var current  = 0;
+  var timer;
+
+  function goTo(idx) {
+    slides[current].classList.remove('activo');
+    current = idx;
+    slides[current].classList.add('activo');
+
+    fills.forEach(function (fill, i) {
+      fill.classList.remove('corriendo', 'completo');
+      if (i < idx) {
+        fill.classList.add('completo');
+      } else if (i === idx) {
+        void fill.offsetWidth; /* fuerza reflow para reiniciar la animación */
+        fill.classList.add('corriendo');
+      }
+    });
+  }
+
+  function next() { goTo((current + 1) % slides.length); }
+
+  function startTimer() { timer = setInterval(next, DURATION); }
+
+  bars.forEach(function (bar, idx) {
+    bar.addEventListener('click', function () {
+      clearInterval(timer);
+      goTo(idx);
+      startTimer();
+    });
+  });
+
+  startTimer();
+})();
+</script>
 
 <!-- ===== GALERÍA ===== -->
 <section class="seccion seccion-oscura">
