@@ -1,5 +1,26 @@
 const PAGES_PATH = '/php/pages/';
 
+const PAGE_FILE_MAP = {
+  inicio: 'home',
+  nosotros: 'about',
+  oferta_educativa: 'educational_offer',
+  investigacion: 'research',
+  comunidad: 'community',
+  contacto: 'contact',
+  aviso_privacidad: 'privacy_notice',
+  terminos: 'terms',
+  mapa_sitio: 'sitemap',
+  transparencia: 'transparency',
+  convocatorias: 'announcements',
+  publicaciones: 'publications',
+  cuerpos_academicos: 'academic_bodies',
+  grupos_disciplinares: 'disciplinary_groups',
+};
+
+function getPageFile(pagina) {
+  return (PAGE_FILE_MAP[pagina] ?? pagina) + '.php';
+}
+
 function cargarPagina(nombre) {
   const contenido = document.getElementById('contenido');
   if (!contenido) return;
@@ -45,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       const pagina = this.dataset.navSection;
       history.pushState({ pagina }, '', '#' + pagina);
-      cargarPagina(pagina + '.php');
+      cargarPagina(getPageFile(pagina));
     });
   });
 
@@ -55,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ctaContacto.addEventListener('click', function (e) {
       e.preventDefault();
       history.pushState({ pagina: 'contacto' }, '', '#contacto');
-      cargarPagina('contacto.php');
+      cargarPagina(getPageFile('contacto'));
       actualizarNavActivo('contacto');
     });
   }
@@ -86,20 +107,20 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     const pagina = enlace.dataset.page;
     history.pushState({ pagina }, '', '#' + pagina);
-    cargarPagina(pagina + '.php');
+    cargarPagina(getPageFile(pagina));
     actualizarNavActivo(pagina);
   });
 
   // Navegación del navegador (atrás / adelante)
   window.addEventListener('popstate', function (e) {
     const pagina = e.state?.pagina || 'inicio';
-    cargarPagina(pagina + '.php');
+    cargarPagina(getPageFile(pagina));
     actualizarNavActivo(pagina);
   });
 
   // Página inicial según hash de la URL o inicio por defecto
   const hash = window.location.hash.replace('#', '');
   const paginaInicial = hash || 'inicio';
-  cargarPagina(paginaInicial + '.php');
+  cargarPagina(getPageFile(paginaInicial));
   actualizarNavActivo(paginaInicial);
 });

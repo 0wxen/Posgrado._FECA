@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 $dbHost = getenv('PGHOST') ?: 'localhost';
 $dbPort = getenv('PGPORT') ?: '5432';
-$dbName = getenv('PGDATABASE') ?: 'posgrado_Feca';
+$dbName = getenv('PGDATABASE') ?: 'examen_parcial_2';
 $dbUser = getenv('PGUSER') ?: 'postgres';
 $dbPassword = getenv('PGPASSWORD') ?: 'Owen1234';
 
