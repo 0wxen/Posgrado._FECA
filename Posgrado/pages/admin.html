@@ -1,0 +1,479 @@
+<!-- ===== BANNER ===== -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <span class="page-banner-kicker">Administración · FECA UJED</span>
+    <h1>Panel de Contenido</h1>
+    <p class="page-banner-desc">
+      Ve, edita, agrega y elimina el contenido del sitio: textos, imágenes y datos de cada sección.
+    </p>
+  </div>
+</div>
+
+<!-- ===== PANEL PRINCIPAL ===== -->
+<section class="seccion seccion-gris">
+  <div class="inner">
+
+    <!-- Aviso modo sin BD -->
+    <div class="admin-aviso-db">
+      <i class="ti ti-database-off"></i>
+      <div>
+        <strong>Modo de vista previa</strong> · Los cambios se guardan en tu navegador (localStorage).
+        La sincronización con <strong>PostgreSQL</strong> estará disponible al conectar el servidor.
+      </div>
+    </div>
+
+    <!-- Pestañas de secciones -->
+    <div class="admin-tabs" role="tablist">
+      <button class="admin-tab-btn activo" data-admin-tab="nosotros" role="tab">
+        <i class="ti ti-users"></i> Personal
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="oferta" role="tab">
+        <i class="ti ti-school"></i> Oferta Educativa
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="convocatorias" role="tab">
+        <i class="ti ti-file-text"></i> Convocatorias
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="blog" role="tab">
+        <i class="ti ti-news"></i> Blog / Noticias
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="galeria" role="tab">
+        <i class="ti ti-photo"></i> Galería
+      </button>
+    </div>
+
+    <!-- ── Panel: Personal / Nosotros ── -->
+    <div id="admin-panel-nosotros" class="admin-panel" role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div class="admin-panel-hdr-left">
+          <h3>Directivos y Personal</h3>
+          <span class="admin-count-badge" id="cnt-nosotros">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('nosotros',null)">
+          <i class="ti ti-plus"></i> Agregar persona
+        </button>
+      </div>
+      <div class="admin-grid" id="grid-nosotros"></div>
+    </div>
+
+    <!-- ── Panel: Oferta Educativa ── -->
+    <div id="admin-panel-oferta" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div class="admin-panel-hdr-left">
+          <h3>Programas de Posgrado</h3>
+          <span class="admin-count-badge" id="cnt-oferta">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('oferta',null)">
+          <i class="ti ti-plus"></i> Agregar programa
+        </button>
+      </div>
+      <div class="admin-grid" id="grid-oferta"></div>
+    </div>
+
+    <!-- ── Panel: Convocatorias ── -->
+    <div id="admin-panel-convocatorias" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div class="admin-panel-hdr-left">
+          <h3>Convocatorias</h3>
+          <span class="admin-count-badge" id="cnt-convocatorias">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('convocatorias',null)">
+          <i class="ti ti-plus"></i> Agregar convocatoria
+        </button>
+      </div>
+      <div class="admin-grid" id="grid-convocatorias"></div>
+    </div>
+
+    <!-- ── Panel: Blog / Noticias ── -->
+    <div id="admin-panel-blog" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div class="admin-panel-hdr-left">
+          <h3>Entradas de Blog</h3>
+          <span class="admin-count-badge" id="cnt-blog">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('blog',null)">
+          <i class="ti ti-plus"></i> Agregar entrada
+        </button>
+      </div>
+      <div class="admin-grid" id="grid-blog"></div>
+    </div>
+
+    <!-- ── Panel: Galería ── -->
+    <div id="admin-panel-galeria" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div class="admin-panel-hdr-left">
+          <h3>Imágenes de la Galería</h3>
+          <span class="admin-count-badge" id="cnt-galeria">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('galeria',null)">
+          <i class="ti ti-plus"></i> Agregar imagen
+        </button>
+      </div>
+      <div class="admin-galeria-grid" id="grid-galeria"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== MODAL DE EDICIÓN ===== -->
+<div id="admin-modal" class="admin-modal-overlay" hidden role="dialog" aria-modal="true">
+  <div class="admin-modal-box">
+    <div class="admin-modal-hdr">
+      <h3 id="admin-modal-titulo">
+        <small id="admin-modal-subtitulo">Sección</small>
+        Editar elemento
+      </h3>
+      <button class="admin-modal-cerrar" onclick="adminCerrarModal()" aria-label="Cerrar">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body" id="admin-modal-body"></div>
+    <div class="admin-modal-footer">
+      <button class="btn-primary" onclick="adminGuardar()">
+        <i class="ti ti-device-floppy"></i> Guardar cambios
+      </button>
+      <button class="btn-outline-dark" onclick="adminCerrarModal()">
+        <i class="ti ti-x"></i> Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'dep_cms_v1';
+
+  /* ── Datos por defecto ── */
+  var DEFAULTS = {
+    nosotros: [
+      { id: 1, foto: '', nombre: 'Dr. [Director de División]', cargo: 'Director de la División de Estudios de Posgrado', area: 'Dirección', email: 'posgradofeca@ujed.mx', descripcion: 'Responsable de la dirección y gestión académica de los programas de posgrado de la FECA UJED.' },
+      { id: 2, foto: '', nombre: 'Dr. [Subdirector Académico]', cargo: 'Subdirector Académico', area: 'Academia', email: '', descripcion: 'Apoya las funciones académicas y de investigación de los programas de posgrado.' }
+    ],
+    oferta: [
+      { id: 1, imagen: '', nivel: 'Maestría', sigla: 'MCEyA', nombre: 'Maestría en Ciencias Económico Administrativas', descripcion: 'Forma profesionales con alto nivel académico para la investigación y docencia en el área económico-administrativa.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
+      { id: 2, imagen: '', nivel: 'Doctorado', sigla: 'DCEyA', nombre: 'Doctorado en Ciencias Económico Administrativas', descripcion: 'Programa doctoral orientado a la generación y aplicación del conocimiento en el área económico-administrativa.', duracion: '3 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
+      { id: 3, imagen: '', nivel: 'Maestría', sigla: 'MI', nombre: 'Maestría en Impuestos', descripcion: 'Capacita especialistas en materia fiscal y tributaria para el ejercicio profesional en sector público y privado.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: '' },
+      { id: 4, imagen: '', nivel: 'Especialidad', sigla: 'EF', nombre: 'Especialidad en Fiscal', descripcion: 'Programa de especialización en materia fiscal para profesionales en activo.', duracion: '1 año', modalidad: 'Presencial', reconocimiento: '' }
+    ],
+    convocatorias: [
+      { id: 1, imagen: '', titulo: 'Convocatoria MCEyA 2025-A', programa: 'Maestría en Ciencias Económico Administrativas', ciclo: '2025-A', limite: '', descripcion: 'Convocatoria abierta de admisión al programa de maestría para el ciclo escolar 2025-A.', estado: 'Vigente', urlRegistro: '#', urlPDF: '#' }
+    ],
+    blog: [
+      { id: 1, imagen: '', titulo: 'Bienvenida al nuevo portal institucional', categoria: 'Institucional', fecha: '2025-01-15', extracto: 'La División de Estudios de Posgrado FECA UJED presenta su nuevo portal web con información actualizada sobre programas, convocatorias e investigación.' }
+    ],
+    galeria: []
+  };
+
+  /* ── Configuración de campos por sección ── */
+  var FORMS = {
+    nosotros: [
+      { id: 'foto',        label: 'Fotografía',          type: 'image'    },
+      { id: 'nombre',      label: 'Nombre completo',     type: 'text',    required: true  },
+      { id: 'cargo',       label: 'Cargo / Puesto',      type: 'text',    required: true  },
+      { id: 'area',        label: 'Área',                type: 'text'     },
+      { id: 'email',       label: 'Correo electrónico',  type: 'email'    },
+      { id: 'descripcion', label: 'Descripción',         type: 'textarea' }
+    ],
+    oferta: [
+      { id: 'imagen',        label: 'Imagen del programa',         type: 'image'  },
+      { id: 'nivel',         label: 'Nivel',                       type: 'select', options: ['Maestría','Doctorado','Especialidad'], required: true },
+      { id: 'sigla',         label: 'Sigla (Ej. MCEyA)',           type: 'text',   required: true },
+      { id: 'nombre',        label: 'Nombre completo del programa', type: 'text',   required: true },
+      { id: 'descripcion',   label: 'Descripción',                 type: 'textarea' },
+      { id: 'duracion',      label: 'Duración',                    type: 'text'    },
+      { id: 'modalidad',     label: 'Modalidad',                   type: 'select', options: ['Presencial','En línea','Mixta'] },
+      { id: 'reconocimiento',label: 'Reconocimiento (PNPC, etc.)', type: 'text'    }
+    ],
+    convocatorias: [
+      { id: 'imagen',      label: 'Imagen / Cartel',         type: 'image'  },
+      { id: 'titulo',      label: 'Título',                  type: 'text',    required: true },
+      { id: 'programa',    label: 'Programa',                type: 'text'    },
+      { id: 'ciclo',       label: 'Ciclo (Ej. 2025-A)',      type: 'text'    },
+      { id: 'limite',      label: 'Fecha límite',            type: 'date'    },
+      { id: 'estado',      label: 'Estado',                  type: 'select', options: ['Vigente','Próxima','Cerrada'] },
+      { id: 'descripcion', label: 'Descripción',             type: 'textarea' },
+      { id: 'urlRegistro', label: 'URL de registro',         type: 'url'     },
+      { id: 'urlPDF',      label: 'URL del PDF / documento', type: 'url'     }
+    ],
+    blog: [
+      { id: 'imagen',    label: 'Imagen destacada',      type: 'image'  },
+      { id: 'titulo',    label: 'Título',                type: 'text',    required: true },
+      { id: 'categoria', label: 'Categoría',             type: 'text'    },
+      { id: 'fecha',     label: 'Fecha de publicación',  type: 'date'    },
+      { id: 'extracto',  label: 'Extracto / Resumen',   type: 'textarea' }
+    ],
+    galeria: [
+      { id: 'imagen',    label: 'Imagen',       type: 'image', required: true },
+      { id: 'titulo',    label: 'Título',       type: 'text'  },
+      { id: 'categoria', label: 'Categoría (Ej. Eventos, Campus)', type: 'text' }
+    ]
+  };
+
+  var LABELS = {
+    nosotros:      { panel: 'Directivos y Personal', item: 'Persona' },
+    oferta:        { panel: 'Programas de Posgrado', item: 'Programa' },
+    convocatorias: { panel: 'Convocatorias',          item: 'Convocatoria' },
+    blog:          { panel: 'Blog / Noticias',        item: 'Entrada de blog' },
+    galeria:       { panel: 'Galería de Imágenes',    item: 'Imagen' }
+  };
+
+  /* ── Estado local ── */
+  var estado = { tab: 'nosotros', sec: null, id: null, fotosTemp: {} };
+
+  /* ── Persistencia ── */
+  function getData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(_) { return {}; } }
+  function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+  function getSection(sec) {
+    var d = getData();
+    return d.hasOwnProperty(sec) ? d[sec] : JSON.parse(JSON.stringify(DEFAULTS[sec] || []));
+  }
+  function saveSection(sec, items) {
+    var d = getData(); d[sec] = items; saveData(d);
+  }
+  function genId() { return Date.now() + Math.floor(Math.random() * 999); }
+
+  /* ── Escape para HTML ── */
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ── Renderizar grilla de una sección ── */
+  function renderGrid(sec) {
+    var items = getSection(sec);
+    var grid  = document.getElementById('grid-' + sec);
+    var cnt   = document.getElementById('cnt-' + sec);
+    if (!grid) return;
+    if (cnt) cnt.textContent = items.length + ' elemento' + (items.length !== 1 ? 's' : '');
+
+    if (!items.length) {
+      grid.innerHTML = '<div class="admin-empty">' +
+        '<i class="ti ti-inbox"></i>' +
+        '<p>Sin elementos. Haz clic en "Agregar" para crear el primero.</p>' +
+        '</div>';
+      return;
+    }
+
+    grid.innerHTML = items.map(function(item) { return buildCard(sec, item); }).join('');
+  }
+
+  /* ── Construir una tarjeta ── */
+  function buildCard(sec, item) {
+    var imgSrc = item.foto || item.imagen || '';
+    var media  = imgSrc
+      ? '<img class="admin-card-img" src="' + esc(imgSrc) + '" alt="">'
+      : '<div class="admin-card-img-placeholder"><i class="ti ti-' + secIcon(sec) + '"></i></div>';
+
+    var title    = esc(item.nombre || item.titulo || item.sigla || '(Sin título)');
+    var subtitle = '';
+    var badge    = '';
+    var desc     = esc(truncar(item.descripcion || item.extracto || '', 85));
+
+    if (sec === 'nosotros') {
+      subtitle = esc(item.cargo || '');
+    } else if (sec === 'oferta') {
+      subtitle = esc(item.sigla || '');
+      var lvl = (item.nivel || '').toLowerCase();
+      badge = '<span class="admin-badge admin-badge-' + lvl + '">' + esc(item.nivel || '') + '</span>';
+      if (item.reconocimiento) {
+        badge += ' <span class="admin-badge" style="background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;">' + esc(item.reconocimiento) + '</span>';
+      }
+    } else if (sec === 'convocatorias') {
+      var est = (item.estado || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+      badge = '<span class="admin-badge admin-badge-' + est + '">' + esc(item.estado || '') + '</span>';
+      subtitle = esc(item.ciclo || '');
+    } else if (sec === 'blog') {
+      subtitle = esc(item.categoria || '');
+      if (item.fecha) badge = '<span style="font-size:11px;color:#aaa;">' + esc(item.fecha) + '</span>';
+    } else if (sec === 'galeria') {
+      subtitle = esc(item.categoria || '');
+    }
+
+    var galClass = sec === 'galeria' ? ' admin-galeria-card' : '';
+
+    return '<div class="admin-card' + galClass + '">' +
+      media +
+      '<div class="admin-card-body">' +
+        (badge ? '<div style="margin-bottom:4px;">' + badge + '</div>' : '') +
+        '<div class="admin-card-title">' + title + '</div>' +
+        (subtitle ? '<div class="admin-card-subtitle">' + subtitle + '</div>' : '') +
+        (desc ? '<div class="admin-card-desc">' + desc + '</div>' : '') +
+      '</div>' +
+      '<div class="admin-card-actions">' +
+        '<button class="admin-btn-edit" onclick="adminAbrirEditar(\'' + sec + '\',' + item.id + ')">' +
+          '<i class="ti ti-pencil"></i> Editar' +
+        '</button>' +
+        '<button class="admin-btn-delete" title="Eliminar" onclick="adminEliminar(\'' + sec + '\',' + item.id + ')">' +
+          '<i class="ti ti-trash"></i>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function secIcon(sec) {
+    return { nosotros:'user', oferta:'school', convocatorias:'file-text', blog:'news', galeria:'photo' }[sec] || 'file';
+  }
+  function truncar(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
+
+  /* ── Cambiar pestaña ── */
+  function cambiarTab(tab) {
+    estado.tab = tab;
+    document.querySelectorAll('.admin-tab-btn').forEach(function(b) {
+      b.classList.toggle('activo', b.dataset.adminTab === tab);
+    });
+    document.querySelectorAll('.admin-panel').forEach(function(p) {
+      p.hidden = (p.id !== 'admin-panel-' + tab);
+    });
+    renderGrid(tab);
+  }
+
+  /* ── Construir campo de formulario ── */
+  function buildField(field, value) {
+    var id    = 'mf-' + field.id;
+    var label = '<label class="form-label" for="' + id + '">' + esc(field.label) + (field.required ? ' *' : '') + '</label>';
+    var ctrl  = '';
+
+    if (field.type === 'image') {
+      var hasImg = !!value;
+      ctrl = '<div class="admin-upload-zona" onclick="document.getElementById(\'' + id + '\').click()">' +
+        '<img id="prev-' + field.id + '" class="admin-upload-preview" src="' + esc(value) + '" style="' + (hasImg ? 'display:block;' : 'display:none;') + '">' +
+        '<i class="ti ti-upload" id="ico-' + field.id + '" style="' + (hasImg ? 'display:none;' : '') + '"></i>' +
+        '<span id="txt-' + field.id + '">' + (hasImg ? 'Haz clic para cambiar la imagen' : 'Haz clic o arrastra una imagen') + '</span>' +
+        '<small style="font-size:11px;color:#bbb;">JPG, PNG o WEBP</small>' +
+        '<input type="file" id="' + id + '" accept="image/*">' +
+      '</div>';
+    } else if (field.type === 'textarea') {
+      ctrl = '<textarea id="' + id + '" class="form-control" rows="3"' + (field.required ? ' required' : '') + '>' + esc(value) + '</textarea>';
+    } else if (field.type === 'select') {
+      var opts = (field.options || []).map(function(o) {
+        return '<option value="' + esc(o) + '"' + (o === value ? ' selected' : '') + '>' + esc(o) + '</option>';
+      }).join('');
+      ctrl = '<select id="' + id + '" class="form-control"' + (field.required ? ' required' : '') + '>' +
+        '<option value="">Seleccionar…</option>' + opts + '</select>';
+    } else {
+      ctrl = '<input type="' + field.type + '" id="' + id + '" class="form-control" value="' + esc(value) + '"' + (field.required ? ' required' : '') + '>';
+    }
+
+    return '<div class="form-group">' + label + ctrl + '</div>';
+  }
+
+  /* ── Abrir modal de edición ── */
+  window.adminAbrirEditar = function(sec, id) {
+    estado.sec      = sec;
+    estado.id       = id;
+    estado.fotosTemp = {};
+
+    var esNuevo = (id === null || id === undefined);
+    var label   = LABELS[sec] || { item: 'Elemento' };
+    document.getElementById('admin-modal-subtitulo').textContent = label.panel || sec;
+    document.getElementById('admin-modal-titulo').childNodes[1].textContent = (esNuevo ? 'Agregar ' : 'Editar ') + label.item;
+
+    var item = {};
+    if (!esNuevo) {
+      var items = getSection(sec);
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === id) { item = items[i]; break; }
+      }
+    }
+
+    var fields = FORMS[sec] || [];
+    document.getElementById('admin-modal-body').innerHTML =
+      fields.map(function(f) { return buildField(f, item[f.id] || ''); }).join('');
+
+    /* Listeners para upload de imágenes */
+    fields.forEach(function(f) {
+      if (f.type !== 'image') return;
+      var inp = document.getElementById('mf-' + f.id);
+      if (!inp) return;
+      inp.addEventListener('change', function() {
+        if (!this.files || !this.files[0]) return;
+        var fid = f.id;
+        var r   = new FileReader();
+        r.onload = function(ev) {
+          estado.fotosTemp[fid] = ev.target.result;
+          var prev = document.getElementById('prev-' + fid);
+          var ico  = document.getElementById('ico-' + fid);
+          var txt  = document.getElementById('txt-' + fid);
+          if (prev) { prev.src = ev.target.result; prev.style.display = 'block'; }
+          if (ico)  ico.style.display = 'none';
+          if (txt)  txt.textContent = 'Imagen lista. Guarda para aplicar.';
+        };
+        r.readAsDataURL(this.files[0]);
+      });
+    });
+
+    document.getElementById('admin-modal').hidden = false;
+    document.body.style.overflow = 'hidden';
+  };
+
+  /* ── Cerrar modal ── */
+  window.adminCerrarModal = function() {
+    document.getElementById('admin-modal').hidden = true;
+    document.body.style.overflow = '';
+    estado.sec = null; estado.id = null; estado.fotosTemp = {};
+  };
+
+  /* ── Guardar ── */
+  window.adminGuardar = function() {
+    var sec = estado.sec;
+    if (!sec) return;
+    var fields = FORMS[sec] || [];
+    var items  = getSection(sec);
+    var esNuevo = (estado.id === null || estado.id === undefined);
+    var item   = { id: esNuevo ? genId() : estado.id };
+
+    if (!esNuevo) {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === estado.id) { item = JSON.parse(JSON.stringify(items[i])); break; }
+      }
+    }
+
+    fields.forEach(function(f) {
+      if (f.type === 'image') {
+        if (estado.fotosTemp[f.id]) item[f.id] = estado.fotosTemp[f.id];
+      } else {
+        var el = document.getElementById('mf-' + f.id);
+        if (el) item[f.id] = el.value.trim();
+      }
+    });
+
+    if (esNuevo) {
+      items.push(item);
+    } else {
+      for (var j = 0; j < items.length; j++) {
+        if (items[j].id === estado.id) { items[j] = item; break; }
+      }
+    }
+
+    saveSection(sec, items);
+    adminCerrarModal();
+    renderGrid(sec);
+  };
+
+  /* ── Eliminar ── */
+  window.adminEliminar = function(sec, id) {
+    if (!confirm('¿Eliminar este elemento? Esta acción no se puede deshacer.')) return;
+    var items = getSection(sec).filter(function(i) { return i.id !== id; });
+    saveSection(sec, items);
+    renderGrid(sec);
+  };
+
+  /* ── Eventos de las pestañas ── */
+  document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { cambiarTab(this.dataset.adminTab); });
+  });
+
+  /* ── Cerrar modal al hacer clic en overlay ── */
+  var modal = document.getElementById('admin-modal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) adminCerrarModal();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    var m = document.getElementById('admin-modal');
+    if (e.key === 'Escape' && m && !m.hidden) adminCerrarModal();
+  });
+
+  /* ── Inicializar con la pestaña activa ── */
+  cambiarTab('nosotros');
+})();
+</script>

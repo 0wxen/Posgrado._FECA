@@ -1,0 +1,524 @@
+<!-- ===== BANNER ===== -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <span class="page-banner-kicker">Portal de Usuarios · FECA UJED</span>
+    <h1>Mi Perfil</h1>
+    <p class="page-banner-desc">
+      Gestiona tu información personal y académica. Los cambios se sincronizarán
+      con PostgreSQL una vez habilitada la conexión.
+    </p>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN PRINCIPAL ===== -->
+<section class="seccion seccion-gris">
+  <div class="inner">
+
+    <!-- Aviso modo invitado -->
+    <div class="perfil-aviso-invitado">
+      <i class="ti ti-info-circle"></i>
+      <div>
+        <strong>Modo de vista previa (sin sesión iniciada)</strong>
+        Los datos que ingreses se almacenan localmente en tu navegador.
+        La persistencia completa estará disponible al conectar con la base de datos PostgreSQL.
+      </div>
+    </div>
+
+    <!-- Layout dos columnas -->
+    <div class="perfil-layout">
+
+      <!-- ── Sidebar ── -->
+      <aside class="perfil-sidebar">
+
+        <!-- Tarjeta de foto y nombre -->
+        <div class="perfil-foto-card">
+          <div class="perfil-foto-card-hdr">
+            <div class="perfil-avatar-wrap">
+              <div class="perfil-avatar" id="perfil-avatar" title="Haz clic para cambiar la foto">
+                <i class="ti ti-user" id="perfil-avatar-icono"></i>
+                <img id="perfil-avatar-img" src="" alt="Foto de perfil" style="display:none;">
+              </div>
+              <label class="perfil-avatar-edit" for="perfil-input-foto" title="Cambiar foto">
+                <i class="ti ti-camera"></i>
+              </label>
+              <input type="file" id="perfil-input-foto" accept="image/*" style="display:none;">
+            </div>
+            <div class="perfil-nombre-display" id="sidebar-nombre">Invitado</div>
+            <div class="perfil-rol-badge">
+              <i class="ti ti-user-circle" style="font-size:13px;"></i>
+              <span id="sidebar-rol">Visitante</span>
+            </div>
+            <div class="perfil-db-chip">
+              <i class="ti ti-database-off"></i>
+              Sin conexión a BD
+            </div>
+          </div>
+          <div class="perfil-foto-card-body">
+            <div class="perfil-stat-row">
+              <i class="ti ti-mail"></i>
+              <div>
+                <div class="perfil-stat-label">Correo</div>
+                <div class="perfil-stat-value" id="sidebar-email">—</div>
+              </div>
+            </div>
+            <div class="perfil-stat-row">
+              <i class="ti ti-building"></i>
+              <div>
+                <div class="perfil-stat-label">Programa</div>
+                <div class="perfil-stat-value" id="sidebar-programa">—</div>
+              </div>
+            </div>
+            <div class="perfil-stat-row">
+              <i class="ti ti-calendar"></i>
+              <div>
+                <div class="perfil-stat-label">Semestre / Generación</div>
+                <div class="perfil-stat-value" id="sidebar-semestre">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción CRUD -->
+        <div class="perfil-sidebar-acciones">
+          <button class="btn-sm-rojo" id="btn-perfil-editar" onclick="perfilEditar()">
+            <i class="ti ti-pencil"></i> Editar perfil
+          </button>
+          <button class="btn-sm-outline" id="btn-perfil-cancelar" onclick="perfilCancelar()" style="display:none;">
+            <i class="ti ti-x"></i> Cancelar
+          </button>
+          <button class="btn-outline-dark" onclick="perfilLimpiar()" style="margin-top:4px;" title="Eliminar datos locales">
+            <i class="ti ti-trash"></i> Limpiar datos
+          </button>
+        </div>
+
+        <!-- Nota CRUD -->
+        <div class="perfil-crud-nota">
+          <i class="ti ti-database"></i>
+          <div>
+            <strong>CRUD con PostgreSQL</strong>
+            Crear, leer, actualizar y eliminar perfiles estará disponible al conectar con la base de datos institucional.
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ── Contenido principal ── -->
+      <div>
+
+        <!-- MODO LECTURA -->
+        <div class="perfil-card" id="perfil-vista">
+          <div class="perfil-card-hdr">
+            <h2>Información del perfil</h2>
+            <span class="perfil-modo-tag perfil-modo-tag--lectura">
+              <i class="ti ti-eye" style="font-size:12px;"></i> Lectura
+            </span>
+          </div>
+          <div class="perfil-card-body">
+
+            <div class="perfil-seccion-titulo">
+              <i class="ti ti-user"></i> Información Personal
+            </div>
+            <div class="perfil-campos-grid">
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Nombre(s)</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-nombres">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Apellido Paterno</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-apellido-p">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Apellido Materno</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-apellido-m">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Correo electrónico</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-email">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Teléfono</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-telefono">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Fecha de nacimiento</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-fecha-nac">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">CURP</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-curp">Sin datos</span>
+              </div>
+            </div>
+
+            <div class="perfil-seccion-titulo">
+              <i class="ti ti-school"></i> Información Académica
+            </div>
+            <div class="perfil-campos-grid">
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Rol</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-rol">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Programa de Posgrado</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-programa">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Matrícula / Clave</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-matricula">Sin datos</span>
+              </div>
+              <div class="perfil-campo">
+                <span class="perfil-campo-label">Semestre / Generación</span>
+                <span class="perfil-campo-valor perfil-campo-vacio" id="vista-semestre">Sin datos</span>
+              </div>
+            </div>
+
+            <div class="perfil-seccion-titulo">
+              <i class="ti ti-notes"></i> Descripción
+            </div>
+            <div style="font-size:14px; color:#666; line-height:1.7; min-height:36px;">
+              <span class="perfil-campo-vacio" id="vista-bio">Sin descripción.</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- MODO EDICIÓN -->
+        <div class="perfil-card" id="perfil-edicion" style="display:none;">
+          <div class="perfil-card-hdr">
+            <h2>Editar perfil</h2>
+            <span class="perfil-modo-tag perfil-modo-tag--edicion">
+              <i class="ti ti-pencil" style="font-size:12px;"></i> Edición
+            </span>
+          </div>
+          <div class="perfil-card-body">
+
+            <form id="perfil-form" onsubmit="perfilGuardar(event)" novalidate>
+
+              <div class="perfil-seccion-titulo">
+                <i class="ti ti-user"></i> Información Personal
+              </div>
+              <div class="perfil-form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="f-nombres">Nombre(s) *</label>
+                  <input type="text" id="f-nombres" class="form-control" placeholder="Ej. Juan Carlos" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-apellido-p">Apellido Paterno *</label>
+                  <input type="text" id="f-apellido-p" class="form-control" placeholder="Ej. García" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-apellido-m">Apellido Materno</label>
+                  <input type="text" id="f-apellido-m" class="form-control" placeholder="Ej. López">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-email">Correo electrónico *</label>
+                  <input type="email" id="f-email" class="form-control" placeholder="usuario@ujed.mx" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-telefono">Teléfono</label>
+                  <input type="tel" id="f-telefono" class="form-control" placeholder="(618) 000 0000">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-fecha-nac">Fecha de nacimiento</label>
+                  <input type="date" id="f-fecha-nac" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-curp">CURP</label>
+                  <input type="text" id="f-curp" class="form-control" placeholder="AAAA000000AAAAAA00"
+                    maxlength="18" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+                </div>
+              </div>
+
+              <div class="perfil-seccion-titulo" style="margin-top:8px;">
+                <i class="ti ti-photo"></i> Foto de perfil
+              </div>
+              <div class="perfil-upload-zona" id="upload-zona" onclick="document.getElementById('f-foto').click()">
+                <img id="perfil-preview" class="perfil-preview-img" src="" alt="Vista previa">
+                <i class="ti ti-upload" id="upload-icono"></i>
+                <span id="upload-texto">Haz clic o arrastra una imagen aquí</span>
+                <small style="font-size:11px; color:#bbb;">JPG, PNG o WEBP · máx. 2 MB</small>
+                <input type="file" id="f-foto" accept="image/*" onchange="perfilPreviewFoto(this)">
+              </div>
+
+              <div class="perfil-seccion-titulo" style="margin-top:8px;">
+                <i class="ti ti-school"></i> Información Académica
+              </div>
+              <div class="perfil-form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="f-rol">Rol</label>
+                  <select id="f-rol" class="form-control">
+                    <option value="">Seleccionar…</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Docente">Docente</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Investigador">Investigador</option>
+                    <option value="Visitante">Visitante</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-programa">Programa de Posgrado</label>
+                  <select id="f-programa" class="form-control">
+                    <option value="">Seleccionar…</option>
+                    <option value="Maestría en Ciencias Económico Administrativas">MCEyA</option>
+                    <option value="Maestría en Impuestos">MI</option>
+                    <option value="Doctorado en Ciencias Económico Administrativas">DCEyA</option>
+                    <option value="Especialidad en Fiscal">EF</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-matricula">Matrícula / Clave de empleado</label>
+                  <input type="text" id="f-matricula" class="form-control" placeholder="Ej. 20-0000">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-semestre">Semestre / Generación</label>
+                  <input type="text" id="f-semestre" class="form-control" placeholder="Ej. 3er semestre · Gen. 2024">
+                </div>
+              </div>
+
+              <div class="perfil-seccion-titulo" style="margin-top:8px;">
+                <i class="ti ti-notes"></i> Descripción personal
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-bio">Bio breve</label>
+                <textarea id="f-bio" class="form-control" rows="3"
+                  placeholder="Escribe una breve descripción sobre ti…"></textarea>
+              </div>
+
+              <!-- Acciones del formulario -->
+              <div class="perfil-form-acciones">
+                <button type="submit" class="btn-primary">
+                  <i class="ti ti-device-floppy"></i> Guardar cambios
+                </button>
+                <button type="button" class="btn-outline-dark" onclick="perfilCancelar()">
+                  <i class="ti ti-x"></i> Cancelar
+                </button>
+              </div>
+
+              <p style="font-size:11px; color:#ccc; margin-top:14px; text-align:center;">
+                <i class="ti ti-database-off" style="font-size:12px;"></i>
+                Los datos se guardan localmente. La sincronización con PostgreSQL estará disponible próximamente.
+              </p>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- /perfil-main -->
+
+    </div>
+    <!-- /perfil-layout -->
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'dep_perfil_v1';
+
+  /* ── Leer datos guardados ── */
+  function cargarDatos() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (_) { return {}; }
+  }
+
+  /* ── Guardar datos ── */
+  function guardarDatos(d) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+  }
+
+  /* ── Actualizar vistas con los datos del objeto ── */
+  function renderVista(d) {
+    var nombreCompleto = [d.nombres, d.apellidoP, d.apellidoM].filter(Boolean).join(' ') || 'Invitado';
+    var set = function (id, val) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = val || '';
+      if (!val) { el.classList.add('perfil-campo-vacio'); el.textContent = 'Sin datos'; }
+      else         el.classList.remove('perfil-campo-vacio');
+    };
+
+    /* Sidebar */
+    var sn = document.getElementById('sidebar-nombre');
+    if (sn) sn.textContent = nombreCompleto;
+    var sr = document.getElementById('sidebar-rol');
+    if (sr) sr.textContent = d.rol || 'Visitante';
+    var se = document.getElementById('sidebar-email');
+    if (se) { se.textContent = d.email || '—'; se.classList.toggle('perfil-campo-vacio', !d.email); }
+    var sp = document.getElementById('sidebar-programa');
+    if (sp) { sp.textContent = d.programa || '—'; sp.classList.toggle('perfil-campo-vacio', !d.programa); }
+    var ss = document.getElementById('sidebar-semestre');
+    if (ss) { ss.textContent = d.semestre || '—'; ss.classList.toggle('perfil-campo-vacio', !d.semestre); }
+
+    /* Vista campos */
+    set('vista-nombres',   d.nombres);
+    set('vista-apellido-p', d.apellidoP);
+    set('vista-apellido-m', d.apellidoM);
+    set('vista-email',     d.email);
+    set('vista-telefono',  d.telefono);
+    set('vista-fecha-nac', d.fechaNac);
+    set('vista-curp',      d.curp);
+    set('vista-rol',       d.rol);
+    set('vista-programa',  d.programa);
+    set('vista-matricula', d.matricula);
+    set('vista-semestre',  d.semestre);
+
+    var bio = document.getElementById('vista-bio');
+    if (bio) {
+      bio.textContent = d.bio || '';
+      if (!d.bio) { bio.classList.add('perfil-campo-vacio'); bio.textContent = 'Sin descripción.'; }
+      else bio.classList.remove('perfil-campo-vacio');
+    }
+
+    /* Avatar */
+    if (d.foto) {
+      var img = document.getElementById('perfil-avatar-img');
+      var ico = document.getElementById('perfil-avatar-icono');
+      if (img) { img.src = d.foto; img.style.display = 'block'; }
+      if (ico) ico.style.display = 'none';
+    }
+  }
+
+  /* ── Rellenar formulario con datos guardados ── */
+  function rellenarForm(d) {
+    var val = function (id, v) { var el = document.getElementById(id); if (el) el.value = v || ''; };
+    val('f-nombres',    d.nombres);
+    val('f-apellido-p', d.apellidoP);
+    val('f-apellido-m', d.apellidoM);
+    val('f-email',      d.email);
+    val('f-telefono',   d.telefono);
+    val('f-fecha-nac',  d.fechaNac);
+    val('f-curp',       d.curp);
+    val('f-rol',        d.rol);
+    val('f-programa',   d.programa);
+    val('f-matricula',  d.matricula);
+    val('f-semestre',   d.semestre);
+    val('f-bio',        d.bio);
+
+    /* Preview foto */
+    if (d.foto) {
+      var prev = document.getElementById('perfil-preview');
+      var ico  = document.getElementById('upload-icono');
+      var txt  = document.getElementById('upload-texto');
+      if (prev) { prev.src = d.foto; prev.style.display = 'block'; }
+      if (ico)  ico.style.display = 'none';
+      if (txt)  txt.textContent = 'Imagen seleccionada. Haz clic para cambiarla.';
+    }
+  }
+
+  /* ── Exposición global de funciones ── */
+  window.perfilEditar = function () {
+    document.getElementById('perfil-vista').style.display  = 'none';
+    document.getElementById('perfil-edicion').style.display = '';
+    document.getElementById('btn-perfil-editar').style.display   = 'none';
+    document.getElementById('btn-perfil-cancelar').style.display = '';
+    rellenarForm(cargarDatos());
+    window.scrollTo({ top: document.getElementById('perfil-edicion').offsetTop - 80, behavior: 'smooth' });
+  };
+
+  window.perfilCancelar = function () {
+    document.getElementById('perfil-edicion').style.display = 'none';
+    document.getElementById('perfil-vista').style.display   = '';
+    document.getElementById('btn-perfil-editar').style.display   = '';
+    document.getElementById('btn-perfil-cancelar').style.display = 'none';
+  };
+
+  window.perfilGuardar = function (e) {
+    e.preventDefault();
+    var g = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    var d = cargarDatos();
+    d.nombres    = g('f-nombres');
+    d.apellidoP  = g('f-apellido-p');
+    d.apellidoM  = g('f-apellido-m');
+    d.email      = g('f-email');
+    d.telefono   = g('f-telefono');
+    d.fechaNac   = g('f-fecha-nac');
+    d.curp       = g('f-curp');
+    d.rol        = g('f-rol');
+    d.programa   = g('f-programa');
+    d.matricula  = g('f-matricula');
+    d.semestre   = g('f-semestre');
+    d.bio        = g('f-bio');
+    guardarDatos(d);
+    renderVista(d);
+    perfilCancelar();
+  };
+
+  window.perfilLimpiar = function () {
+    if (!confirm('¿Deseas borrar todos los datos locales del perfil?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    renderVista({});
+  };
+
+  window.perfilPreviewFoto = function (input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var src  = ev.target.result;
+      var prev = document.getElementById('perfil-preview');
+      var ico  = document.getElementById('upload-icono');
+      var txt  = document.getElementById('upload-texto');
+      var ai   = document.getElementById('perfil-avatar-img');
+      var aic  = document.getElementById('perfil-avatar-icono');
+      if (prev) { prev.src = src; prev.style.display = 'block'; }
+      if (ico)  ico.style.display = 'none';
+      if (txt)  txt.textContent = 'Imagen lista. Guarda para aplicar.';
+      if (ai)   { ai.src = src; ai.style.display = 'block'; }
+      if (aic)  aic.style.display = 'none';
+      /* Guardar en datos locales */
+      var d = cargarDatos(); d.foto = src; guardarDatos(d);
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+
+  /* Drag-and-drop zona de imagen */
+  var zona = document.getElementById('upload-zona');
+  if (zona) {
+    zona.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      zona.style.borderColor = 'var(--rojo)';
+      zona.style.background  = 'rgba(227,19,19,0.05)';
+    });
+    zona.addEventListener('dragleave', function () {
+      zona.style.borderColor = '';
+      zona.style.background  = '';
+    });
+    zona.addEventListener('drop', function (e) {
+      e.preventDefault();
+      zona.style.borderColor = '';
+      zona.style.background  = '';
+      var files = e.dataTransfer.files;
+      if (files && files[0]) {
+        var inp = document.getElementById('f-foto');
+        if (inp) {
+          Object.defineProperty(inp, 'files', { value: files, configurable: true });
+          perfilPreviewFoto(inp);
+        }
+      }
+    });
+  }
+
+  /* Sidebar: clic en avatar abre selector de foto */
+  var ava = document.getElementById('perfil-avatar');
+  var inp = document.getElementById('perfil-input-foto');
+  if (ava && inp) {
+    ava.addEventListener('click', function () { inp.click(); });
+    inp.addEventListener('change', function () {
+      if (!this.files || !this.files[0]) return;
+      var r = new FileReader();
+      r.onload = function (ev) {
+        var src = ev.target.result;
+        var ai  = document.getElementById('perfil-avatar-img');
+        var aic = document.getElementById('perfil-avatar-icono');
+        if (ai)  { ai.src = src; ai.style.display = 'block'; }
+        if (aic) aic.style.display = 'none';
+        var d = cargarDatos(); d.foto = src; guardarDatos(d);
+      };
+      r.readAsDataURL(this.files[0]);
+    });
+  }
+
+  /* Inicializar con datos guardados */
+  renderVista(cargarDatos());
+})();
+</script>

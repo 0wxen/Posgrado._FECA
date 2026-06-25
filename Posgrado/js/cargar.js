@@ -23,6 +23,8 @@ const PAGE_FILE_MAP = {
   publicaciones:       'publications',
   cuerpos_academicos:  'academic_bodies',
   grupos_disciplinares:'disciplinary_groups',
+  perfiles:            'profile',
+  admin:               'admin',
 };
 
 function getPageFile(pagina) {
