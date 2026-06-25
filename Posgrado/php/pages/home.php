@@ -7,34 +7,68 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 <!-- ===== HERO ===== -->
 <section class="hero">
   <div class="hero-inner">
-    <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-    <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
-    <p class="hero-desc">
-      Formamos líderes con excelencia académica, investigación y compromiso
-      para el desarrollo de la sociedad.
-    </p>
-    <div class="hero-actions">
-      <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
-        <i class="ti ti-file-text"></i> Ver Convocatorias
-      </a>
-      <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
-        Conoce más
-      </a>
+
+    <!-- Columna izquierda: texto y llamadas a la acción -->
+    <div class="hero-content">
+      <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+      <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
+      <p class="hero-desc">
+        Formamos líderes con excelencia académica, investigación y compromiso
+        para el desarrollo de la sociedad.
+      </p>
+      <div class="hero-actions">
+        <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
+          <i class="ti ti-file-text"></i> Ver Convocatorias
+        </a>
+        <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
+          Conoce más
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">5+</div>
+          <div class="hero-stat-label">Programas de Posgrado</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">25+</div>
+          <div class="hero-stat-label">Años de Trayectoria</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">PNPC</div>
+          <div class="hero-stat-label">Reconocimiento Nacional</div>
+        </div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div>
-        <div class="hero-stat-num">5+</div>
-        <div class="hero-stat-label">Programas de Posgrado</div>
+
+    <!-- Columna derecha: carrusel de imágenes de convocatorias -->
+    <div class="hero-image-panel">
+      <div class="hero-conv-wrapper">
+        <div class="hero-conv-carousel">
+          <div class="hero-conv-slide activo">
+            <img src="../assets/img/convocatoria-a2025.png"
+                 alt="Convocatoria Ciclo A-2025" loading="eager">
+          </div>
+          <div class="hero-conv-slide">
+            <img src="../assets/img/convocatoria-me.png"
+                 alt="Convocatoria Maestría en Economía 2025" loading="lazy">
+          </div>
+        </div>
+        <button class="hero-conv-nav-btn prev" aria-label="Convocatoria anterior">
+          <i class="ti ti-chevron-left"></i>
+        </button>
+        <button class="hero-conv-nav-btn next" aria-label="Siguiente convocatoria">
+          <i class="ti ti-chevron-right"></i>
+        </button>
       </div>
-      <div>
-        <div class="hero-stat-num">25+</div>
-        <div class="hero-stat-label">Años de Trayectoria</div>
+      <div class="hero-conv-footer">
+        <div class="hero-conv-dots">
+          <button class="hero-conv-dot activo" aria-label="Convocatoria 1"></button>
+          <button class="hero-conv-dot" aria-label="Convocatoria 2"></button>
+        </div>
       </div>
-      <div>
-        <div class="hero-stat-num">PNPC</div>
-        <div class="hero-stat-label">Reconocimiento Nacional</div>
-      </div>
+      <p class="hero-conv-label">Convocatoria Activa · Ciclo A-2025</p>
     </div>
+
   </div>
 </section>
 
@@ -273,6 +307,39 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var slides  = document.querySelectorAll('.hero-conv-slide');
+  var dots    = document.querySelectorAll('.hero-conv-dot');
+  var btnPrev = document.querySelector('.hero-conv-nav-btn.prev');
+  var btnNext = document.querySelector('.hero-conv-nav-btn.next');
+  if (!slides.length) return;
+  var current = 0;
+  var timer;
+
+  function goTo(idx) {
+    slides[current].classList.remove('activo');
+    dots[current].classList.remove('activo');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('activo');
+    dots[current].classList.add('activo');
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(function () { goTo(current + 1); }, 4500);
+  }
+
+  if (btnPrev) btnPrev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
+  if (btnNext) btnNext.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+  });
+
+  resetTimer();
+})();
+</script>
 
 <!-- ===== GALERÍA ===== -->
 <section class="seccion seccion-oscura">

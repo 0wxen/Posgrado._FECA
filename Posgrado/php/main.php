@@ -1,18 +1,18 @@
 <?php
 $pages = [
-  'inicio' => ['title' => 'Inicio', 'file' => 'inicio.php'],
-  'nosotros' => ['title' => 'Nosotros', 'file' => 'nosotros.php'],
-  'oferta_educativa' => ['title' => 'Oferta Educativa', 'file' => 'oferta_educativa.php'],
-  'investigacion' => ['title' => 'Investigación', 'file' => 'investigacion.php'],
-  'comunidad' => ['title' => 'Comunidad', 'file' => 'comunidad.php'],
+  'inicio' => ['title' => 'Inicio', 'file' => 'home.php'],
+  'nosotros' => ['title' => 'Nosotros', 'file' => 'about.php'],
+  'oferta_educativa' => ['title' => 'Oferta Educativa', 'file' => 'educational_offer.php'],
+  'investigacion' => ['title' => 'Investigación', 'file' => 'research.php'],
+  'comunidad' => ['title' => 'Comunidad', 'file' => 'community.php'],
   'blog' => ['title' => 'Blog', 'file' => 'blog.php'],
-  'contacto' => ['title' => 'Contacto', 'file' => 'contacto.php'],
-  'aviso_privacidad' => ['title' => 'Aviso de Privacidad', 'file' => 'aviso_privacidad.php'],
-  'terminos' => ['title' => 'Términos de Uso', 'file' => 'terminos.php'],
-  'mapa_sitio' => ['title' => 'Mapa del Sitio', 'file' => 'mapa_sitio.php'],
-  'transparencia' => ['title' => 'Transparencia', 'file' => 'transparencia.php'],
-  'convocatorias' => ['title' => 'Convocatorias', 'file' => 'convocatorias.php'],
-  'publicaciones' => ['title' => 'Publicaciones', 'file' => 'publicaciones.php'],
+  'contacto' => ['title' => 'Contacto', 'file' => 'contact.php'],
+  'aviso_privacidad' => ['title' => 'Aviso de Privacidad', 'file' => 'privacy_notice.php'],
+  'terminos' => ['title' => 'Términos de Uso', 'file' => 'terms.php'],
+  'mapa_sitio' => ['title' => 'Mapa del Sitio', 'file' => 'sitemap.php'],
+  'transparencia' => ['title' => 'Transparencia', 'file' => 'transparency.php'],
+  'convocatorias' => ['title' => 'Convocatorias', 'file' => 'announcements.php'],
+  'publicaciones' => ['title' => 'Publicaciones', 'file' => 'publications.php'],
 ];
 
 $currentPage = $_GET['page'] ?? 'inicio';
@@ -637,7 +637,7 @@ function nav_symbol(string $currentPage, string $page): string {
       <div class="inner">
         <!-- Logotipos institucionales -->
         <a
-          href="principal.php?page=inicio"
+          href="main.php?page=inicio"
           class="header-logos"
           aria-label="Inicio — División de Estudios de Posgrado FECA UJED"
         >
@@ -671,20 +671,20 @@ function nav_symbol(string $currentPage, string $page): string {
 
         <!-- Navegación principal -->
         <nav role="navigation" aria-label="Menú principal">
-          <a href="principal.php?page=nosotros" class="<?= nav_class($currentPage, 'nosotros') ?>" data-nav-section="nosotros" <?= $currentPage === 'nosotros' ? 'aria-current="page"' : '' ?>
+          <a href="main.php?page=nosotros" class="<?= nav_class($currentPage, 'nosotros') ?>" data-nav-section="nosotros" <?= $currentPage === 'nosotros' ? 'aria-current="page"' : '' ?>
             >Nosotros <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'nosotros') ?></span></a
           >
-          <a href="principal.php?page=oferta_educativa" class="<?= nav_class($currentPage, 'oferta_educativa') ?>" data-nav-section="oferta_educativa" <?= $currentPage === 'oferta_educativa' ? 'aria-current="page"' : '' ?>
+          <a href="main.php?page=oferta_educativa" class="<?= nav_class($currentPage, 'oferta_educativa') ?>" data-nav-section="oferta_educativa" <?= $currentPage === 'oferta_educativa' ? 'aria-current="page"' : '' ?>
             >Oferta Educativa <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'oferta_educativa') ?></span></a
           >
-          <a href="principal.php?page=investigacion" class="<?= nav_class($currentPage, 'investigacion') ?>" data-nav-section="investigacion" <?= $currentPage === 'investigacion' ? 'aria-current="page"' : '' ?>
+          <a href="main.php?page=investigacion" class="<?= nav_class($currentPage, 'investigacion') ?>" data-nav-section="investigacion" <?= $currentPage === 'investigacion' ? 'aria-current="page"' : '' ?>
             >Investigación <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'investigacion') ?></span></a
           >
-          <a href="principal.php?page=comunidad" class="<?= nav_class($currentPage, 'comunidad') ?>" data-nav-section="comunidad" <?= $currentPage === 'comunidad' ? 'aria-current="page"' : '' ?>
+          <a href="main.php?page=comunidad" class="<?= nav_class($currentPage, 'comunidad') ?>" data-nav-section="comunidad" <?= $currentPage === 'comunidad' ? 'aria-current="page"' : '' ?>
             >Comunidad <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'comunidad') ?></span></a
           >
-          <a href="principal.php?page=blog" class="<?= nav_class($currentPage, 'blog') ?>" data-nav-section="blog">Blog <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'blog') ?></span></a>
-          <a href="principal.php?page=contacto" class="nav-cta">Contacto</a>
+          <a href="main.php?page=blog" class="<?= nav_class($currentPage, 'blog') ?>" data-nav-section="blog">Blog <span class="chevron" aria-hidden="true"><?= nav_symbol($currentPage, 'blog') ?></span></a>
+          <a href="main.php?page=contacto" class="nav-cta">Contacto</a>
         </nav>
       </div>
     </header>
@@ -696,7 +696,7 @@ function nav_symbol(string $currentPage, string $page): string {
           if (is_file($contentFile)) {
             include $contentFile;
           } else {
-            include __DIR__ . DIRECTORY_SEPARATOR . 'pages' . DIRECTORY_SEPARATOR . 'inicio.php';
+            include __DIR__ . DIRECTORY_SEPARATOR . 'pages' . DIRECTORY_SEPARATOR . 'home.php';
           }
         ?>
       </div>
@@ -784,12 +784,12 @@ function nav_symbol(string $currentPage, string $page): string {
           <div class="footer-col">
             <div class="footer-col-title">Secciones</div>
             <ul>
-              <li><a href="principal.php?page=nosotros">Nosotros</a></li>
-              <li><a href="principal.php?page=oferta_educativa">Oferta Educativa</a></li>
-              <li><a href="principal.php?page=investigacion">Investigación</a></li>
-              <li><a href="principal.php?page=comunidad">Comunidad</a></li>
-              <li><a href="principal.php?page=blog">Blog</a></li>
-              <li><a href="principal.php?page=contacto">Contacto</a></li>
+              <li><a href="main.php?page=nosotros">Nosotros</a></li>
+              <li><a href="main.php?page=oferta_educativa">Oferta Educativa</a></li>
+              <li><a href="main.php?page=investigacion">Investigación</a></li>
+              <li><a href="main.php?page=comunidad">Comunidad</a></li>
+              <li><a href="main.php?page=blog">Blog</a></li>
+              <li><a href="main.php?page=contacto">Contacto</a></li>
             </ul>
           </div>
 
@@ -797,16 +797,16 @@ function nav_symbol(string $currentPage, string $page): string {
           <div class="footer-col">
             <div class="footer-col-title">Enlaces rápidos</div>
             <ul>
-              <li><a href="principal.php?page=aviso_privacidad">Aviso de Privacidad</a></li>
-              <li><a href="principal.php?page=transparencia">Transparencia</a></li>
-              <li><a href="principal.php?page=mapa_sitio">Mapa del Sitio</a></li>
+              <li><a href="main.php?page=aviso_privacidad">Aviso de Privacidad</a></li>
+              <li><a href="main.php?page=transparencia">Transparencia</a></li>
+              <li><a href="main.php?page=mapa_sitio">Mapa del Sitio</a></li>
               <li>
                 <a href="https://ujed.mx" target="_blank" rel="noopener"
                   >Directorio UJED</a
                 >
               </li>
-              <li><a href="principal.php?page=convocatorias">Convocatorias</a></li>
-              <li><a href="principal.php?page=publicaciones">Publicaciones</a></li>
+              <li><a href="main.php?page=convocatorias">Convocatorias</a></li>
+              <li><a href="main.php?page=publicaciones">Publicaciones</a></li>
             </ul>
           </div>
         </div>
@@ -818,9 +818,9 @@ function nav_symbol(string $currentPage, string $page): string {
             derechos reservados.</span
           >
           <div class="footer-bottom-links">
-            <a href="principal.php?page=aviso_privacidad">Aviso de Privacidad</a>
-            <a href="principal.php?page=terminos">Términos de Uso</a>
-            <a href="principal.php?page=mapa_sitio">Mapa del Sitio</a>
+            <a href="main.php?page=aviso_privacidad">Aviso de Privacidad</a>
+            <a href="main.php?page=terminos">Términos de Uso</a>
+            <a href="main.php?page=mapa_sitio">Mapa del Sitio</a>
           </div>
         </div>
       </div>

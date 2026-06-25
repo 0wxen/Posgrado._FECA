@@ -22,7 +22,7 @@ function content_type_label(string $type): string {
 function fetch_public_content(array $types, int $limit = 20): array {
   global $pdo;
 
-  if ($types === []) {
+  if ($pdo === null || $types === []) {
     return [];
   }
 

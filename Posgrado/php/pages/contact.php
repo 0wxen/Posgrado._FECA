@@ -1,0 +1,219 @@
+<!-- ===== BANNER ===== -->
+<section class="page-banner">
+  <div class="page-banner-inner">
+    <span class="page-banner-kicker">FECA UJED · División de Estudios de Posgrado</span>
+    <h1>Contacto</h1>
+    <p class="page-banner-desc">
+      Comunícate con nosotros para solicitar información sobre programas,
+      convocatorias o el proceso de admisión.
+    </p>
+  </div>
+</section>
+
+<!-- ===== INFO + FORMULARIO ===== -->
+<section class="seccion seccion-gris">
+  <div class="inner">
+    <div class="contacto-grid">
+
+      <!-- Columna izquierda: información -->
+      <div class="contacto-info-cards">
+
+        <div class="contacto-info-card">
+          <div class="contacto-info-icon"><i class="ti ti-phone"></i></div>
+          <div>
+            <div class="contacto-info-label">Teléfono</div>
+            <div class="contacto-info-value">
+              <a href="tel:+526188271200">(618) 827 12 00</a><br>
+              <span style="font-size:13px; color:#888;">Extensión 5430</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacto-info-card">
+          <div class="contacto-info-icon"><i class="ti ti-mail"></i></div>
+          <div>
+            <div class="contacto-info-label">Correo electrónico</div>
+            <div class="contacto-info-value">
+              <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacto-info-card">
+          <div class="contacto-info-icon"><i class="ti ti-map-pin"></i></div>
+          <div>
+            <div class="contacto-info-label">Dirección</div>
+            <div class="contacto-info-value">
+              Circuito Universitario s/n<br>
+              C.P. 34120 · Durango, Dgo.<br>
+              <span style="font-size:13px; color:#888;">Edificio FECA, piso 2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacto-info-card">
+          <div class="contacto-info-icon"><i class="ti ti-clock"></i></div>
+          <div>
+            <div class="contacto-info-label">Horario de atención</div>
+            <div class="contacto-info-value">
+              Lunes a Viernes<br>
+              8:00 a.m. — 3:00 p.m.
+            </div>
+          </div>
+        </div>
+
+        <div class="contacto-info-card">
+          <div class="contacto-info-icon"><i class="ti ti-share"></i></div>
+          <div>
+            <div class="contacto-info-label">Redes sociales</div>
+            <div class="contacto-info-value">
+              Síguenos para estar al tanto de convocatorias y novedades.
+              <div class="contacto-social">
+                <a href="https://www.facebook.com/posgradofecaujed"
+                   target="_blank" rel="noopener" title="Facebook">
+                  <i class="ti ti-brand-facebook"></i>
+                </a>
+                <a href="#" target="_blank" rel="noopener" title="Instagram">
+                  <i class="ti ti-brand-instagram"></i>
+                </a>
+                <a href="#" target="_blank" rel="noopener" title="YouTube">
+                  <i class="ti ti-brand-youtube"></i>
+                </a>
+                <a href="#" target="_blank" rel="noopener" title="X / Twitter">
+                  <i class="ti ti-brand-x"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /info cards -->
+
+      <!-- Columna derecha: formulario -->
+      <div class="contacto-form-card">
+        <h3>Envíanos un mensaje</h3>
+
+        <form action="/php/tools/contacto_enviar.php" method="post" novalidate>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="c-nombre">Nombre *</label>
+              <input type="text" id="c-nombre" name="nombre"
+                     class="form-control" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-email">Correo electrónico *</label>
+              <input type="email" id="c-email" name="email"
+                     class="form-control" placeholder="tu@correo.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="c-asunto">Asunto *</label>
+            <select id="c-asunto" name="asunto" class="form-control" required>
+              <option value="" disabled selected>Selecciona un tema…</option>
+              <option value="informacion">Información sobre programas</option>
+              <option value="convocatoria">Convocatorias y admisión</option>
+              <option value="titulacion">Proceso de titulación</option>
+              <option value="investigacion">Investigación y publicaciones</option>
+              <option value="comunidad">Recursos para alumnado o profesorado</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="c-programa">Programa de interés</label>
+            <select id="c-programa" name="programa" class="form-control">
+              <option value="" selected>— Opcional —</option>
+              <option value="DGO">Doctorado en Gestión de las Organizaciones</option>
+              <option value="EAH">Especialidad en Administración de Hospitales</option>
+              <option value="MAG">Maestría en Auditoría Gubernamental</option>
+              <option value="ME">Maestría en Economía (PNPC)</option>
+              <option value="MEC">Maestría en Estrategias Contables</option>
+              <option value="MGN">Maestría en Gestión de Negocios</option>
+              <option value="MGP">Maestría en Gestión Pública</option>
+              <option value="MM">Maestría en Mercadotecnia</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="c-mensaje">Mensaje *</label>
+            <textarea id="c-mensaje" name="mensaje" class="form-control"
+                      rows="5"
+                      placeholder="Escribe aquí tu consulta o comentario…"
+                      required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="ti ti-send"></i> Enviar mensaje
+          </button>
+
+          <p class="form-nota">
+            * Campos obligatorios. Responderemos en un plazo máximo de 2 días hábiles.
+          </p>
+
+        </form>
+      </div><!-- /formulario -->
+
+    </div><!-- /contacto-grid -->
+  </div>
+</section>
+
+<!-- ===== MAPA / UBICACIÓN ===== -->
+<section class="seccion seccion-blanca">
+  <div class="inner">
+    <div class="seccion-header">
+      <span class="kicker">Cómo llegar</span>
+      <h2>Nuestra Ubicación</h2>
+      <p>División de Estudios de Posgrado · FECA · UJED · Campus Universitario, Durango</p>
+    </div>
+
+    <div style="width:100%; aspect-ratio:16/6; border-radius:4px; overflow:hidden;">
+      <iframe
+        src="https://maps.google.com/maps?q=Facultad+de+Economia+Contaduria+y+Administracion+UJED+Durango+Mexico&output=embed&hl=es&z=16"
+        width="100%"
+        height="100%"
+        style="border:0; display:block;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación FECA UJED · Circuito Universitario, Durango"
+      ></iframe>
+    </div>
+
+    <div style="margin-top:20px; display:flex; gap:14px; flex-wrap:wrap;">
+      <a href="https://maps.google.com/?q=FECA+UJED+Durango"
+         target="_blank" rel="noopener" class="btn-sm-rojo">
+        <i class="ti ti-map-pin"></i> Abrir en Google Maps
+      </a>
+      <a href="https://www.ujed.mx" target="_blank" rel="noopener"
+         class="btn-sm-outline">
+        <i class="ti ti-external-link"></i> Portal UJED
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== NAVEGACIÓN INFERIOR ===== -->
+<nav class="page-nav-bottom">
+  <div class="inner">
+    <a href="#blog" class="pnb-prev" data-page="blog">
+      <span class="pnb-arrow"><i class="ti ti-arrow-left"></i></span>
+      <span class="pnb-info">
+        <span class="pnb-dir">Anterior</span>
+        <span class="pnb-name">Blog</span>
+      </span>
+    </a>
+    <a href="#inicio" class="pnb-home" data-page="inicio" title="Volver a Inicio">
+      <i class="ti ti-home"></i>
+    </a>
+    <a href="#inicio" class="pnb-next" data-page="inicio">
+      <span class="pnb-info">
+        <span class="pnb-dir">Volver al</span>
+        <span class="pnb-name">Inicio</span>
+      </span>
+      <span class="pnb-arrow"><i class="ti ti-arrow-right"></i></span>
+    </a>
+  </div>
+</nav>
