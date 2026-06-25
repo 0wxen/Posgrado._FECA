@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Panel de marca -->
   <div class="login-brand">
-    <img src="../assets/img/logo-dep-blanco.png" class="brand-img" alt="DEP FECA UJED">
+    <img src="../assets/img/logo-dep.png" class="brand-img" alt="DEP FECA UJED">
     <h1 class="brand-title">Panel de Administración</h1>
     <div class="brand-divider"></div>
     <p class="brand-sub">

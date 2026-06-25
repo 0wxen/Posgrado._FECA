@@ -302,7 +302,7 @@
         z-index: 2;
         max-width: 1400px;
         margin: 0 auto;
-        padding: 64px 60px;
+        padding: 28px 60px;
         width: 100%;
         display: flex;
         align-items: center;
@@ -317,19 +317,24 @@
 
       /* ===== HERO PANEL DE IMÁGENES (derecha) ===== */
       .hero-image-panel {
-        width: 320px;
+        width: 380px;
         flex-shrink: 0;
       }
-      /* Wrapper relativo para poder posicionar los botones sobre la imagen */
-      .hero-conv-wrapper {
-        position: relative;
-      }
+      /* El carousel es el contexto de posicionamiento de los botones */
       .hero-conv-carousel {
         position: relative;
         aspect-ratio: 3 / 4;
         border-radius: 8px;
-        overflow: hidden;
+        /* sin overflow:hidden aquí — está en el inner para no clipear los botones */
         box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+        cursor: pointer;
+      }
+      /* Inner que clipea las imágenes sin afectar los botones */
+      .hero-conv-slides-inner {
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        overflow: hidden;
       }
       .hero-conv-slide {
         position: absolute;
@@ -350,32 +355,381 @@
         justify-content: center;
         margin-top: 14px;
       }
-      /* Botones prev/next: sobre los costados de la imagen */
+      /* Botones sobre los costados de la imagen */
       .hero-conv-nav-btn {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        z-index: 2;
-        background: rgba(0,0,0,0.35);
-        border: 1.5px solid rgba(255,255,255,0.22);
+        z-index: 5;
+        background: rgba(0,0,0,0.40);
+        border: 1.5px solid rgba(255,255,255,0.28);
         color: #fff;
-        width: 34px;
-        height: 34px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 15px;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        transition: background 0.2s, border-color 0.2s;
+        font-size: 17px;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: background 0.2s, border-color 0.2s, transform 0.15s;
       }
-      .hero-conv-nav-btn.prev { left: 8px; }
-      .hero-conv-nav-btn.next { right: 8px; }
+      .hero-conv-nav-btn.prev { left: 10px; transform: translateY(-50%); }
+      .hero-conv-nav-btn.next { right: 10px; transform: translateY(-50%); }
       .hero-conv-nav-btn:hover {
         background: var(--rojo);
         border-color: var(--rojo);
+      }
+
+      /* ===== MODAL DETALLE CONVOCATORIA ===== */
+      .conv-detail-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .conv-detail-modal.abierto {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .conv-detail-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(8, 0, 2, 0.78);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        cursor: pointer;
+      }
+      .conv-detail-box {
+        position: relative;
+        z-index: 1;
+        background: #fff;
+        border-radius: 10px;
+        max-width: 980px;
+        width: 100%;
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        animation: cdm-enter 0.3s ease;
+      }
+      @keyframes cdm-enter {
+        from { transform: scale(0.95) translateY(12px); }
+        to   { transform: scale(1) translateY(0); }
+      }
+      .conv-detail-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+        background: rgba(0,0,0,0.08);
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #555;
+        transition: background 0.2s, color 0.2s;
+      }
+      .conv-detail-close:hover { background: var(--rojo); color: #fff; }
+      .conv-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        min-height: 480px;
+        overflow: hidden;
+      }
+      .conv-detail-img-col {
+        background: #0c0304;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 24px 24px;
+        gap: 14px;
+      }
+      .conv-detail-img-col img {
+        width: 100%;
+        max-height: 420px;
+        object-fit: contain;
+        border-radius: 6px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+      }
+      .conv-detail-info-col {
+        padding: 36px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        overflow-y: auto;
+        max-height: 90vh;
+      }
+      .conv-detail-info-col .conv-badge { margin-bottom: 12px; }
+      .conv-detail-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--rojo-oscuro);
+        text-transform: uppercase;
+        line-height: 1.15;
+        margin-bottom: 18px;
+      }
+      .conv-detail-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #eee;
+      }
+      .conv-detail-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #555;
+      }
+      .conv-detail-meta-item i { color: var(--rojo-oscuro); font-size: 15px; flex-shrink: 0; }
+      .conv-detail-desc {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+      .conv-detail-reqs { margin-bottom: 16px; }
+      .conv-detail-reqs h4 {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #333;
+        margin-bottom: 8px;
+      }
+      .conv-detail-reqs ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+      .conv-detail-reqs ul li {
+        font-size: 12px;
+        color: #555;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        line-height: 1.5;
+      }
+      .conv-detail-reqs ul li::before {
+        content: '';
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: var(--rojo);
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+      .conv-detail-register {
+        background: linear-gradient(135deg, #fff8f8, #ffeaea);
+        border: 2px solid var(--rojo);
+        border-radius: 6px;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+      .conv-detail-register-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--rojo-oscuro);
+        margin-bottom: 10px;
+      }
+      .conv-detail-register-label i { font-size: 15px; }
+      .conv-detail-register-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        width: 100%;
+        padding: 11px;
+        font-size: 13px;
+      }
+      .conv-detail-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn-outline-dark {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 16px;
+        background: transparent;
+        color: #555;
+        font-family: 'Barlow', sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        border-radius: 3px;
+        text-decoration: none;
+        border: 1.5px solid #ccc;
+        cursor: pointer;
+        transition: border-color 0.2s, color 0.2s;
+        white-space: nowrap;
+      }
+      .btn-outline-dark:hover { border-color: #555; color: #222; }
+
+      /* ===== SECCIÓN CONVOCATORIAS (vigentes/próximas) ===== */
+      .conv-section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .conv-section-title h3 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--rojo-oscuro);
+      }
+      .conv-vigente-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 10px;
+        background: #e8f5e9;
+        color: #2e7d32;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border-radius: 20px;
+        border: 1px solid #a5d6a7;
+      }
+      .conv-proxima-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 10px;
+        background: #f3f3f3;
+        color: #888;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+      }
+      .conv-vigentes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      .conv-card-vigente {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.07);
+        border-top: 3px solid #2e7d32;
+        border-radius: 6px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: box-shadow 0.2s, transform 0.2s;
+      }
+      .conv-card-vigente:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.12); transform: translateY(-3px); }
+      .conv-card-vigente-img {
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+      }
+      .conv-card-vigente-body {
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+      .conv-card-vigente-body h3 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--gris-texto);
+        line-height: 1.2;
+      }
+      .conv-card-vigente-fecha {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #888;
+      }
+      .conv-card-vigente-fecha i { font-size: 13px; color: var(--rojo); }
+      .conv-card-vigente-body p { font-size: 13px; color: #666; line-height: 1.55; flex: 1; }
+      .conv-card-vigente-footer {
+        padding: 12px 18px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        gap: 8px;
+      }
+      .conv-proximas-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .conv-proxima-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        background: #fff;
+        border: 1.5px solid #eee;
+        border-radius: 6px;
+        transition: border-color 0.2s;
+      }
+      .conv-proxima-card:hover { border-color: #ccc; }
+      .conv-proxima-icon {
+        width: 46px; height: 46px;
+        border-radius: 8px;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: var(--rojo-oscuro);
+        flex-shrink: 0;
+      }
+      .conv-proxima-info { flex: 1; min-width: 0; }
+      .conv-proxima-info h4 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--gris-texto);
+        line-height: 1.2;
+        margin-bottom: 4px;
+      }
+      .conv-proxima-info p { font-size: 12px; color: #888; margin: 0; }
+      .conv-proxima-chip {
+        font-size: 11px;
+        font-weight: 700;
+        color: #aaa;
+        background: #f5f5f5;
+        border-radius: 3px;
+        padding: 3px 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
       .hero-conv-dots {
         display: flex;
@@ -932,8 +1286,8 @@
 
       .logo-division-img {
         display: block;
-        height: 36px;
-        max-width: 180px;
+        height: 54px;
+        max-width: 240px;
         width: auto;
         object-fit: contain;
       }
@@ -1128,7 +1482,7 @@
           font-size: 11.5px;
           padding: 7px 7px;
         }
-        .hero-inner { padding: 56px 40px; gap: 36px; }
+        .hero-inner { padding: 28px 40px; gap: 36px; }
         .hero-image-panel { width: 280px; }
       }
 
@@ -2236,6 +2590,22 @@
         .modal-actions { width: 100%; }
         .btn-modal-outline, .btn-modal-primary { flex: 1; justify-content: center; }
       }
+      /* Modal convocatoria responsive */
+      @media (max-width: 720px) {
+        .conv-detail-grid {
+          grid-template-columns: 1fr;
+        }
+        .conv-detail-img-col {
+          border-radius: 10px 10px 0 0;
+          padding: 24px;
+        }
+        .conv-detail-img-col img { max-height: 260px; }
+        .conv-detail-info-col { padding: 24px 20px; max-height: none; }
+      }
+      @media (max-width: 480px) {
+        .conv-vigentes-grid { grid-template-columns: 1fr; }
+        .conv-detail-box { border-radius: 8px; }
+      }
     </style>
   </head>
 
@@ -2243,29 +2613,17 @@
     <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
       <div class="inner">
-        <a
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="Facebook"
-        >
+        <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook">
           <i class="ti ti-brand-facebook"></i>
         </a>
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="Instagram"
-        >
+        <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <i class="ti ti-brand-x"></i>
+        </a>
+        <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram">
           <i class="ti ti-brand-instagram"></i>
         </a>
-        <a
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="YouTube"
-        >
-          <i class="ti ti-brand-youtube"></i>
+        <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok">
+          <i class="ti ti-brand-tiktok"></i>
         </a>
         <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo electrónico">
           <i class="ti ti-mail"></i>
@@ -2286,7 +2644,7 @@
           >
             <div class="logo-division-block">
               <img
-                src="../assets/img/logo-dep-azul.png"
+                src="../assets/img/logo-dep.png"
                 class="logo-division-img"
                 alt="División de Estudios de Posgrado FECA UJED"
               />
@@ -2353,7 +2711,7 @@
             <div class="footer-brand-logos">
               <!-- Logo División de Estudios de Posgrado versión blanca -->
               <img
-                src="../assets/img/logo-dep-blanco.png"
+                src="../assets/img/logo-dep.png"
                 style="
                   height: 44px;
                   width: auto;
@@ -2375,26 +2733,17 @@
               compromiso para el desarrollo de la sociedad.
             </p>
             <div class="footer-social">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="Facebook"
+              <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook"
                 ><i class="ti ti-brand-facebook"></i
               ></a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="Instagram"
+              <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter"
+                ><i class="ti ti-brand-x"></i
+              ></a>
+              <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram"
                 ><i class="ti ti-brand-instagram"></i
               ></a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="YouTube"
-                ><i class="ti ti-brand-youtube"></i
+              <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok"
+                ><i class="ti ti-brand-tiktok"></i
               ></a>
               <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo"
                 ><i class="ti ti-mail"></i
@@ -2477,7 +2826,7 @@
       <div class="modal-box">
 
         <div class="modal-header">
-          <img src="../assets/img/logo-dep-blanco.png" class="modal-logo"
+          <img src="../assets/img/logo-dep.png" class="modal-logo"
                alt="División de Estudios de Posgrado FECA UJED">
           <h2 id="modal-titulo">
             <small>Aviso importante</small>
@@ -2534,6 +2883,118 @@
       modal.querySelectorAll('[data-page]').forEach(function (a) {
         a.addEventListener('click', function () { modal.hidden = true; });
       });
+    })();
+    </script>
+
+    <!-- ===== MODAL DETALLE CONVOCATORIA ===== -->
+    <div class="conv-detail-modal" id="conv-detail-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="conv-detail-overlay" id="conv-detail-overlay"></div>
+      <div class="conv-detail-box">
+        <button class="conv-detail-close" id="conv-detail-close" aria-label="Cerrar">
+          <i class="ti ti-x"></i>
+        </button>
+        <div class="conv-detail-grid">
+          <!-- Izquierda: imagen grande -->
+          <div class="conv-detail-img-col">
+            <img src="" alt="" id="conv-detail-img">
+            <a href="#" download class="btn-sm-rojo" id="conv-detail-download-img"
+               style="width:100%;justify-content:center;">
+              <i class="ti ti-photo-down"></i> Descargar imagen
+            </a>
+          </div>
+          <!-- Derecha: información -->
+          <div class="conv-detail-info-col">
+            <span class="conv-badge" id="conv-detail-badge">Vigente</span>
+            <h2 class="conv-detail-title" id="conv-detail-title"></h2>
+            <div class="conv-detail-meta">
+              <div class="conv-detail-meta-item">
+                <i class="ti ti-calendar"></i>
+                <span id="conv-detail-ciclo"></span>
+              </div>
+              <div class="conv-detail-meta-item">
+                <i class="ti ti-clock-hour-4"></i>
+                <span id="conv-detail-limite"></span>
+              </div>
+              <div class="conv-detail-meta-item">
+                <i class="ti ti-map-pin"></i>
+                <span>Modalidad presencial · Durango, Dgo.</span>
+              </div>
+            </div>
+            <p class="conv-detail-desc" id="conv-detail-desc"></p>
+            <div class="conv-detail-reqs">
+              <h4>Requisitos principales</h4>
+              <ul id="conv-detail-reqs-list">
+                <li>Título de licenciatura con cédula profesional</li>
+                <li>Acta de nacimiento (copia certificada)</li>
+                <li>CURP y dos fotografías tamaño título</li>
+                <li>Carta de exposición de motivos</li>
+                <li>Carta de recomendación académica o laboral</li>
+              </ul>
+            </div>
+            <!-- Registro destacado -->
+            <div class="conv-detail-register">
+              <div class="conv-detail-register-label">
+                <i class="ti ti-alert-circle"></i>
+                Regístrate en línea para iniciar tu proceso de admisión
+              </div>
+              <a href="#" target="_blank" rel="noopener" id="conv-detail-register-btn"
+                 class="btn-primary conv-detail-register-btn">
+                <i class="ti ti-external-link"></i> Registrarse a la Convocatoria
+              </a>
+            </div>
+            <!-- Acciones secundarias -->
+            <div class="conv-detail-actions">
+              <a href="#" target="_blank" id="conv-detail-download-doc" class="btn-outline-dark">
+                <i class="ti ti-file-type-pdf"></i> Descargar Documento
+              </a>
+              <a href="#convocatorias" data-page="convocatorias" class="btn-outline-dark"
+                 id="conv-detail-ver-seccion">
+                <i class="ti ti-arrow-right"></i> Ver todas
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    // ===== Modal de convocatoria (global) =====
+    (function () {
+      var modal   = document.getElementById('conv-detail-modal');
+      var overlay = document.getElementById('conv-detail-overlay');
+      var btnClose= document.getElementById('conv-detail-close');
+      if (!modal) return;
+
+      window.openConvModal = function (data) {
+        var img = document.getElementById('conv-detail-img');
+        img.src = data.img || '';
+        img.alt = data.title || '';
+        document.getElementById('conv-detail-download-img').href = data.img || '#';
+        document.getElementById('conv-detail-badge').textContent  = data.badge  || 'Vigente';
+        document.getElementById('conv-detail-title').textContent  = data.title  || '';
+        document.getElementById('conv-detail-ciclo').textContent  = data.ciclo  || '';
+        document.getElementById('conv-detail-limite').textContent = data.limite || '';
+        document.getElementById('conv-detail-desc').textContent   = data.desc   || '';
+        document.getElementById('conv-detail-register-btn').href  = data.registro || '#';
+        document.getElementById('conv-detail-download-doc').href  = data.doc    || '#';
+        modal.classList.add('abierto');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeConvModal = function () {
+        modal.classList.remove('abierto');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      if (overlay)  overlay.addEventListener('click', window.closeConvModal);
+      if (btnClose) btnClose.addEventListener('click', window.closeConvModal);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') window.closeConvModal();
+      });
+      var verSec = document.getElementById('conv-detail-ver-seccion');
+      if (verSec) verSec.addEventListener('click', window.closeConvModal);
     })();
     </script>
 

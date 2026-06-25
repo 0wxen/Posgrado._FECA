@@ -74,7 +74,6 @@ function cargarPagina(nombre) {
         nuevo.textContent = viejo.textContent;
         viejo.parentNode.replaceChild(nuevo, viejo);
       });
-      actualizarNavActivo(nombre);
     })
     .catch(() => {
       contenido.innerHTML = `
@@ -106,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const pagina = this.dataset.navSection;
       history.pushState({ pagina }, '', '#' + pagina);
       cargarPagina(getPageFile(pagina));
+      actualizarNavActivo(pagina);
     });
   });
 

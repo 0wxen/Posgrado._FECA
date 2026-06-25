@@ -10,63 +10,146 @@
   </div>
 </section>
 
-<!-- ===== CONVOCATORIAS ===== -->
+<!-- ===== CONVOCATORIAS VIGENTES ===== -->
 <section class="seccion seccion-blanca">
   <div class="inner">
-    <div class="seccion-header">
-      <span class="kicker">Procesos activos</span>
-      <h2>Convocatorias Vigentes</h2>
+
+    <!-- Título de bloque: Vigentes -->
+    <div class="conv-section-title" style="margin-bottom:28px;">
+      <h3>Convocatorias Vigentes</h3>
+      <span class="conv-vigente-badge">
+        <i class="ti ti-circle-filled" style="font-size:8px;"></i>
+        Abiertas ahora
+      </span>
     </div>
 
-    <div class="conv-grid">
+    <div class="conv-vigentes-grid">
 
-      <div class="conv-card">
+      <!-- Vigente 1 -->
+      <div class="conv-card-vigente"
+           onclick="openConvModal({
+             img:      '../assets/img/convocatoria-a2025.png',
+             badge:    'Vigente',
+             title:    'Maestría en Gestión de Negocios · Ciclo A-2025',
+             ciclo:    'Ciclo A-2025',
+             limite:   'Límite de registro: 31 de enero de 2025',
+             desc:     'Programa orientado al desarrollo de competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Reconocido por el PNPC-CONAHCyT.',
+             registro: '#',
+             doc:      '#'
+           })">
         <img src="../assets/img/convocatoria-a2025.png"
-             class="conv-card-poster"
-             alt="Convocatoria Ciclo A-2025">
-        <div class="conv-card-body">
-          <p class="conv-card-programa">Maestrías y Especialidad</p>
-          <h3 class="conv-card-titulo">Convocatoria Ciclo A-2025</h3>
-          <p class="conv-card-desc">
-            La División de Estudios de Posgrado FECA UJED invita a los profesionistas
-            egresados de licenciatura a participar en el proceso de admisión para el
-            ciclo escolar A-2025.
-          </p>
-          <a href="../assets/img/convocatoria-a2025.png"
-             target="_blank" rel="noopener"
-             class="btn-sm-rojo">
-            <i class="ti ti-download"></i> Descargar convocatoria
+             class="conv-card-vigente-img" alt="Convocatoria Ciclo A-2025">
+        <div class="conv-card-vigente-body">
+          <span class="conv-vigente-badge" style="font-size:10px;"><i class="ti ti-circle-filled" style="font-size:7px;"></i> Vigente</span>
+          <h3>Maestría en Gestión de Negocios</h3>
+          <div class="conv-card-vigente-fecha">
+            <i class="ti ti-clock-hour-4"></i>
+            Límite: 31 de enero de 2025
+          </div>
+          <p>Desarrolla competencias estratégicas para liderar organizaciones. Reconocido por PNPC-CONAHCyT.</p>
+        </div>
+        <div class="conv-card-vigente-footer">
+          <button class="btn-sm-rojo" onclick="event.stopPropagation(); openConvModal({img:'../assets/img/convocatoria-a2025.png',badge:'Vigente',title:'Maestría en Gestión de Negocios · Ciclo A-2025',ciclo:'Ciclo A-2025',limite:'Límite: 31 de enero de 2025',desc:'Programa orientado al desarrollo de competencias estratégicas.',registro:'#',doc:'#'})">
+            <i class="ti ti-info-circle"></i> Ver detalles
+          </button>
+          <a href="../assets/img/convocatoria-a2025.png" download class="btn-sm-outline" onclick="event.stopPropagation()">
+            <i class="ti ti-download"></i> Descargar
           </a>
         </div>
       </div>
 
-      <div class="conv-card">
+      <!-- Vigente 2 -->
+      <div class="conv-card-vigente"
+           onclick="openConvModal({
+             img:      '../assets/img/convocatoria-me.png',
+             badge:    'Vigente',
+             title:    'Maestría en Economía · Ciclo A-2025',
+             ciclo:    'Ciclo A-2025',
+             limite:   'Límite de registro: 15 de enero de 2025',
+             desc:     'Desarrolla competencias analíticas avanzadas para comprender y resolver los desafíos económicos regionales y nacionales. Programa PNPC.',
+             registro: '#',
+             doc:      '#'
+           })">
         <img src="../assets/img/convocatoria-me.png"
-             class="conv-card-poster"
-             alt="Convocatoria Maestría en Economía">
-        <div class="conv-card-body">
-          <p class="conv-card-programa">Maestría en Economía · PNPC</p>
-          <h3 class="conv-card-titulo">Convocatoria ME 2025</h3>
-          <p class="conv-card-desc">
-            La Maestría en Economía, reconocida en el Padrón Nacional de Posgrados de
-            Calidad (PNPC) de CONAHCYT, abre su proceso de selección para el ciclo 2025.
-          </p>
-          <a href="../assets/img/convocatoria-me.png"
-             target="_blank" rel="noopener"
-             class="btn-sm-rojo">
-            <i class="ti ti-download"></i> Descargar convocatoria
+             class="conv-card-vigente-img" alt="Convocatoria Maestría en Economía 2025">
+        <div class="conv-card-vigente-body">
+          <span class="conv-vigente-badge" style="font-size:10px;"><i class="ti ti-circle-filled" style="font-size:7px;"></i> Vigente</span>
+          <h3>Maestría en Economía</h3>
+          <div class="conv-card-vigente-fecha">
+            <i class="ti ti-clock-hour-4"></i>
+            Límite: 15 de enero de 2025
+          </div>
+          <p>Competencias analíticas para resolver desafíos económicos regionales y nacionales. Programa PNPC.</p>
+        </div>
+        <div class="conv-card-vigente-footer">
+          <button class="btn-sm-rojo" onclick="event.stopPropagation(); openConvModal({img:'../assets/img/convocatoria-me.png',badge:'Vigente',title:'Maestría en Economía · Ciclo A-2025',ciclo:'Ciclo A-2025',limite:'Límite: 15 de enero de 2025',desc:'Competencias analíticas avanzadas para la economía regional.',registro:'#',doc:'#'})">
+            <i class="ti ti-info-circle"></i> Ver detalles
+          </button>
+          <a href="../assets/img/convocatoria-me.png" download class="btn-sm-outline" onclick="event.stopPropagation()">
+            <i class="ti ti-download"></i> Descargar
           </a>
         </div>
       </div>
 
     </div>
 
-    <div style="margin-top:32px; padding:22px 24px; background:#f7f8fa; border-radius:4px; border-left:4px solid var(--dorado);">
-      <strong style="display:block; margin-bottom:6px; font-size:15px;">¿Tienes dudas sobre el proceso de admisión?</strong>
-      <p style="font-size:14px; margin:0; color:#555;">
-        Contáctanos a <a href="mailto:posgradofeca@ujed.mx" style="color:var(--rojo);">posgradofeca@ujed.mx</a>
-        o al <a href="tel:+526188271200" style="color:var(--rojo);">(618) 827 12 00 ext. 5430</a>.
-        Atención de lunes a viernes, 8:00 a.m. – 3:00 p.m.
+    <!-- Separador: Próximas -->
+    <div class="conv-section-title" style="margin-bottom:20px; margin-top:12px;">
+      <h3 style="color:#666;">Próximas Convocatorias</h3>
+      <span class="conv-proxima-badge">
+        <i class="ti ti-clock"></i> Próximamente
+      </span>
+    </div>
+
+    <div class="conv-proximas-list">
+
+      <div class="conv-proxima-card">
+        <div class="conv-proxima-icon"><i class="ti ti-building-community"></i></div>
+        <div class="conv-proxima-info">
+          <h4>Maestría en Gestión Pública</h4>
+          <p>Formación de servidores públicos para el desarrollo institucional y modernización del gobierno.</p>
+        </div>
+        <span class="conv-proxima-chip">Feb 2025</span>
+      </div>
+
+      <div class="conv-proxima-card">
+        <div class="conv-proxima-icon"><i class="ti ti-calculator"></i></div>
+        <div class="conv-proxima-info">
+          <h4>Maestría en Estrategias Contables</h4>
+          <p>Especialización en análisis financiero, planeación fiscal y toma de decisiones estratégicas.</p>
+        </div>
+        <span class="conv-proxima-chip">Mar 2025</span>
+      </div>
+
+      <div class="conv-proxima-card">
+        <div class="conv-proxima-icon"><i class="ti ti-building-hospital"></i></div>
+        <div class="conv-proxima-info">
+          <h4>Especialidad en Administración de Hospitales</h4>
+          <p>Gestión y mejora de la calidad en la atención hospitalaria y servicios de salud.</p>
+        </div>
+        <span class="conv-proxima-chip">Mar 2025</span>
+      </div>
+
+      <div class="conv-proxima-card">
+        <div class="conv-proxima-icon"><i class="ti ti-chart-line"></i></div>
+        <div class="conv-proxima-info">
+          <h4>Doctorado en Gestión Estratégica de Negocios</h4>
+          <p>Programa doctoral con enfoque en investigación aplicada y solución de problemas organizacionales complejos.</p>
+        </div>
+        <span class="conv-proxima-chip">Ago 2025</span>
+      </div>
+
+    </div>
+
+    <!-- Info adicional -->
+    <div style="margin-top:40px; padding:20px 24px; background:#f8f7f5; border-left:4px solid var(--rojo-oscuro); border-radius:0 6px 6px 0;">
+      <p style="font-size:14px; color:#555; line-height:1.7; margin:0;">
+        <strong>¿Tienes dudas sobre el proceso de admisión?</strong><br>
+        Comunícate con la División de Estudios de Posgrado al
+        <a href="tel:6183691775" style="color:var(--rojo);font-weight:700;">(618) 369 17 75</a>
+        o escríbenos a
+        <a href="mailto:posgradofeca@ujed.mx" style="color:var(--rojo);font-weight:700;">posgradofeca@ujed.mx</a>.
+        Horario de atención: Lunes a Viernes 8:00 a.m. – 3:00 p.m.
       </p>
     </div>
 
@@ -76,20 +159,20 @@
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">
   <div class="inner">
-    <a href="#oferta_educativa" class="pnb-prev" data-page="oferta_educativa">
+    <a href="#inicio" class="pnb-prev" data-page="inicio">
       <span class="pnb-arrow"><i class="ti ti-arrow-left"></i></span>
       <span class="pnb-info">
-        <span class="pnb-dir">Ver</span>
-        <span class="pnb-name">Oferta Educativa</span>
+        <span class="pnb-dir">Ir a</span>
+        <span class="pnb-name">Inicio</span>
       </span>
     </a>
     <a href="#inicio" class="pnb-home" data-page="inicio" title="Volver a Inicio">
       <i class="ti ti-home"></i>
     </a>
-    <a href="#contacto" class="pnb-next" data-page="contacto">
+    <a href="#oferta_educativa" class="pnb-next" data-page="oferta_educativa">
       <span class="pnb-info">
         <span class="pnb-dir">Ver</span>
-        <span class="pnb-name">Contacto</span>
+        <span class="pnb-name">Oferta Educativa</span>
       </span>
       <span class="pnb-arrow"><i class="ti ti-arrow-right"></i></span>
     </a>

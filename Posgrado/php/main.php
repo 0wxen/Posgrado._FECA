@@ -602,29 +602,17 @@ function nav_symbol(string $currentPage, string $page): string {
     <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
       <div class="inner">
-        <a
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="Facebook"
-        >
+        <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook">
           <i class="ti ti-brand-facebook"></i>
         </a>
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="Instagram"
-        >
+        <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <i class="ti ti-brand-x"></i>
+        </a>
+        <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram">
           <i class="ti ti-brand-instagram"></i>
         </a>
-        <a
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener"
-          aria-label="YouTube"
-        >
-          <i class="ti ti-brand-youtube"></i>
+        <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok">
+          <i class="ti ti-brand-tiktok"></i>
         </a>
         <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo electrónico">
           <i class="ti ti-mail"></i>
@@ -662,7 +650,7 @@ function nav_symbol(string $currentPage, string $page): string {
           <!-- División de Estudios de Posgrado -->
           <div class="logo-division-block">
             <img
-              src="../assets/img/logo-dep-azul.png"
+              src="../assets/img/logo-dep.png"
               class="logo-division-img"
               alt="División de Estudios de Posgrado FECA UJED"
             />
@@ -709,9 +697,9 @@ function nav_symbol(string $currentPage, string $page): string {
           <!-- Columna: Marca institucional -->
           <div>
             <div class="footer-brand-logos">
-              <!-- Logo División de Estudios de Posgrado versión blanca -->
+              <!-- Logo División de Estudios de Posgrado -->
               <img
-                src="../assets/img/logo-dep-blanco.png"
+                src="../assets/img/logo-dep.png"
                 style="
                   height: 44px;
                   width: auto;
@@ -733,26 +721,17 @@ function nav_symbol(string $currentPage, string $page): string {
               compromiso para el desarrollo de la sociedad.
             </p>
             <div class="footer-social">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="Facebook"
+              <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook"
                 ><i class="ti ti-brand-facebook"></i
               ></a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="Instagram"
+              <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter"
+                ><i class="ti ti-brand-x"></i
+              ></a>
+              <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram"
                 ><i class="ti ti-brand-instagram"></i
               ></a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener"
-                aria-label="YouTube"
-                ><i class="ti ti-brand-youtube"></i
+              <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok"
+                ><i class="ti ti-brand-tiktok"></i
               ></a>
               <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo"
                 ><i class="ti ti-mail"></i

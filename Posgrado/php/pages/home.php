@@ -42,15 +42,29 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
     <!-- Columna derecha: carrusel de imágenes de convocatorias -->
     <div class="hero-image-panel">
-      <div class="hero-conv-wrapper">
-        <div class="hero-conv-carousel">
-          <div class="hero-conv-slide activo">
-            <img src="../assets/img/convocatoria-a2025.png"
-                 alt="Convocatoria Ciclo A-2025" loading="eager">
+      <div class="hero-conv-carousel" id="hero-conv-carousel" title="Ver detalle de convocatoria">
+        <div class="hero-conv-slides-inner">
+          <div class="hero-conv-slide activo"
+               data-conv-title="Maestría en Gestión de Negocios · Ciclo A-2025"
+               data-conv-img="../assets/img/convocatoria-a2025.png"
+               data-conv-badge="Vigente"
+               data-conv-ciclo="Ciclo A-2025"
+               data-conv-limite="Límite de registro: 31 de enero de 2025"
+               data-conv-desc="Programa orientado al desarrollo de competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Reconocido por el PNPC-CONAHCyT."
+               data-conv-registro="#"
+               data-conv-doc="#">
+            <img src="../assets/img/convocatoria-a2025.png" alt="Convocatoria Ciclo A-2025" loading="eager">
           </div>
-          <div class="hero-conv-slide">
-            <img src="../assets/img/convocatoria-me.png"
-                 alt="Convocatoria Maestría en Economía 2025" loading="lazy">
+          <div class="hero-conv-slide"
+               data-conv-title="Maestría en Economía · Ciclo A-2025"
+               data-conv-img="../assets/img/convocatoria-me.png"
+               data-conv-badge="Vigente"
+               data-conv-ciclo="Ciclo A-2025"
+               data-conv-limite="Límite de registro: 15 de enero de 2025"
+               data-conv-desc="Desarrolla competencias analíticas avanzadas para comprender y resolver los desafíos económicos regionales y nacionales. Programa PNPC."
+               data-conv-registro="#"
+               data-conv-doc="#">
+            <img src="../assets/img/convocatoria-me.png" alt="Convocatoria Maestría en Economía 2025" loading="lazy">
           </div>
         </div>
         <button class="hero-conv-nav-btn prev" aria-label="Convocatoria anterior">
@@ -66,7 +80,7 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
           <button class="hero-conv-dot" aria-label="Convocatoria 2"></button>
         </div>
       </div>
-      <p class="hero-conv-label">Convocatoria Activa · Ciclo A-2025</p>
+      <p class="hero-conv-label">Convocatoria Activa · Ciclo A-2025 · <span style="cursor:pointer;text-decoration:underline;" id="hero-conv-ver-detalle">Ver detalle</span></p>
     </div>
 
   </div>
@@ -310,10 +324,12 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
 <script>
 (function () {
-  var slides  = document.querySelectorAll('.hero-conv-slide');
-  var dots    = document.querySelectorAll('.hero-conv-dot');
-  var btnPrev = document.querySelector('.hero-conv-nav-btn.prev');
-  var btnNext = document.querySelector('.hero-conv-nav-btn.next');
+  var carousel   = document.getElementById('hero-conv-carousel');
+  var slides     = document.querySelectorAll('#hero-conv-carousel .hero-conv-slide');
+  var dots       = document.querySelectorAll('.hero-conv-dot');
+  var btnPrev    = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.prev');
+  var btnNext    = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.next');
+  var verDetalle = document.getElementById('hero-conv-ver-detalle');
   if (!slides.length) return;
   var current = 0;
   var timer;
@@ -331,11 +347,30 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     timer = setInterval(function () { goTo(current + 1); }, 4500);
   }
 
-  if (btnPrev) btnPrev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
-  if (btnNext) btnNext.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+  function abrirModal() {
+    if (typeof window.openConvModal !== 'function') return;
+    var s = slides[current];
+    window.openConvModal({
+      img:      s.dataset.convImg,
+      badge:    s.dataset.convBadge,
+      title:    s.dataset.convTitle,
+      ciclo:    s.dataset.convCiclo,
+      limite:   s.dataset.convLimite,
+      desc:     s.dataset.convDesc,
+      registro: s.dataset.convRegistro,
+      doc:      s.dataset.convDoc
+    });
+  }
+
+  if (btnPrev) btnPrev.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); resetTimer(); });
+  if (btnNext) btnNext.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); resetTimer(); });
   dots.forEach(function (dot, i) {
     dot.addEventListener('click', function () { goTo(i); resetTimer(); });
   });
+  if (carousel) carousel.addEventListener('click', function (e) {
+    if (!e.target.closest('.hero-conv-nav-btn')) abrirModal();
+  });
+  if (verDetalle) verDetalle.addEventListener('click', abrirModal);
 
   resetTimer();
 })();

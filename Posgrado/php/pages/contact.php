@@ -69,18 +69,17 @@
             <div class="contacto-info-value">
               Síguenos para estar al tanto de convocatorias y novedades.
               <div class="contacto-social">
-                <a href="https://www.facebook.com/posgradofecaujed"
-                   target="_blank" rel="noopener" title="Facebook">
+                <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" title="Facebook">
                   <i class="ti ti-brand-facebook"></i>
                 </a>
-                <a href="#" target="_blank" rel="noopener" title="Instagram">
+                <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" title="X / Twitter">
+                  <i class="ti ti-brand-x"></i>
+                </a>
+                <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" title="Instagram">
                   <i class="ti ti-brand-instagram"></i>
                 </a>
-                <a href="#" target="_blank" rel="noopener" title="YouTube">
-                  <i class="ti ti-brand-youtube"></i>
-                </a>
-                <a href="#" target="_blank" rel="noopener" title="X / Twitter">
-                  <i class="ti ti-brand-x"></i>
+                <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" title="TikTok">
+                  <i class="ti ti-brand-tiktok"></i>
                 </a>
               </div>
             </div>
