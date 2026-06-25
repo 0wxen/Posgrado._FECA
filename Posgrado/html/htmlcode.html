@@ -3378,6 +3378,60 @@
         .admin-tab-btn { padding: 10px 13px; font-size: 14px; }
         .admin-modal-box { max-height: 95vh; }
       }
+
+      /* ── Proporciones de imagen/media por tipo de sección ── */
+      .admin-conv-img { width:100%; aspect-ratio:2/3; object-fit:cover; object-position:top center; display:block; }
+      .admin-conv-img-ph { width:100%; aspect-ratio:2/3; background:linear-gradient(135deg,var(--rojo-oscuro) 0%,#0e0407 100%); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.18); font-size:52px; }
+      .admin-person-img { width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center; display:block; }
+      .admin-person-img-ph { width:100%; aspect-ratio:3/4; background:linear-gradient(135deg,#e8e8e8 0%,#d8d8d8 100%); display:flex; align-items:center; justify-content:center; color:#ccc; font-size:52px; }
+      .admin-blog-img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+      .admin-blog-img-ph { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.18); font-size:40px; }
+
+      /* Oferta: encabezado coloreado por nivel */
+      .admin-oferta-hdr { position:relative; padding:26px 18px 20px; overflow:hidden; min-height:100px; display:flex; flex-direction:column; justify-content:flex-end; gap:6px; }
+      .admin-oferta-hdr--maestría,.admin-oferta-hdr--maestria { background:linear-gradient(135deg,#7a5c2c 0%,var(--dorado) 100%); }
+      .admin-oferta-hdr--doctorado { background:linear-gradient(135deg,var(--rojo-oscuro) 0%,#0e0407 100%); }
+      .admin-oferta-hdr--especialidad { background:linear-gradient(135deg,#263238 0%,#546e7a 100%); }
+      .admin-oferta-sigla-deco { position:absolute; bottom:-12px; right:8px; font-family:'Barlow Condensed',sans-serif; font-size:78px; font-weight:700; color:rgba(255,255,255,.09); line-height:1; pointer-events:none; }
+      .admin-oferta-nivel-tag { display:inline-block; padding:3px 10px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.26); border-radius:2px; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.9); position:relative; z-index:1; align-self:flex-start; }
+      .admin-oferta-sigla-label { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; color:#fff; letter-spacing:.04em; position:relative; z-index:1; }
+      .admin-oferta-img-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.18; }
+
+      /* Investigación: encabezado oscuro con ícono */
+      .admin-invest-hdr { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; padding:28px 16px; position:relative; overflow:hidden; min-height:108px; }
+      .admin-invest-hdr i { font-size:40px; color:var(--dorado); position:relative; z-index:1; }
+      .admin-invest-hdr-deco { position:absolute; top:-10px; right:-4px; font-family:'Barlow Condensed',sans-serif; font-size:86px; font-weight:700; color:rgba(255,255,255,.04); line-height:1; pointer-events:none; }
+      .admin-invest-tipo-tag { display:inline-flex; align-items:center; gap:4px; padding:2px 9px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:20px; font-size:10px; font-weight:700; color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:.07em; position:relative; z-index:1; text-align:center; }
+
+      /* Comunidad: encabezado dinámico por tipo */
+      .admin-comunidad-hdr { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; padding:20px 16px; min-height:96px; position:relative; overflow:hidden; }
+      .admin-comunidad-hdr--evento   { background:linear-gradient(135deg,var(--rojo-oscuro) 0%,#0e0407 100%); }
+      .admin-comunidad-hdr--recurso  { background:linear-gradient(135deg,#1a3a4a 0%,#0a1e2a 100%); }
+      .admin-comunidad-hdr--servicio { background:linear-gradient(135deg,#1a3a2a 0%,#0a1e12 100%); }
+      .admin-comunidad-hdr--tutoria,.admin-comunidad-hdr--tutoría { background:linear-gradient(135deg,#2c1a4a 0%,#1a0e2a 100%); }
+      .admin-comunidad-hdr--otro,.admin-comunidad-hdr--default { background:linear-gradient(135deg,#2a2a3e 0%,#1a1a2e 100%); }
+      .admin-comunidad-hdr img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.28; }
+      .admin-comunidad-hdr i { font-size:34px; color:var(--dorado); position:relative; z-index:1; }
+      .admin-comunidad-tipo-txt { font-size:10px; font-weight:700; color:rgba(255,255,255,.6); text-transform:uppercase; letter-spacing:.1em; position:relative; z-index:1; }
+
+      /* Grids con anchos mínimos adaptados */
+      .admin-grid-conv      { grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); }
+      .admin-grid-person    { grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); }
+      .admin-grid-oferta    { grid-template-columns:repeat(auto-fill,minmax(265px,1fr)); }
+      .admin-grid-invest    { grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); }
+      .admin-grid-comunidad { grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); }
+      .admin-grid-blog      { grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+
+      .admin-card-meta { display:flex; align-items:center; gap:10px; font-size:11px; color:#aaa; flex-wrap:wrap; margin-bottom:3px; }
+      .admin-card-meta .meta-cat { color:var(--dorado); font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+      .admin-card-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:5px; }
+      .admin-card-tag { display:inline-flex; align-items:center; gap:3px; padding:2px 7px; background:var(--gris-bg); border-radius:2px; font-size:10px; font-weight:600; color:#666; }
+      .admin-card-tag i { font-size:11px; }
+
+      @media (max-width:600px) {
+        .admin-grid-conv,.admin-grid-person,.admin-grid-oferta,
+        .admin-grid-invest,.admin-grid-comunidad,.admin-grid-blog { grid-template-columns:1fr; }
+      }
     </style>
   </head>
 
