@@ -22,57 +22,32 @@
       </div>
     </div>
 
-    <!-- Pestañas de secciones -->
+    <!-- Pestañas -->
     <div class="admin-tabs" role="tablist">
-      <button class="admin-tab-btn activo" data-admin-tab="nosotros" role="tab">
-        <i class="ti ti-users"></i> Personal
+      <button class="admin-tab-btn activo" data-admin-tab="convocatorias" role="tab">
+        <i class="ti ti-file-text"></i> Convocatorias
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="nosotros" role="tab">
+        <i class="ti ti-users"></i> Nosotros
       </button>
       <button class="admin-tab-btn" data-admin-tab="oferta" role="tab">
         <i class="ti ti-school"></i> Oferta Educativa
       </button>
-      <button class="admin-tab-btn" data-admin-tab="convocatorias" role="tab">
-        <i class="ti ti-file-text"></i> Convocatorias
+      <button class="admin-tab-btn" data-admin-tab="investigacion" role="tab">
+        <i class="ti ti-microscope"></i> Investigación
+      </button>
+      <button class="admin-tab-btn" data-admin-tab="comunidad" role="tab">
+        <i class="ti ti-users-group"></i> Comunidad
       </button>
       <button class="admin-tab-btn" data-admin-tab="blog" role="tab">
-        <i class="ti ti-news"></i> Blog / Noticias
-      </button>
-      <button class="admin-tab-btn" data-admin-tab="galeria" role="tab">
-        <i class="ti ti-photo"></i> Galería
+        <i class="ti ti-news"></i> Blog
       </button>
     </div>
 
-    <!-- ── Panel: Personal / Nosotros ── -->
-    <div id="admin-panel-nosotros" class="admin-panel" role="tabpanel">
+    <!-- ── Convocatorias (cartel vertical 2:3) ── -->
+    <div id="admin-panel-convocatorias" class="admin-panel" role="tabpanel">
       <div class="admin-panel-hdr">
-        <div class="admin-panel-hdr-left">
-          <h3>Directivos y Personal</h3>
-          <span class="admin-count-badge" id="cnt-nosotros">0</span>
-        </div>
-        <button class="btn-sm-rojo" onclick="adminAbrirEditar('nosotros',null)">
-          <i class="ti ti-plus"></i> Agregar persona
-        </button>
-      </div>
-      <div class="admin-grid" id="grid-nosotros"></div>
-    </div>
-
-    <!-- ── Panel: Oferta Educativa ── -->
-    <div id="admin-panel-oferta" class="admin-panel" hidden role="tabpanel">
-      <div class="admin-panel-hdr">
-        <div class="admin-panel-hdr-left">
-          <h3>Programas de Posgrado</h3>
-          <span class="admin-count-badge" id="cnt-oferta">0</span>
-        </div>
-        <button class="btn-sm-rojo" onclick="adminAbrirEditar('oferta',null)">
-          <i class="ti ti-plus"></i> Agregar programa
-        </button>
-      </div>
-      <div class="admin-grid" id="grid-oferta"></div>
-    </div>
-
-    <!-- ── Panel: Convocatorias ── -->
-    <div id="admin-panel-convocatorias" class="admin-panel" hidden role="tabpanel">
-      <div class="admin-panel-hdr">
-        <div class="admin-panel-hdr-left">
+        <div style="display:flex;align-items:center;gap:12px;">
           <h3>Convocatorias</h3>
           <span class="admin-count-badge" id="cnt-convocatorias">0</span>
         </div>
@@ -80,35 +55,77 @@
           <i class="ti ti-plus"></i> Agregar convocatoria
         </button>
       </div>
-      <div class="admin-grid" id="grid-convocatorias"></div>
+      <div class="admin-grid admin-grid-conv" id="grid-convocatorias"></div>
     </div>
 
-    <!-- ── Panel: Blog / Noticias ── -->
+    <!-- ── Nosotros / Personal (retrato 3:4) ── -->
+    <div id="admin-panel-nosotros" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Directivos y Personal</h3>
+          <span class="admin-count-badge" id="cnt-nosotros">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('nosotros',null)">
+          <i class="ti ti-plus"></i> Agregar persona
+        </button>
+      </div>
+      <div class="admin-grid admin-grid-person" id="grid-nosotros"></div>
+    </div>
+
+    <!-- ── Oferta Educativa (encabezado coloreado) ── -->
+    <div id="admin-panel-oferta" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Programas de Posgrado</h3>
+          <span class="admin-count-badge" id="cnt-oferta">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('oferta',null)">
+          <i class="ti ti-plus"></i> Agregar programa
+        </button>
+      </div>
+      <div class="admin-grid admin-grid-oferta" id="grid-oferta"></div>
+    </div>
+
+    <!-- ── Investigación (encabezado ícono, texto amplio) ── -->
+    <div id="admin-panel-investigacion" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Cuerpos y Grupos de Investigación</h3>
+          <span class="admin-count-badge" id="cnt-investigacion">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('investigacion',null)">
+          <i class="ti ti-plus"></i> Agregar cuerpo/grupo
+        </button>
+      </div>
+      <div class="admin-grid admin-grid-invest" id="grid-investigacion"></div>
+    </div>
+
+    <!-- ── Comunidad (encabezado por tipo + imagen de fondo) ── -->
+    <div id="admin-panel-comunidad" class="admin-panel" hidden role="tabpanel">
+      <div class="admin-panel-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Contenido de Comunidad</h3>
+          <span class="admin-count-badge" id="cnt-comunidad">0</span>
+        </div>
+        <button class="btn-sm-rojo" onclick="adminAbrirEditar('comunidad',null)">
+          <i class="ti ti-plus"></i> Agregar elemento
+        </button>
+      </div>
+      <div class="admin-grid admin-grid-comunidad" id="grid-comunidad"></div>
+    </div>
+
+    <!-- ── Blog / Noticias (imagen paisaje 16:9) ── -->
     <div id="admin-panel-blog" class="admin-panel" hidden role="tabpanel">
       <div class="admin-panel-hdr">
-        <div class="admin-panel-hdr-left">
-          <h3>Entradas de Blog</h3>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Blog / Noticias</h3>
           <span class="admin-count-badge" id="cnt-blog">0</span>
         </div>
         <button class="btn-sm-rojo" onclick="adminAbrirEditar('blog',null)">
           <i class="ti ti-plus"></i> Agregar entrada
         </button>
       </div>
-      <div class="admin-grid" id="grid-blog"></div>
-    </div>
-
-    <!-- ── Panel: Galería ── -->
-    <div id="admin-panel-galeria" class="admin-panel" hidden role="tabpanel">
-      <div class="admin-panel-hdr">
-        <div class="admin-panel-hdr-left">
-          <h3>Imágenes de la Galería</h3>
-          <span class="admin-count-badge" id="cnt-galeria">0</span>
-        </div>
-        <button class="btn-sm-rojo" onclick="adminAbrirEditar('galeria',null)">
-          <i class="ti ti-plus"></i> Agregar imagen
-        </button>
-      </div>
-      <div class="admin-galeria-grid" id="grid-galeria"></div>
+      <div class="admin-grid admin-grid-blog" id="grid-blog"></div>
     </div>
 
   </div>
@@ -119,8 +136,8 @@
   <div class="admin-modal-box">
     <div class="admin-modal-hdr">
       <h3 id="admin-modal-titulo">
-        <small id="admin-modal-subtitulo">Sección</small>
-        Editar elemento
+        <small id="admin-modal-sub">Sección</small>
+        Elemento
       </h3>
       <button class="admin-modal-cerrar" onclick="adminCerrarModal()" aria-label="Cerrar">
         <i class="ti ti-x"></i>
@@ -140,178 +157,290 @@
 
 <script>
 (function () {
-  var STORAGE_KEY = 'dep_cms_v1';
+  var STORAGE_KEY = 'dep_cms_v2';
 
   /* ── Datos por defecto ── */
   var DEFAULTS = {
+    convocatorias: [
+      { id: 1, imagen: '', titulo: 'Convocatoria MCEyA 2025-A', programa: 'Maestría en Ciencias Económico Administrativas', ciclo: '2025-A', limite: '2025-03-31', descripcion: 'Convocatoria abierta de admisión para el ciclo escolar 2025-A. Cupo limitado.', estado: 'Vigente', urlRegistro: '#', urlPDF: '#' },
+      { id: 2, imagen: '', titulo: 'Convocatoria DCEyA 2025-A', programa: 'Doctorado en Ciencias Económico Administrativas', ciclo: '2025-A', limite: '', descripcion: 'Convocatoria de admisión al programa doctoral para el ciclo 2025-A.', estado: 'Próxima', urlRegistro: '#', urlPDF: '#' }
+    ],
     nosotros: [
       { id: 1, foto: '', nombre: 'Dr. [Director de División]', cargo: 'Director de la División de Estudios de Posgrado', area: 'Dirección', email: 'posgradofeca@ujed.mx', descripcion: 'Responsable de la dirección y gestión académica de los programas de posgrado de la FECA UJED.' },
       { id: 2, foto: '', nombre: 'Dr. [Subdirector Académico]', cargo: 'Subdirector Académico', area: 'Academia', email: '', descripcion: 'Apoya las funciones académicas y de investigación de los programas de posgrado.' }
     ],
     oferta: [
-      { id: 1, imagen: '', nivel: 'Maestría', sigla: 'MCEyA', nombre: 'Maestría en Ciencias Económico Administrativas', descripcion: 'Forma profesionales con alto nivel académico para la investigación y docencia en el área económico-administrativa.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
-      { id: 2, imagen: '', nivel: 'Doctorado', sigla: 'DCEyA', nombre: 'Doctorado en Ciencias Económico Administrativas', descripcion: 'Programa doctoral orientado a la generación y aplicación del conocimiento en el área económico-administrativa.', duracion: '3 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
-      { id: 3, imagen: '', nivel: 'Maestría', sigla: 'MI', nombre: 'Maestría en Impuestos', descripcion: 'Capacita especialistas en materia fiscal y tributaria para el ejercicio profesional en sector público y privado.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: '' },
-      { id: 4, imagen: '', nivel: 'Especialidad', sigla: 'EF', nombre: 'Especialidad en Fiscal', descripcion: 'Programa de especialización en materia fiscal para profesionales en activo.', duracion: '1 año', modalidad: 'Presencial', reconocimiento: '' }
+      { id: 1, imagen: '', nivel: 'Maestría', sigla: 'MCEyA', nombre: 'Maestría en Ciencias Económico Administrativas', descripcion: 'Forma profesionales con alto nivel académico para la investigación y docencia.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
+      { id: 2, imagen: '', nivel: 'Doctorado', sigla: 'DCEyA', nombre: 'Doctorado en Ciencias Económico Administrativas', descripcion: 'Programa doctoral orientado a la generación y aplicación del conocimiento.', duracion: '3 años', modalidad: 'Presencial', reconocimiento: 'PNPC' },
+      { id: 3, imagen: '', nivel: 'Maestría', sigla: 'MI', nombre: 'Maestría en Impuestos', descripcion: 'Capacita especialistas en materia fiscal y tributaria.', duracion: '2 años', modalidad: 'Presencial', reconocimiento: '' },
+      { id: 4, imagen: '', nivel: 'Especialidad', sigla: 'EF', nombre: 'Especialidad en Fiscal', descripcion: 'Formación especializada en materia fiscal para profesionales en activo.', duracion: '1 año', modalidad: 'Presencial', reconocimiento: '' }
     ],
-    convocatorias: [
-      { id: 1, imagen: '', titulo: 'Convocatoria MCEyA 2025-A', programa: 'Maestría en Ciencias Económico Administrativas', ciclo: '2025-A', limite: '', descripcion: 'Convocatoria abierta de admisión al programa de maestría para el ciclo escolar 2025-A.', estado: 'Vigente', urlRegistro: '#', urlPDF: '#' }
+    investigacion: [
+      { id: 1, nombre: 'Cuerpo Académico de Finanzas y Economía', tipo: 'Cuerpo Académico Consolidado', lineas: 'Finanzas corporativas\nMercados financieros\nEconomía regional', descripcion: 'Grupo dedicado a la investigación en el área de finanzas, mercados de capital y economía aplicada.', integrantes: 'Dr. Nombre Apellido\nMtro. Nombre Apellido', prodep: 'UJED-CA-123', publicaciones: '' },
+      { id: 2, nombre: 'Grupo Disciplinar en Contaduría', tipo: 'Grupo Disciplinar', lineas: 'Auditoría y control interno\nContabilidad gubernamental', descripcion: 'Grupo enfocado en la investigación de prácticas contables y fiscales contemporáneas.', integrantes: 'Dr. Nombre Apellido', prodep: '', publicaciones: '' }
+    ],
+    comunidad: [
+      { id: 1, imagen: '', tipo: 'Evento', titulo: 'Semana de la Investigación 2025', descripcion: 'Evento anual donde investigadores presentan avances y resultados de sus proyectos.', fecha: '2025-03-15', categoria: 'Investigación', url: '' },
+      { id: 2, imagen: '', tipo: 'Recurso', titulo: 'Biblioteca Digital UJED', descripcion: 'Acceso a bases de datos académicas, repositorios y publicaciones científicas.', fecha: '', categoria: 'Académico', url: 'https://ujed.mx' },
+      { id: 3, imagen: '', tipo: 'Servicio', titulo: 'Tutoría Académica', descripcion: 'Sistema de tutorías para acompañamiento durante el programa de posgrado.', fecha: '', categoria: 'Académico', url: '' }
     ],
     blog: [
       { id: 1, imagen: '', titulo: 'Bienvenida al nuevo portal institucional', categoria: 'Institucional', fecha: '2025-01-15', extracto: 'La División de Estudios de Posgrado FECA UJED presenta su nuevo portal web con información actualizada sobre programas, convocatorias e investigación.' }
-    ],
-    galeria: []
+    ]
   };
 
   /* ── Configuración de campos por sección ── */
   var FORMS = {
+    convocatorias: [
+      { id: 'imagen',      label: 'Imagen / Cartel (formato vertical recomendado)', type: 'image'   },
+      { id: 'titulo',      label: 'Título',                    type: 'text',    req: true  },
+      { id: 'programa',    label: 'Programa',                  type: 'text'               },
+      { id: 'ciclo',       label: 'Ciclo (Ej. 2025-A)',        type: 'text'               },
+      { id: 'limite',      label: 'Fecha límite de registro',  type: 'date'               },
+      { id: 'estado',      label: 'Estado',                    type: 'select', options: ['Vigente','Próxima','Cerrada'] },
+      { id: 'descripcion', label: 'Descripción',               type: 'textarea'           },
+      { id: 'urlRegistro', label: 'URL de registro en línea',  type: 'url'                },
+      { id: 'urlPDF',      label: 'URL del documento PDF',     type: 'url'                }
+    ],
     nosotros: [
-      { id: 'foto',        label: 'Fotografía',          type: 'image'    },
-      { id: 'nombre',      label: 'Nombre completo',     type: 'text',    required: true  },
-      { id: 'cargo',       label: 'Cargo / Puesto',      type: 'text',    required: true  },
-      { id: 'area',        label: 'Área',                type: 'text'     },
-      { id: 'email',       label: 'Correo electrónico',  type: 'email'    },
-      { id: 'descripcion', label: 'Descripción',         type: 'textarea' }
+      { id: 'foto',        label: 'Fotografía (formato vertical / carnet)', type: 'image'           },
+      { id: 'nombre',      label: 'Nombre completo',           type: 'text',    req: true  },
+      { id: 'cargo',       label: 'Cargo / Puesto',            type: 'text',    req: true  },
+      { id: 'area',        label: 'Área',                      type: 'text'               },
+      { id: 'email',       label: 'Correo electrónico',        type: 'email'              },
+      { id: 'descripcion', label: 'Descripción / Semblanza',   type: 'textarea'           }
     ],
     oferta: [
-      { id: 'imagen',        label: 'Imagen del programa',         type: 'image'  },
-      { id: 'nivel',         label: 'Nivel',                       type: 'select', options: ['Maestría','Doctorado','Especialidad'], required: true },
-      { id: 'sigla',         label: 'Sigla (Ej. MCEyA)',           type: 'text',   required: true },
-      { id: 'nombre',        label: 'Nombre completo del programa', type: 'text',   required: true },
-      { id: 'descripcion',   label: 'Descripción',                 type: 'textarea' },
-      { id: 'duracion',      label: 'Duración',                    type: 'text'    },
-      { id: 'modalidad',     label: 'Modalidad',                   type: 'select', options: ['Presencial','En línea','Mixta'] },
-      { id: 'reconocimiento',label: 'Reconocimiento (PNPC, etc.)', type: 'text'    }
+      { id: 'imagen',        label: 'Imagen del programa (opcional)', type: 'image'              },
+      { id: 'nivel',         label: 'Nivel',                  type: 'select', options: ['Maestría','Doctorado','Especialidad'], req: true },
+      { id: 'sigla',         label: 'Sigla (Ej. MCEyA)',      type: 'text',    req: true  },
+      { id: 'nombre',        label: 'Nombre completo',        type: 'text',    req: true  },
+      { id: 'descripcion',   label: 'Descripción',            type: 'textarea'            },
+      { id: 'duracion',      label: 'Duración',               type: 'text'                },
+      { id: 'modalidad',     label: 'Modalidad',              type: 'select', options: ['Presencial','En línea','Mixta'] },
+      { id: 'reconocimiento',label: 'Reconocimiento (PNPC…)', type: 'text'                }
     ],
-    convocatorias: [
-      { id: 'imagen',      label: 'Imagen / Cartel',         type: 'image'  },
-      { id: 'titulo',      label: 'Título',                  type: 'text',    required: true },
-      { id: 'programa',    label: 'Programa',                type: 'text'    },
-      { id: 'ciclo',       label: 'Ciclo (Ej. 2025-A)',      type: 'text'    },
-      { id: 'limite',      label: 'Fecha límite',            type: 'date'    },
-      { id: 'estado',      label: 'Estado',                  type: 'select', options: ['Vigente','Próxima','Cerrada'] },
-      { id: 'descripcion', label: 'Descripción',             type: 'textarea' },
-      { id: 'urlRegistro', label: 'URL de registro',         type: 'url'     },
-      { id: 'urlPDF',      label: 'URL del PDF / documento', type: 'url'     }
+    investigacion: [
+      { id: 'nombre',        label: 'Nombre del cuerpo / grupo', type: 'text', req: true  },
+      { id: 'tipo',          label: 'Tipo',                   type: 'select', options: ['Cuerpo Académico Consolidado','Cuerpo Académico en Consolidación','Cuerpo Académico en Formación','Grupo Disciplinar'], req: true },
+      { id: 'lineas',        label: 'Líneas de investigación (una por línea)', type: 'textarea' },
+      { id: 'descripcion',   label: 'Descripción / Objetivos', type: 'textarea'           },
+      { id: 'integrantes',   label: 'Integrantes (uno por línea)', type: 'textarea'       },
+      { id: 'prodep',        label: 'Clave PRODEP',           type: 'text'                },
+      { id: 'publicaciones', label: 'URL de publicaciones / repositorio', type: 'url'     }
+    ],
+    comunidad: [
+      { id: 'imagen',      label: 'Imagen / Banner (horizontal recomendado)', type: 'image' },
+      { id: 'tipo',        label: 'Tipo de contenido',        type: 'select', options: ['Evento','Recurso','Servicio','Tutoría','Otro'], req: true },
+      { id: 'titulo',      label: 'Título',                   type: 'text',    req: true  },
+      { id: 'descripcion', label: 'Descripción',              type: 'textarea'            },
+      { id: 'fecha',       label: 'Fecha (si aplica)',        type: 'date'                },
+      { id: 'categoria',   label: 'Categoría (Ej. Bienestar, Académico)', type: 'text'   },
+      { id: 'url',         label: 'Enlace / URL',             type: 'url'                 }
     ],
     blog: [
-      { id: 'imagen',    label: 'Imagen destacada',      type: 'image'  },
-      { id: 'titulo',    label: 'Título',                type: 'text',    required: true },
-      { id: 'categoria', label: 'Categoría',             type: 'text'    },
-      { id: 'fecha',     label: 'Fecha de publicación',  type: 'date'    },
-      { id: 'extracto',  label: 'Extracto / Resumen',   type: 'textarea' }
-    ],
-    galeria: [
-      { id: 'imagen',    label: 'Imagen',       type: 'image', required: true },
-      { id: 'titulo',    label: 'Título',       type: 'text'  },
-      { id: 'categoria', label: 'Categoría (Ej. Eventos, Campus)', type: 'text' }
+      { id: 'imagen',    label: 'Imagen destacada (formato horizontal 16:9)', type: 'image'        },
+      { id: 'titulo',    label: 'Título',                     type: 'text',    req: true  },
+      { id: 'categoria', label: 'Categoría',                  type: 'text'                },
+      { id: 'fecha',     label: 'Fecha de publicación',       type: 'date'                },
+      { id: 'extracto',  label: 'Extracto / Resumen',         type: 'textarea'            }
     ]
   };
 
   var LABELS = {
-    nosotros:      { panel: 'Directivos y Personal', item: 'Persona' },
-    oferta:        { panel: 'Programas de Posgrado', item: 'Programa' },
-    convocatorias: { panel: 'Convocatorias',          item: 'Convocatoria' },
-    blog:          { panel: 'Blog / Noticias',        item: 'Entrada de blog' },
-    galeria:       { panel: 'Galería de Imágenes',    item: 'Imagen' }
+    convocatorias: { panel:'Convocatorias',                     item:'Convocatoria'        },
+    nosotros:      { panel:'Directivos y Personal',             item:'Persona'             },
+    oferta:        { panel:'Programas de Posgrado',             item:'Programa'            },
+    investigacion: { panel:'Investigación',                     item:'Cuerpo / Grupo'      },
+    comunidad:     { panel:'Comunidad',                         item:'Elemento'            },
+    blog:          { panel:'Blog / Noticias',                   item:'Entrada de blog'     }
   };
 
-  /* ── Estado local ── */
-  var estado = { tab: 'nosotros', sec: null, id: null, fotosTemp: {} };
+  /* ── Estado ── */
+  var estado = { tab: 'convocatorias', sec: null, id: null, fotosTemp: {} };
 
   /* ── Persistencia ── */
-  function getData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(_) { return {}; } }
-  function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-  function getSection(sec) {
-    var d = getData();
-    return d.hasOwnProperty(sec) ? d[sec] : JSON.parse(JSON.stringify(DEFAULTS[sec] || []));
-  }
-  function saveSection(sec, items) {
-    var d = getData(); d[sec] = items; saveData(d);
-  }
-  function genId() { return Date.now() + Math.floor(Math.random() * 999); }
+  function getData()         { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(_) { return {}; } }
+  function saveData(d)       { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+  function getSection(sec)   { var d = getData(); return d.hasOwnProperty(sec) ? d[sec] : JSON.parse(JSON.stringify(DEFAULTS[sec] || [])); }
+  function saveSection(s, a) { var d = getData(); d[s] = a; saveData(d); }
+  function genId()           { return Date.now() + Math.floor(Math.random() * 999); }
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function trunc(s, n) { return (s||'').length > n ? s.slice(0,n)+'…' : (s||''); }
 
-  /* ── Escape para HTML ── */
-  function esc(s) {
-    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  /* ── Botones de acción comunes ── */
+  function cardActions(sec, id) {
+    return '<div class="admin-card-actions">' +
+      '<button class="admin-btn-edit" onclick="adminAbrirEditar(\'' + sec + '\',' + id + ')">' +
+        '<i class="ti ti-pencil"></i> Editar' +
+      '</button>' +
+      '<button class="admin-btn-delete" title="Eliminar" onclick="adminEliminar(\'' + sec + '\',' + id + ')">' +
+        '<i class="ti ti-trash"></i>' +
+      '</button>' +
+    '</div>';
   }
 
-  /* ── Renderizar grilla de una sección ── */
+  /* ── Renderers específicos por sección ── */
+
+  function renderConvCard(item) {
+    var img = item.imagen || '';
+    var media = img
+      ? '<img class="admin-conv-img" src="' + esc(img) + '" alt="">'
+      : '<div class="admin-conv-img-ph"><i class="ti ti-file-text"></i></div>';
+    var badgeMap = { 'vigente':'vigente','próxima':'proxima','proxima':'proxima','cerrada':'cerrada' };
+    var est  = badgeMap[(item.estado||'').toLowerCase()] || 'proxima';
+    var badge = '<span class="admin-badge admin-badge-' + est + '">' + esc(item.estado||'Vigente') + '</span>';
+    return '<div class="admin-card">' +
+      media +
+      '<div class="admin-card-body">' +
+        '<div style="margin-bottom:5px;">' + badge + '</div>' +
+        '<div class="admin-card-title">' + esc(item.titulo||'') + '</div>' +
+        (item.programa ? '<div class="admin-card-subtitle">' + esc(item.programa) + '</div>' : '') +
+        '<div class="admin-card-tags">' +
+          (item.ciclo  ? '<span class="admin-card-tag"><i class="ti ti-calendar"></i>' + esc(item.ciclo) + '</span>' : '') +
+          (item.limite ? '<span class="admin-card-tag"><i class="ti ti-clock-hour-4"></i>Límite: ' + esc(item.limite) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      cardActions('convocatorias', item.id) +
+    '</div>';
+  }
+
+  function renderPersonCard(item) {
+    var img = item.foto || '';
+    var media = img
+      ? '<img class="admin-person-img" src="' + esc(img) + '" alt="">'
+      : '<div class="admin-person-img-ph"><i class="ti ti-user"></i></div>';
+    return '<div class="admin-card">' +
+      media +
+      '<div class="admin-card-body">' +
+        '<div class="admin-card-title">' + esc(item.nombre||'') + '</div>' +
+        (item.cargo ? '<div class="admin-card-subtitle">' + esc(item.cargo) + '</div>' : '') +
+        (item.area  ? '<div style="margin:3px 0;"><span class="admin-card-tag"><i class="ti ti-building"></i>' + esc(item.area) + '</span></div>' : '') +
+        (item.email ? '<div class="admin-card-desc" style="margin-top:4px;font-size:11px;"><i class="ti ti-mail" style="font-size:11px;margin-right:3px;color:var(--dorado);"></i>' + esc(item.email) + '</div>' : '') +
+      '</div>' +
+      cardActions('nosotros', item.id) +
+    '</div>';
+  }
+
+  function renderOfertaCard(item) {
+    var lvl = (item.nivel||'').toLowerCase().replace(/é/g,'e');
+    var sigla = item.sigla || '';
+    var recon = item.reconocimiento
+      ? '<span class="admin-badge" style="background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;margin-top:2px;">' + esc(item.reconocimiento) + '</span>'
+      : '';
+    return '<div class="admin-card">' +
+      '<div class="admin-oferta-hdr admin-oferta-hdr--' + lvl + '">' +
+        (item.imagen ? '<img class="admin-oferta-img-bg" src="' + esc(item.imagen) + '" alt="">' : '') +
+        '<span class="admin-oferta-nivel-tag">' + esc(item.nivel||'') + '</span>' +
+        '<span class="admin-oferta-sigla-label">' + esc(sigla) + '</span>' +
+        '<span class="admin-oferta-sigla-deco">' + esc(sigla) + '</span>' +
+      '</div>' +
+      '<div class="admin-card-body">' +
+        '<div class="admin-card-title">' + esc(item.nombre||'') + '</div>' +
+        (recon ? '<div style="margin:4px 0;">' + recon + '</div>' : '') +
+        (item.descripcion ? '<div class="admin-card-desc">' + esc(trunc(item.descripcion, 80)) + '</div>' : '') +
+        '<div class="admin-card-tags">' +
+          (item.duracion  ? '<span class="admin-card-tag"><i class="ti ti-clock"></i>' + esc(item.duracion) + '</span>' : '') +
+          (item.modalidad ? '<span class="admin-card-tag"><i class="ti ti-map-pin"></i>' + esc(item.modalidad) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      cardActions('oferta', item.id) +
+    '</div>';
+  }
+
+  function renderInvestCard(item) {
+    var tipo = item.tipo || 'Investigación';
+    var tipoShort = tipo.replace('Cuerpo Académico ','CA ').replace('Grupo Disciplinar','GD');
+    var lineasArr = (item.lineas||'').split('\n').filter(Boolean);
+    var lineasHtml = lineasArr.length
+      ? '<ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:6px;">' +
+          lineasArr.slice(0,3).map(function(l) {
+            return '<li style="font-size:12px;color:#666;display:flex;align-items:flex-start;gap:6px;line-height:1.4;">' +
+              '<span style="width:5px;height:5px;border-radius:50%;background:var(--dorado);flex-shrink:0;margin-top:5px;"></span>' +
+              esc(l) + '</li>';
+          }).join('') +
+          (lineasArr.length > 3 ? '<li style="font-size:11px;color:#bbb;">+' + (lineasArr.length-3) + ' más…</li>' : '') +
+        '</ul>'
+      : '';
+    return '<div class="admin-card">' +
+      '<div class="admin-invest-hdr">' +
+        '<span class="admin-invest-hdr-deco">CA</span>' +
+        '<i class="ti ti-microscope"></i>' +
+        '<span class="admin-invest-tipo-tag">' + esc(tipoShort) + '</span>' +
+      '</div>' +
+      '<div class="admin-card-body">' +
+        '<div class="admin-card-title">' + esc(item.nombre||'') + '</div>' +
+        (item.prodep ? '<div style="margin:4px 0;"><span class="admin-card-tag"><i class="ti ti-award"></i>PRODEP: ' + esc(item.prodep) + '</span></div>' : '') +
+        lineasHtml +
+      '</div>' +
+      cardActions('investigacion', item.id) +
+    '</div>';
+  }
+
+  function renderComunidadCard(item) {
+    var tipo = (item.tipo||'otro').toLowerCase().replace('í','i').replace('ó','o');
+    var iconMap = { evento:'calendar-event', recurso:'file-description', servicio:'tool', tutoria:'user-check', otro:'star' };
+    var icon = iconMap[tipo] || 'star';
+    var img  = item.imagen || '';
+    return '<div class="admin-card">' +
+      '<div class="admin-comunidad-hdr admin-comunidad-hdr--' + tipo + '">' +
+        (img ? '<img src="' + esc(img) + '" alt="">' : '') +
+        '<i class="ti ti-' + icon + '"></i>' +
+        '<span class="admin-comunidad-tipo-txt">' + esc(item.tipo||'Comunidad') + '</span>' +
+      '</div>' +
+      '<div class="admin-card-body">' +
+        '<div class="admin-card-title">' + esc(item.titulo||'') + '</div>' +
+        (item.categoria ? '<div class="admin-card-subtitle">' + esc(item.categoria) + '</div>' : '') +
+        (item.fecha ? '<div class="admin-card-meta" style="margin-top:3px;"><i class="ti ti-calendar" style="font-size:11px;"></i> ' + esc(item.fecha) + '</div>' : '') +
+        (item.descripcion ? '<div class="admin-card-desc">' + esc(trunc(item.descripcion, 85)) + '</div>' : '') +
+      '</div>' +
+      cardActions('comunidad', item.id) +
+    '</div>';
+  }
+
+  function renderBlogCard(item) {
+    var img = item.imagen || '';
+    var media = img
+      ? '<img class="admin-blog-img" src="' + esc(img) + '" alt="">'
+      : '<div class="admin-blog-img-ph"><i class="ti ti-news"></i></div>';
+    return '<div class="admin-card">' +
+      media +
+      '<div class="admin-card-body">' +
+        '<div class="admin-card-meta">' +
+          (item.categoria ? '<span class="meta-cat">' + esc(item.categoria) + '</span>' : '') +
+          (item.fecha ? '<span>' + esc(item.fecha) + '</span>' : '') +
+        '</div>' +
+        '<div class="admin-card-title" style="font-size:17px;">' + esc(item.titulo||'') + '</div>' +
+        (item.extracto ? '<div class="admin-card-desc">' + esc(trunc(item.extracto, 90)) + '</div>' : '') +
+      '</div>' +
+      cardActions('blog', item.id) +
+    '</div>';
+  }
+
+  var RENDERERS = {
+    convocatorias: renderConvCard,
+    nosotros:      renderPersonCard,
+    oferta:        renderOfertaCard,
+    investigacion: renderInvestCard,
+    comunidad:     renderComunidadCard,
+    blog:          renderBlogCard
+  };
+
+  /* ── Renderizar grilla ── */
   function renderGrid(sec) {
     var items = getSection(sec);
     var grid  = document.getElementById('grid-' + sec);
     var cnt   = document.getElementById('cnt-' + sec);
     if (!grid) return;
     if (cnt) cnt.textContent = items.length + ' elemento' + (items.length !== 1 ? 's' : '');
-
     if (!items.length) {
-      grid.innerHTML = '<div class="admin-empty">' +
-        '<i class="ti ti-inbox"></i>' +
-        '<p>Sin elementos. Haz clic en "Agregar" para crear el primero.</p>' +
-        '</div>';
+      grid.innerHTML = '<div class="admin-empty"><i class="ti ti-inbox"></i>' +
+        '<p>Sin elementos. Haz clic en "Agregar" para crear el primero.</p></div>';
       return;
     }
-
-    grid.innerHTML = items.map(function(item) { return buildCard(sec, item); }).join('');
+    var render = RENDERERS[sec];
+    grid.innerHTML = render ? items.map(render).join('') : '';
   }
-
-  /* ── Construir una tarjeta ── */
-  function buildCard(sec, item) {
-    var imgSrc = item.foto || item.imagen || '';
-    var media  = imgSrc
-      ? '<img class="admin-card-img" src="' + esc(imgSrc) + '" alt="">'
-      : '<div class="admin-card-img-placeholder"><i class="ti ti-' + secIcon(sec) + '"></i></div>';
-
-    var title    = esc(item.nombre || item.titulo || item.sigla || '(Sin título)');
-    var subtitle = '';
-    var badge    = '';
-    var desc     = esc(truncar(item.descripcion || item.extracto || '', 85));
-
-    if (sec === 'nosotros') {
-      subtitle = esc(item.cargo || '');
-    } else if (sec === 'oferta') {
-      subtitle = esc(item.sigla || '');
-      var lvl = (item.nivel || '').toLowerCase();
-      badge = '<span class="admin-badge admin-badge-' + lvl + '">' + esc(item.nivel || '') + '</span>';
-      if (item.reconocimiento) {
-        badge += ' <span class="admin-badge" style="background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;">' + esc(item.reconocimiento) + '</span>';
-      }
-    } else if (sec === 'convocatorias') {
-      var est = (item.estado || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-      badge = '<span class="admin-badge admin-badge-' + est + '">' + esc(item.estado || '') + '</span>';
-      subtitle = esc(item.ciclo || '');
-    } else if (sec === 'blog') {
-      subtitle = esc(item.categoria || '');
-      if (item.fecha) badge = '<span style="font-size:11px;color:#aaa;">' + esc(item.fecha) + '</span>';
-    } else if (sec === 'galeria') {
-      subtitle = esc(item.categoria || '');
-    }
-
-    var galClass = sec === 'galeria' ? ' admin-galeria-card' : '';
-
-    return '<div class="admin-card' + galClass + '">' +
-      media +
-      '<div class="admin-card-body">' +
-        (badge ? '<div style="margin-bottom:4px;">' + badge + '</div>' : '') +
-        '<div class="admin-card-title">' + title + '</div>' +
-        (subtitle ? '<div class="admin-card-subtitle">' + subtitle + '</div>' : '') +
-        (desc ? '<div class="admin-card-desc">' + desc + '</div>' : '') +
-      '</div>' +
-      '<div class="admin-card-actions">' +
-        '<button class="admin-btn-edit" onclick="adminAbrirEditar(\'' + sec + '\',' + item.id + ')">' +
-          '<i class="ti ti-pencil"></i> Editar' +
-        '</button>' +
-        '<button class="admin-btn-delete" title="Eliminar" onclick="adminEliminar(\'' + sec + '\',' + item.id + ')">' +
-          '<i class="ti ti-trash"></i>' +
-        '</button>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function secIcon(sec) {
-    return { nosotros:'user', oferta:'school', convocatorias:'file-text', blog:'news', galeria:'photo' }[sec] || 'file';
-  }
-  function truncar(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
 
   /* ── Cambiar pestaña ── */
   function cambiarTab(tab) {
@@ -325,68 +454,59 @@
     renderGrid(tab);
   }
 
-  /* ── Construir campo de formulario ── */
+  /* ── Construir campo del formulario ── */
   function buildField(field, value) {
     var id    = 'mf-' + field.id;
-    var label = '<label class="form-label" for="' + id + '">' + esc(field.label) + (field.required ? ' *' : '') + '</label>';
+    var lbl   = '<label class="form-label" for="' + id + '">' + esc(field.label) + (field.req ? ' *' : '') + '</label>';
     var ctrl  = '';
-
     if (field.type === 'image') {
-      var hasImg = !!value;
+      var has = !!value;
       ctrl = '<div class="admin-upload-zona" onclick="document.getElementById(\'' + id + '\').click()">' +
-        '<img id="prev-' + field.id + '" class="admin-upload-preview" src="' + esc(value) + '" style="' + (hasImg ? 'display:block;' : 'display:none;') + '">' +
-        '<i class="ti ti-upload" id="ico-' + field.id + '" style="' + (hasImg ? 'display:none;' : '') + '"></i>' +
-        '<span id="txt-' + field.id + '">' + (hasImg ? 'Haz clic para cambiar la imagen' : 'Haz clic o arrastra una imagen') + '</span>' +
+        '<img id="prev-' + field.id + '" class="admin-upload-preview" src="' + esc(value||'') + '" style="' + (has?'display:block;':'display:none;') + '">' +
+        '<i class="ti ti-upload" id="ico-' + field.id + '" style="' + (has?'display:none;':'') + '"></i>' +
+        '<span id="txt-' + field.id + '">' + (has?'Haz clic para cambiar la imagen':'Haz clic o arrastra una imagen') + '</span>' +
         '<small style="font-size:11px;color:#bbb;">JPG, PNG o WEBP</small>' +
         '<input type="file" id="' + id + '" accept="image/*">' +
       '</div>';
     } else if (field.type === 'textarea') {
-      ctrl = '<textarea id="' + id + '" class="form-control" rows="3"' + (field.required ? ' required' : '') + '>' + esc(value) + '</textarea>';
+      ctrl = '<textarea id="' + id + '" class="form-control" rows="3"' + (field.req?' required':'') + '>' + esc(value||'') + '</textarea>';
     } else if (field.type === 'select') {
-      var opts = (field.options || []).map(function(o) {
-        return '<option value="' + esc(o) + '"' + (o === value ? ' selected' : '') + '>' + esc(o) + '</option>';
+      var opts = (field.options||[]).map(function(o) {
+        return '<option value="' + esc(o) + '"' + (o===value?' selected':'') + '>' + esc(o) + '</option>';
       }).join('');
-      ctrl = '<select id="' + id + '" class="form-control"' + (field.required ? ' required' : '') + '>' +
-        '<option value="">Seleccionar…</option>' + opts + '</select>';
+      ctrl = '<select id="' + id + '" class="form-control"' + (field.req?' required':'') + '><option value="">Seleccionar…</option>' + opts + '</select>';
     } else {
-      ctrl = '<input type="' + field.type + '" id="' + id + '" class="form-control" value="' + esc(value) + '"' + (field.required ? ' required' : '') + '>';
+      ctrl = '<input type="' + field.type + '" id="' + id + '" class="form-control" value="' + esc(value||'') + '"' + (field.req?' required':'') + '>';
     }
-
-    return '<div class="form-group">' + label + ctrl + '</div>';
+    return '<div class="form-group">' + lbl + ctrl + '</div>';
   }
 
-  /* ── Abrir modal de edición ── */
+  /* ── Abrir modal ── */
   window.adminAbrirEditar = function(sec, id) {
-    estado.sec      = sec;
-    estado.id       = id;
-    estado.fotosTemp = {};
-
+    estado.sec = sec; estado.id = id; estado.fotosTemp = {};
     var esNuevo = (id === null || id === undefined);
-    var label   = LABELS[sec] || { item: 'Elemento' };
-    document.getElementById('admin-modal-subtitulo').textContent = label.panel || sec;
-    document.getElementById('admin-modal-titulo').childNodes[1].textContent = (esNuevo ? 'Agregar ' : 'Editar ') + label.item;
-
+    var lbl = LABELS[sec] || { panel: sec, item: 'Elemento' };
+    document.getElementById('admin-modal-sub').textContent = lbl.panel;
+    var tituloNode = document.getElementById('admin-modal-titulo').childNodes;
+    for (var i = 0; i < tituloNode.length; i++) {
+      if (tituloNode[i].nodeType === 3) { tituloNode[i].textContent = '\n' + (esNuevo ? 'Agregar ' : 'Editar ') + lbl.item; break; }
+    }
     var item = {};
     if (!esNuevo) {
       var items = getSection(sec);
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].id === id) { item = items[i]; break; }
-      }
+      for (var j = 0; j < items.length; j++) { if (items[j].id === id) { item = items[j]; break; } }
     }
-
     var fields = FORMS[sec] || [];
     document.getElementById('admin-modal-body').innerHTML =
-      fields.map(function(f) { return buildField(f, item[f.id] || ''); }).join('');
-
-    /* Listeners para upload de imágenes */
+      fields.map(function(f) { return buildField(f, item[f.id]||''); }).join('');
     fields.forEach(function(f) {
       if (f.type !== 'image') return;
       var inp = document.getElementById('mf-' + f.id);
       if (!inp) return;
       inp.addEventListener('change', function() {
-        if (!this.files || !this.files[0]) return;
+        if (!this.files||!this.files[0]) return;
         var fid = f.id;
-        var r   = new FileReader();
+        var r = new FileReader();
         r.onload = function(ev) {
           estado.fotosTemp[fid] = ev.target.result;
           var prev = document.getElementById('prev-' + fid);
@@ -399,7 +519,6 @@
         r.readAsDataURL(this.files[0]);
       });
     });
-
     document.getElementById('admin-modal').hidden = false;
     document.body.style.overflow = 'hidden';
   };
@@ -415,17 +534,12 @@
   window.adminGuardar = function() {
     var sec = estado.sec;
     if (!sec) return;
-    var fields = FORMS[sec] || [];
-    var items  = getSection(sec);
+    var fields  = FORMS[sec] || [];
+    var items   = getSection(sec);
     var esNuevo = (estado.id === null || estado.id === undefined);
-    var item   = { id: esNuevo ? genId() : estado.id };
-
-    if (!esNuevo) {
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].id === estado.id) { item = JSON.parse(JSON.stringify(items[i])); break; }
-      }
-    }
-
+    var item    = esNuevo ? { id: genId() } : JSON.parse(JSON.stringify(
+      (function(){ for (var i=0;i<items.length;i++) if (items[i].id===estado.id) return items[i]; return {id:estado.id}; })()
+    ));
     fields.forEach(function(f) {
       if (f.type === 'image') {
         if (estado.fotosTemp[f.id]) item[f.id] = estado.fotosTemp[f.id];
@@ -434,15 +548,11 @@
         if (el) item[f.id] = el.value.trim();
       }
     });
-
     if (esNuevo) {
       items.push(item);
     } else {
-      for (var j = 0; j < items.length; j++) {
-        if (items[j].id === estado.id) { items[j] = item; break; }
-      }
+      for (var j = 0; j < items.length; j++) { if (items[j].id === estado.id) { items[j] = item; break; } }
     }
-
     saveSection(sec, items);
     adminCerrarModal();
     renderGrid(sec);
@@ -451,29 +561,24 @@
   /* ── Eliminar ── */
   window.adminEliminar = function(sec, id) {
     if (!confirm('¿Eliminar este elemento? Esta acción no se puede deshacer.')) return;
-    var items = getSection(sec).filter(function(i) { return i.id !== id; });
-    saveSection(sec, items);
+    saveSection(sec, getSection(sec).filter(function(i) { return i.id !== id; }));
     renderGrid(sec);
   };
 
-  /* ── Eventos de las pestañas ── */
+  /* ── Eventos ── */
   document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
     btn.addEventListener('click', function() { cambiarTab(this.dataset.adminTab); });
   });
-
-  /* ── Cerrar modal al hacer clic en overlay ── */
   var modal = document.getElementById('admin-modal');
   if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) adminCerrarModal();
-    });
+    modal.addEventListener('click', function(e) { if (e.target === modal) adminCerrarModal(); });
   }
   document.addEventListener('keydown', function(e) {
     var m = document.getElementById('admin-modal');
     if (e.key === 'Escape' && m && !m.hidden) adminCerrarModal();
   });
 
-  /* ── Inicializar con la pestaña activa ── */
-  cambiarTab('nosotros');
+  /* ── Inicializar ── */
+  cambiarTab('convocatorias');
 })();
 </script>
