@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="js" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Cuerpos Académicos FECA</title>
+    <meta name="description" content="Información sobre integrantes y producción de los Cuerpos Académicos de la Facultad de Economía, Contaduría y Administración de la UJED.">
+    <meta property="og:title" content="Cuerpos Académicos de la Facultad de Economía, Contaduría y Administración, UJED">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cadepfeca.ujed.mx">
+
+    <script src="Cuerpos%20Acad%C3%A9micos%20FECA_files/polyfills.3_uKF0.js"></script>
+    <link href="Cuerpos%20Acad%C3%A9micos%20FECA_files/css_uKF0.css" rel="stylesheet">
+    <link rel="stylesheet" href="Cuerpos%20Acad%C3%A9micos%20FECA_files/main.10_uKF0.css">
+    <link rel="stylesheet" href="Cuerpos%20Acad%C3%A9micos%20FECA_files/content-style_uKF0.css">
+
+    <style>
+        /* ── Iconos: fallback Unicode (fontello no está descargado localmente) ── */
+        [class^="icon-"]::before,
+        [class*=" icon-"]::before { font-family: inherit !important; }
+        .icon-down-open-mini::before  { content: ' ▾' !important; }
+        .icon-right-open-mini::before { content: ' ›' !important; font-weight: 700; }
+        .icon-user::before            { content: ' ◉' !important; }
+
+        /* ── Members section ── */
+        .members-section {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+        }
+        .members-section__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a3a5c;
+            margin-bottom: 0.4rem;
+        }
+        .members-section__ca-name {
+            font-size: 0.88rem;
+            color: #718096;
+            margin-bottom: 1.8rem;
+        }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.4rem;
+            margin-bottom: 3rem;
+        }
+        .member-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,.09);
+            text-align: center;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,.14);
+        }
+        .member-card__photo {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+        .member-card__photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg,#e2e8f0,#cbd5e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #a0aec0;
+        }
+        .member-card__info {
+            padding: 0.8rem 0.6rem;
+        }
+        .member-card__name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #1a3a5c;
+            line-height: 1.3;
+            margin-bottom: 0.25rem;
+        }
+        .member-card__role {
+            font-size: 0.72rem;
+            color: #718096;
+        }
+    </style>
+</head>
+
+<body data-root="https://cadepfeca.ujed.mx" class="home">
+
+    <!-- Header -->
+    <header id="main-header" class="main-header" role="banner">
+        <div class="row">
+            <a href="index.html" title="Ir a página de inicio">
+                <img id="header-logo" class="main-header__logo"
+                     src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-ca-feca_uKF0.png"
+                     alt="Cuerpos Académicos FECA">
+            </a>
+            <button id="main-menu-btn" class="main-header__btn"
+                    aria-expanded="false" aria-controls="main-menu">
+                <span class="main-header__btn-icon">
+                    <span class="top-bar"></span>
+                    <span class="middle-bar"></span>
+                    <span class="bottom-bar"></span>
+                </span>
+                Menú
+                <span class="js-text visually-hidden"
+                      data-inactive-text="Mostrar menú"
+                      data-active-text="Ocultar menú">Mostrar menú</span>
+            </button>
+            <nav id="main-menu" class="main-menu" role="navigation" aria-hidden="false">
+                <ul class="main-menu__list">
+                    <li class="main-menu__li">
+                        <p class="main-menu__text-link">
+                            Cuerpos académicos
+                            <span class="main-menu__dropdown-arrow icon-down-open-mini" aria-hidden="true"></span>
+                        </p>
+                        <ul id="nav-submenu" class="main-menu__submenu"></ul>
+                    </li>
+                    <li class="main-menu__li main-menu__li--login">
+                        <a class="main-menu__login btn" href="admin.html">
+                            Iniciar sesión
+                            <span class="main-menu__login-icon icon-user" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main" role="main">
+
+        <section class="hero hero--home">
+            <img id="hero-logo" class="hero--home__logo" alt="Cuerpos Académicos FECA"
+                 src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-ca_uKF0.png">
+            <div class="hero__slide" id="hero-slide">
+                <span class="hero__slide-photo" id="slide-0"></span>
+                <span class="hero__slide-photo" id="slide-1"></span>
+                <span class="hero__slide-photo" id="slide-2"></span>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="row">
+                <h2 id="section-title" class="section-title">
+                    Nuestros Cuerpos Académicos
+                </h2>
+                <div id="ca-cards-wrapper" class="ca-cards-wrapper">
+                    <!-- Cards populated by JS -->
+                </div>
+
+                <!-- Members sections (one per CA, shown only if members exist) -->
+                <div id="members-container"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer" role="contentinfo">
+        <div class="row">
+            <div class="main-footer__wrapper">
+                <p class="main-footer__info">
+                    <span id="footer-title" class="main-footer__title">Cuerpos Académicos FECA-UJED</span><br>
+                    <span id="footer-address">Fanny Anitúa y Privada de la Loza s/n. C.P. 34000. Durango, Dgo., México.</span><br>
+                    <span id="footer-contact">Tel: (618) 812 21 33 y 812 21 66. Correo electrónico: conirico@ujed.mx</span>
+                </p>
+                <div class="main-footer__logos">
+                    <img id="footer-logo-feca" class="main-footer__logo"
+                         src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-feca_uKF0.png" alt="Logo FECA">
+                </div>
+            </div>
+        </div>
+        <div class="main-footer__ujed-row">
+            <img id="footer-logo-ujed" class="main-footer__logo-ujed"
+                 src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-ujed.2025_uKF0.png" alt="UJED">
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="Cuerpos%20Acad%C3%A9micos%20FECA_files/dependencies.3_uKF0.js"></script>
+    <script src="Cuerpos%20Acad%C3%A9micos%20FECA_files/main.4_uKF0.js"></script>
+    <script>
+        const IMG = "Cuerpos%20Acad%C3%A9micos%20FECA_files/";
+        const DEFAULT_CONTENT = {
+            header: { logo: IMG + "logo-ca-feca_uKF0.png" },
+            hero: {
+                logo: IMG + "logo-ca_uKF0.png",
+                slides: [
+                    { bg: "" },
+                    { bg: "" },
+                    { bg: "" }
+                ]
+            },
+            section: {
+                title: "Nuestros Cuerpos Académicos",
+                cards: [
+                    {
+                        id: 1, type: "CAC",
+                        title: "Gestión y desarrollo de las organizaciones",
+                        image: IMG + "gestion-y-desarrollo-de-las-organizaciones-5e45bcebe2d2_uKF0.jpg",
+                        link: "https://cadepfeca.ujed.mx/cuerpos-academicos/gestion-y-desarrollo-de-las-organizaciones",
+                        linkText: "Ver cuerpo académico",
+                        members: []
+                    },
+                    {
+                        id: 2, type: "CAC",
+                        title: "Procesos de cambio y desarrollo de las instituciones",
+                        image: IMG + "procesos-de-cambio-y-desarrollo-de-las-instituciones_uKF0.jpg",
+                        link: "https://cadepfeca.ujed.mx/cuerpos-academicos/procesos-de-cambio-y-desarrollo-de-las-instituciones",
+                        linkText: "Ver cuerpo académico",
+                        members: []
+                    },
+                    {
+                        id: 3, type: "CAC",
+                        title: "Estudios empresariales desde la perspectiva económico administrativa",
+                        image: IMG + "estudios-empresariales-desde-la-perspectiva-economico-a_uKF0.jpg",
+                        link: "https://cadepfeca.ujed.mx/cuerpos-academicos/estudios-empresariales-desde-la-perspectiva-economico-administrativa",
+                        linkText: "Ver cuerpo académico",
+                        members: []
+                    }
+                ]
+            },
+            footer: {
+                title: "Cuerpos Académicos FECA-UJED",
+                address: "Fanny Anitúa y Privada de la Loza s/n. C.P. 34000. Durango, Dgo., México.",
+                contact: "Tel: (618) 812 21 33 y 812 21 66. Correo electrónico: conirico@ujed.mx",
+                logoFeca: IMG + "logo-feca_uKF0.png",
+                logoUjed: IMG + "logo-ujed.2025_uKF0.png"
+            }
+        };
+
+        function renderCards(cards) {
+            document.getElementById('ca-cards-wrapper').innerHTML = cards.map(c => `
+                <a class="ca-card" href="${c.link}">
+                    <img class="ca-card__image" src="${c.image}" alt="">
+                    <p class="ca-card__title">
+                        <span class="ca-card__type">${c.type}:</span>
+                        ${c.title}
+                    </p>
+                    <p class="ca-card__link">
+                        ${c.linkText}
+                        <span class="icon-right-open-mini" aria-hidden="true"></span>
+                    </p>
+                </a>
+            `).join('');
+        }
+
+        function renderNav(cards) {
+            document.getElementById('nav-submenu').innerHTML = cards.map(c => `
+                <li class="main-menu__submenu-li">
+                    <a class="main-menu__submenu-link" href="${c.link}">${c.title}</a>
+                </li>
+            `).join('');
+        }
+
+        function renderMembers(cards) {
+            const container = document.getElementById('members-container');
+            const html = cards.filter(c => c.members && c.members.length > 0).map(c => `
+                <div class="members-section">
+                    <h3 class="members-section__title">Integrantes</h3>
+                    <p class="members-section__ca-name">${c.type}: ${c.title}</p>
+                    <div class="members-grid">
+                        ${c.members.map(m => `
+                            <div class="member-card">
+                                ${m.photo
+                                    ? `<img class="member-card__photo" src="${m.photo}" alt="${m.name}">`
+                                    : `<div class="member-card__photo-placeholder">👤</div>`
+                                }
+                                <div class="member-card__info">
+                                    <div class="member-card__name">${m.name || '—'}</div>
+                                    <div class="member-card__role">${m.role || ''}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        }
+
+        function applyHeroSlides(slides) {
+            (slides || []).forEach((s, i) => {
+                const el = document.getElementById('slide-' + i);
+                if (el && s.bg) el.style.backgroundImage = `url('${s.bg}')`;
+            });
+        }
+
+        function applyContent(data) {
+            document.getElementById('header-logo').src = data.header.logo;
+            document.getElementById('hero-logo').src   = data.hero.logo;
+            applyHeroSlides(data.hero.slides);
+            document.getElementById('section-title').textContent = data.section.title;
+            renderCards(data.section.cards);
+            renderNav(data.section.cards);
+            renderMembers(data.section.cards);
+            document.getElementById('footer-title').textContent   = data.footer.title;
+            document.getElementById('footer-address').textContent = data.footer.address;
+            document.getElementById('footer-contact').textContent = data.footer.contact;
+            document.getElementById('footer-logo-feca').src = data.footer.logoFeca;
+            document.getElementById('footer-logo-ujed').src = data.footer.logoUjed;
+        }
+
+        async function loadContent() {
+            // 1. Try the server API
+            try {
+                const res = await fetch('/api/content', { signal: AbortSignal.timeout(2000) });
+                if (res.ok) { applyContent(await res.json()); return; }
+            } catch { /* server not running */ }
+
+            // 2. Fallback: check localStorage (saved by admin without server)
+            const local = localStorage.getItem('ca_feca_content');
+            if (local) { try { applyContent(JSON.parse(local)); return; } catch { /* corrupt */ } }
+
+            // 3. Last resort: hardcoded defaults
+            applyContent(DEFAULT_CONTENT);
+        }
+
+        loadContent();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administración — Cuerpos Académicos FECA</title>
+    <style>
+        /* ─── Reset ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; color: #2d3748; }
+        input, textarea, select { font-family: inherit; font-size: 0.88rem; }
+        /* Iconos Unicode (fontello no disponible localmente) */
+        [class^="icon-"]::before, [class*=" icon-"]::before { font-family: inherit !important; }
+        .icon-down-open-mini::before  { content: ' ▾' !important; }
+        .icon-right-open-mini::before { content: ' ›' !important; font-weight: 700; }
+        .icon-user::before            { content: ' ◉' !important; }
+
+        /* ─── Login overlay ─── */
+        #login-overlay {
+            position: fixed; inset: 0;
+            background: linear-gradient(135deg, #1a3a5c 0%, #0a1e38 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10000; transition: opacity 0.4s;
+        }
+        #login-overlay.hidden { opacity: 0; pointer-events: none; }
+        .login-card {
+            background: #fff; border-radius: 16px;
+            padding: 2.5rem 2rem; width: 100%; max-width: 400px;
+            box-shadow: 0 24px 60px rgba(0,0,0,.45);
+        }
+        .login-card__logo {
+            display: block; margin: 0 auto 1.5rem; max-width: 170px;
+        }
+        .login-card h1 {
+            text-align: center; font-size: 1.2rem; color: #1a3a5c; margin-bottom: 0.2rem;
+        }
+        .login-card__sub {
+            text-align: center; font-size: 0.78rem; color: #a0aec0; margin-bottom: 1.8rem;
+        }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block; font-size: 0.72rem; font-weight: 700;
+            color: #4a5568; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: .06em;
+        }
+        .form-group input {
+            width: 100%; padding: 0.65rem 0.85rem;
+            border: 1.5px solid #e2e8f0; border-radius: 8px; outline: none; transition: border-color .2s;
+        }
+        .form-group input:focus { border-color: #00bbef; }
+        #login-error { color: #e53e3e; font-size: 0.8rem; margin-bottom: 0.7rem; min-height: 1.1em; text-align: center; }
+        .btn-primary {
+            width: 100%; padding: 0.72rem; background: #1a3a5c; color: #fff;
+            border: none; border-radius: 8px; font-size: 0.92rem; font-weight: 700;
+            cursor: pointer; transition: background .2s;
+        }
+        .btn-primary:hover { background: #00bbef; }
+        .divider {
+            display: flex; align-items: center; gap: 1rem;
+            margin: 1.1rem 0; color: #a0aec0; font-size: 0.75rem;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+        /* Acceso temporal — botón principal (destacado) */
+        .btn-temp-primary {
+            width: 100%; padding: 1rem; margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00bbef 0%, #0090c4 100%);
+            color: #fff; border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+            box-shadow: 0 4px 14px rgba(0,187,239,.4);
+            transition: transform .15s, box-shadow .2s;
+        }
+        .btn-temp-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,187,239,.55);
+        }
+        .btn-temp-primary:active { transform: translateY(0); }
+        .btn-temp__badge {
+            background: rgba(255,255,255,.25); color: #fff; font-size: 0.68rem;
+            padding: 0.15rem 0.5rem; border-radius: 20px; font-weight: 800;
+            letter-spacing: .05em;
+        }
+        .temp-note {
+            text-align: center; font-size: 0.72rem; color: #a0aec0;
+            margin-bottom: 1.4rem; line-height: 1.5;
+        }
+        /* Credenciales — botón secundario */
+        .btn-temp {
+            width: 100%; padding: 0.68rem; background: #f7fafc; color: #4a5568;
+            border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem;
+            font-weight: 600; cursor: pointer; transition: all .2s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-temp:hover { background: #ebf8ff; border-color: #00bbef; color: #1a3a5c; }
+        /* Sección de credenciales colapsable */
+        .credentials-toggle {
+            text-align: center; font-size: 0.78rem; color: #718096;
+            cursor: pointer; margin-bottom: 0.9rem; user-select: none;
+            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+        }
+        .credentials-toggle:hover { color: #1a3a5c; }
+        .credentials-toggle .arrow { transition: transform .25s; display: inline-block; }
+        .credentials-toggle.open .arrow { transform: rotate(180deg); }
+        .credentials-form {
+            overflow: hidden; max-height: 0;
+            transition: max-height .35s ease, opacity .3s;
+            opacity: 0;
+        }
+        .credentials-form.open { max-height: 300px; opacity: 1; }
+
+        /* ─── Admin layout ─── */
+        #admin-panel { display: none; }
+        #admin-panel.visible { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 250px; background: #1a3a5c; color: #fff;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh; overflow-y: auto;
+        }
+        .sidebar__header { padding: 1.3rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+        .sidebar__header img { max-width: 130px; margin-bottom: 0.5rem; }
+        .sidebar__header p { font-size: 0.72rem; color: rgba(255,255,255,.45); }
+        .sidebar__nav { flex: 1; padding: 0.8rem 0; }
+        .sidebar__nav a {
+            display: flex; align-items: center; gap: 0.65rem;
+            padding: 0.65rem 1.1rem; color: rgba(255,255,255,.7);
+            text-decoration: none; font-size: 0.84rem; transition: all .2s;
+            border-left: 3px solid transparent;
+        }
+        .sidebar__nav a:hover, .sidebar__nav a.active {
+            background: rgba(255,255,255,.08); color: #fff; border-left-color: #00bbef;
+        }
+        .sidebar__nav a .nav-icon { font-size: 1rem; width: 1.3rem; text-align: center; }
+        .sidebar__footer { padding: 1rem 1.1rem; border-top: 1px solid rgba(255,255,255,.1); }
+        .btn-logout {
+            width: 100%; padding: 0.55rem; background: transparent; color: rgba(255,255,255,.55);
+            border: 1px solid rgba(255,255,255,.2); border-radius: 6px;
+            cursor: pointer; font-size: 0.8rem; transition: all .2s;
+        }
+        .btn-logout:hover { background: rgba(255,0,0,.15); color: #fc8181; }
+
+        /* ─── Main content ─── */
+        .main-content { flex: 1; padding: 1.8rem; overflow-y: auto; max-width: 860px; }
+        .top-bar-admin {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            margin-bottom: 1.6rem; gap: 1rem;
+        }
+        .page-title { font-size: 1.35rem; font-weight: 700; color: #1a3a5c; }
+        .page-subtitle { font-size: 0.78rem; color: #a0aec0; margin-top: 0.2rem; }
+        .action-bar { display: flex; gap: 0.6rem; flex-shrink: 0; }
+        .btn-preview {
+            padding: 0.55rem 1.1rem; background: #fff; color: #1a3a5c;
+            border: 1.5px solid #1a3a5c; border-radius: 7px; font-size: 0.82rem;
+            font-weight: 600; cursor: pointer; text-decoration: none; transition: all .2s;
+        }
+        .btn-preview:hover { background: #ebf8ff; }
+        .btn-save {
+            padding: 0.55rem 1.3rem; background: #1a3a5c; color: #fff;
+            border: none; border-radius: 7px; font-size: 0.82rem; font-weight: 700;
+            cursor: pointer; transition: background .2s; min-width: 130px;
+            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+        }
+        .btn-save:hover { background: #00bbef; }
+        .btn-save:disabled { background: #a0aec0; cursor: default; }
+
+        /* ─── Sections ─── */
+        .section-panel { display: none; }
+        .section-panel.active { display: block; }
+
+        /* ─── Editor cards ─── */
+        .editor-card {
+            background: #fff; border-radius: 12px; padding: 1.4rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,.08); margin-bottom: 1.2rem;
+        }
+        .editor-card__head {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.1rem; padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .editor-card__title { font-size: 0.95rem; font-weight: 700; color: #1a3a5c; }
+        .editor-card__badge {
+            background: #bee3f8; color: #2b6cb0; font-size: 0.68rem; font-weight: 800;
+            padding: 0.18rem 0.5rem; border-radius: 20px; text-transform: uppercase; letter-spacing: .06em;
+        }
+        .editor-card__badge.green { background: #c6f6d5; color: #276749; }
+        .editor-card__badge.orange { background: #feebc8; color: #9c4221; }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+        .field-group { margin-bottom: 0.9rem; }
+        .field-group label {
+            display: block; font-size: 0.7rem; font-weight: 700; color: #4a5568;
+            margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: .06em;
+        }
+        .field-group input, .field-group textarea, .field-group select {
+            width: 100%; padding: 0.58rem 0.75rem;
+            border: 1.5px solid #e2e8f0; border-radius: 7px; outline: none; transition: border-color .2s;
+        }
+        .field-group input:focus, .field-group textarea:focus, .field-group select:focus { border-color: #00bbef; }
+        .field-group textarea { resize: vertical; min-height: 72px; }
+
+        /* ─── Image upload box ─── */
+        .img-upload-wrap { position: relative; }
+        .img-upload-box {
+            border: 2px dashed #cbd5e0; border-radius: 10px;
+            overflow: hidden; cursor: pointer; transition: border-color .2s, background .2s;
+            position: relative; background: #f7fafc;
+        }
+        .img-upload-box:hover { border-color: #00bbef; background: #ebf8ff; }
+        .img-upload-box input[type="file"] {
+            position: absolute; inset: 0; opacity: 0; cursor: pointer;
+            width: 100%; height: 100%; z-index: 2;
+        }
+        .img-upload-box__img {
+            width: 100%; display: block; max-height: 180px;
+            object-fit: cover; border-radius: 8px 8px 0 0;
+        }
+        .img-upload-box__overlay {
+            background: rgba(0,0,0,.45); color: #fff;
+            font-size: 0.75rem; font-weight: 600; text-align: center;
+            padding: 0.55rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+        }
+        /* When no image yet: show a placeholder area */
+        .img-upload-box--empty .img-upload-box__overlay {
+            min-height: 110px; flex-direction: column; gap: 0.3rem;
+            background: transparent; color: #a0aec0; font-weight: 500;
+        }
+        .img-upload-box--empty .img-upload-box__overlay .icon { font-size: 2rem; }
+        .img-filename {
+            font-size: 0.7rem; color: #718096; margin-top: 0.4rem;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+
+        /* ─── Hero slide upload row ─── */
+        .slides-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        @media (max-width: 640px) { .slides-grid { grid-template-columns: 1fr; } }
+
+        /* ─── Members ─── */
+        .members-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .members-header__title { font-size: 0.88rem; font-weight: 700; color: #2d3748; }
+        .btn-add-member {
+            padding: 0.42rem 0.9rem; background: #ebf8ff; color: #1a3a5c;
+            border: 1.5px solid #bee3f8; border-radius: 7px; font-size: 0.78rem;
+            font-weight: 700; cursor: pointer; transition: all .2s;
+        }
+        .btn-add-member:hover { background: #00bbef; color: #fff; border-color: #00bbef; }
+        .members-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .member-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr auto;
+            gap: 0.75rem; align-items: center;
+            background: #f7fafc; border: 1.5px solid #e2e8f0;
+            border-radius: 10px; padding: 0.75rem;
+        }
+        .member-item__photo-box {
+            width: 80px; height: 80px; border-radius: 8px; overflow: hidden;
+            border: 2px dashed #cbd5e0; position: relative; background: #e2e8f0;
+            cursor: pointer; flex-shrink: 0;
+        }
+        .member-item__photo-box input[type="file"] {
+            position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2;
+        }
+        .member-item__photo {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .member-item__photo-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: #a0aec0; background: #edf2f7;
+        }
+        .member-item__photo-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,.4);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 0.65rem; font-weight: 700;
+            opacity: 0; transition: opacity .2s; text-align: center;
+        }
+        .member-item__photo-box:hover .member-item__photo-overlay { opacity: 1; }
+        .btn-remove-member {
+            background: #fff5f5; color: #e53e3e; border: 1.5px solid #fed7d7;
+            border-radius: 7px; padding: 0.5rem 0.7rem; cursor: pointer;
+            font-size: 0.8rem; font-weight: 700; transition: all .2s; align-self: center;
+        }
+        .btn-remove-member:hover { background: #e53e3e; color: #fff; border-color: #e53e3e; }
+        .members-empty {
+            text-align: center; color: #a0aec0; font-size: 0.82rem;
+            padding: 1.5rem; background: #f7fafc; border-radius: 8px;
+            border: 1.5px dashed #e2e8f0;
+        }
+
+        /* ─── Toast ─── */
+        #toast {
+            position: fixed; bottom: 2rem; right: 2rem;
+            background: #2d3748; color: #fff; padding: 0.7rem 1.3rem;
+            border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+            transform: translateY(80px); opacity: 0;
+            transition: all .3s; z-index: 99999; pointer-events: none;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; }
+        #toast.success { background: #276749; }
+        #toast.error   { background: #c53030; }
+
+        /* ─── Spinner ─── */
+        .spinner {
+            display: inline-block; width: 15px; height: 15px;
+            border: 2.5px solid rgba(255,255,255,.3);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════ LOGIN OVERLAY ════════════════ -->
+<div id="login-overlay">
+    <div class="login-card">
+        <img class="login-card__logo"
+             src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-ca-feca_uKF0.png"
+             alt="Cuerpos Académicos FECA"
+             onerror="this.style.display='none'">
+        <h1>Panel de Administración</h1>
+        <p class="login-card__sub">Cuerpos Académicos FECA · UJED</p>
+
+        <!-- ── Acceso temporal (principal por ahora) ── -->
+        <button class="btn-temp-primary" id="btn-temp-access">
+            ⚡ Ingresar al panel
+            <span class="btn-temp__badge">ACCESO TEMPORAL</span>
+        </button>
+        <p class="temp-note">Sin base de datos · Sesión válida por 24 horas</p>
+
+        <!-- ── Credenciales (colapsado, para cuando haya DB) ── -->
+        <div class="divider">o</div>
+        <div class="credentials-toggle" id="credentials-toggle">
+            <span>Iniciar sesión con usuario y contraseña</span>
+            <span class="arrow">▾</span>
+        </div>
+
+        <div class="credentials-form" id="credentials-form">
+            <div class="form-group">
+                <label for="login-user">Usuario</label>
+                <input id="login-user" type="text" placeholder="admin" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="login-pass">Contraseña</label>
+                <input id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <div id="login-error"></div>
+            <button class="btn-primary" id="btn-login">Iniciar sesión</button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════ ADMIN PANEL ════════════════ -->
+<div id="admin-panel">
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <img src="Cuerpos%20Acad%C3%A9micos%20FECA_files/logo-ca-feca_uKF0.png"
+                 alt="FECA" onerror="this.style.display='none'">
+            <p>Panel de Administración</p>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="#" class="active" data-section="general">
+                <span class="nav-icon">🏠</span> General
+            </a>
+            <a href="#" data-section="hero">
+                <span class="nav-icon">🖼</span> Sección Hero
+            </a>
+            <a href="#" data-section="card-0">
+                <span class="nav-icon">📋</span> Cuerpo Acad. 1
+            </a>
+            <a href="#" data-section="card-1">
+                <span class="nav-icon">📋</span> Cuerpo Acad. 2
+            </a>
+            <a href="#" data-section="card-2">
+                <span class="nav-icon">📋</span> Cuerpo Acad. 3
+            </a>
+            <a href="#" data-section="footer">
+                <span class="nav-icon">📌</span> Pie de página
+            </a>
+        </nav>
+        <div class="sidebar__footer">
+            <button class="btn-logout" id="btn-logout">Cerrar sesión</button>
+        </div>
+    </aside>
+
+    <div class="main-content">
+        <div class="top-bar-admin">
+            <div>
+                <div class="page-title" id="panel-title">Configuración General</div>
+                <div class="page-subtitle">Modifica el contenido y guarda los cambios</div>
+            </div>
+            <div class="action-bar">
+                <a href="index.html" target="_blank" class="btn-preview">👁 Vista previa</a>
+                <button class="btn-save" id="btn-save">💾 Guardar cambios</button>
+            </div>
+        </div>
+
+        <!-- ── General ── -->
+        <div class="section-panel active" id="panel-general">
+            <div class="editor-card">
+                <div class="editor-card__head">
+                    <span class="editor-card__title">Encabezado del sitio</span>
+                    <span class="editor-card__badge">Header</span>
+                </div>
+                <div class="two-col">
+                    <div class="field-group">
+                        <label>Logo principal (encabezado)</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-header-logo">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'header-logo','header.logo')">
+                            <img id="img-header-logo" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🖼</span>
+                                Haz clic para cambiar
+                            </div>
+                        </div>
+                        <div id="fn-header-logo" class="img-filename"></div>
+                    </div>
+                    <div>
+                        <div class="field-group">
+                            <label>Título del sitio</label>
+                            <input type="text" id="site-title" value="Cuerpos Académicos FECA">
+                        </div>
+                        <div class="field-group">
+                            <label>Título de la sección de tarjetas</label>
+                            <input type="text" id="section-title-input" value="Nuestros Cuerpos Académicos">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Hero ── -->
+        <div class="section-panel" id="panel-hero">
+            <div class="editor-card">
+                <div class="editor-card__head">
+                    <span class="editor-card__title">Logo central (portada)</span>
+                    <span class="editor-card__badge">Hero</span>
+                </div>
+                <div style="max-width:300px">
+                    <div class="field-group">
+                        <label>Logo del hero</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-hero-logo">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'hero-logo','hero.logo')">
+                            <img id="img-hero-logo" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🖼</span>Haz clic para cambiar
+                            </div>
+                        </div>
+                        <div id="fn-hero-logo" class="img-filename"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-card">
+                <div class="editor-card__head">
+                    <span class="editor-card__title">Imágenes de fondo (banners del hero)</span>
+                    <span class="editor-card__badge green">Fondos</span>
+                </div>
+                <p style="font-size:.78rem;color:#718096;margin-bottom:1rem">
+                    Estas 3 imágenes rotan como fondo animado del banner principal.
+                    Se recomienda proporción 16:9 o panorámica.
+                </p>
+                <div class="slides-grid">
+                    <div class="field-group">
+                        <label>Fondo 1</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-slide-0">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'slide-0','hero.slides.0.bg')">
+                            <img id="img-slide-0" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🌄</span>Fondo 1
+                            </div>
+                        </div>
+                        <div id="fn-slide-0" class="img-filename"></div>
+                    </div>
+                    <div class="field-group">
+                        <label>Fondo 2</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-slide-1">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'slide-1','hero.slides.1.bg')">
+                            <img id="img-slide-1" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🌄</span>Fondo 2
+                            </div>
+                        </div>
+                        <div id="fn-slide-1" class="img-filename"></div>
+                    </div>
+                    <div class="field-group">
+                        <label>Fondo 3</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-slide-2">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'slide-2','hero.slides.2.bg')">
+                            <img id="img-slide-2" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🌄</span>Fondo 3
+                            </div>
+                        </div>
+                        <div id="fn-slide-2" class="img-filename"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Cards (0,1,2) generadas por JS ── -->
+        <div class="section-panel" id="panel-card-0"></div>
+        <div class="section-panel" id="panel-card-1"></div>
+        <div class="section-panel" id="panel-card-2"></div>
+
+        <!-- ── Footer ── -->
+        <div class="section-panel" id="panel-footer">
+            <div class="editor-card">
+                <div class="editor-card__head">
+                    <span class="editor-card__title">Pie de página</span>
+                    <span class="editor-card__badge">Footer</span>
+                </div>
+                <div class="field-group">
+                    <label>Título</label>
+                    <input type="text" id="footer-title-input" value="Cuerpos Académicos FECA-UJED">
+                </div>
+                <div class="field-group">
+                    <label>Dirección</label>
+                    <input type="text" id="footer-address-input"
+                           value="Fanny Anitúa y Privada de la Loza s/n. C.P. 34000. Durango, Dgo., México.">
+                </div>
+                <div class="field-group">
+                    <label>Teléfono y correo</label>
+                    <input type="text" id="footer-contact-input"
+                           value="Tel: (618) 812 21 33 y 812 21 66. Correo electrónico: conirico@ujed.mx">
+                </div>
+                <div class="two-col" style="margin-top:0.5rem">
+                    <div class="field-group">
+                        <label>Logo FECA</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-footer-feca">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'footer-feca','footer.logoFeca')">
+                            <img id="img-footer-feca" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🖼</span>Haz clic para cambiar
+                            </div>
+                        </div>
+                        <div id="fn-footer-feca" class="img-filename"></div>
+                    </div>
+                    <div class="field-group">
+                        <label>Logo UJED</label>
+                        <div class="img-upload-box img-upload-box--empty" id="box-footer-ujed">
+                            <input type="file" accept="image/*"
+                                   onchange="handleImageUpload(this,'footer-ujed','footer.logoUjed')">
+                            <img id="img-footer-ujed" class="img-upload-box__img" style="display:none" alt="">
+                            <div class="img-upload-box__overlay">
+                                <span class="icon">🖼</span>Haz clic para cambiar
+                            </div>
+                        </div>
+                        <div id="fn-footer-ujed" class="img-filename"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  State
+// ═══════════════════════════════════════════════
+const IMG = "Cuerpos%20Acad%C3%A9micos%20FECA_files/";
+
+const DEFAULT_CONTENT = {
+    header: { logo: IMG + "logo-ca-feca_uKF0.png", title: "Cuerpos Académicos FECA" },
+    hero: {
+        logo: IMG + "logo-ca_uKF0.png",
+        slides: [{ bg: "" }, { bg: "" }, { bg: "" }]
+    },
+    section: {
+        title: "Nuestros Cuerpos Académicos",
+        cards: [
+            { id: 1, type: "CAC", title: "Gestión y desarrollo de las organizaciones",
+              image: IMG + "gestion-y-desarrollo-de-las-organizaciones-5e45bcebe2d2_uKF0.jpg",
+              link: "https://cadepfeca.ujed.mx/cuerpos-academicos/gestion-y-desarrollo-de-las-organizaciones",
+              linkText: "Ver cuerpo académico", members: [] },
+            { id: 2, type: "CAC", title: "Procesos de cambio y desarrollo de las instituciones",
+              image: IMG + "procesos-de-cambio-y-desarrollo-de-las-instituciones_uKF0.jpg",
+              link: "https://cadepfeca.ujed.mx/cuerpos-academicos/procesos-de-cambio-y-desarrollo-de-las-instituciones",
+              linkText: "Ver cuerpo académico", members: [] },
+            { id: 3, type: "CAC", title: "Estudios empresariales desde la perspectiva económico administrativa",
+              image: IMG + "estudios-empresariales-desde-la-perspectiva-economico-a_uKF0.jpg",
+              link: "https://cadepfeca.ujed.mx/cuerpos-academicos/estudios-empresariales-desde-la-perspectiva-economico-administrativa",
+              linkText: "Ver cuerpo académico", members: [] }
+        ]
+    },
+    footer: {
+        title: "Cuerpos Académicos FECA-UJED",
+        address: "Fanny Anitúa y Privada de la Loza s/n. C.P. 34000. Durango, Dgo., México.",
+        contact: "Tel: (618) 812 21 33 y 812 21 66. Correo electrónico: conirico@ujed.mx",
+        logoFeca: IMG + "logo-feca_uKF0.png",
+        logoUjed: IMG + "logo-ujed.2025_uKF0.png"
+    }
+};
+
+// Tracks the current path for every image field (key = dotted path like 'header.logo')
+const paths = {};
+// Tracks File objects pending upload
+const pendingFiles = {};
+// Members data per card index
+const membersData = { 0: [], 1: [], 2: [] };
+// Member photo files pending upload: key = "ci_mi" (card index, member index)
+const memberPendingFiles = {};
+
+const TOKEN_KEY = 'ca_feca_token';
+const TEMP_KEY  = 'ca_feca_temp_access';
+const TEMP_TTL  = 24 * 60 * 60 * 1000;
+
+// ═══════════════════════════════════════════════
+//  Auth
+// ═══════════════════════════════════════════════
+function isAuthenticated() {
+    if (localStorage.getItem(TOKEN_KEY)) return true;
+    const t = parseInt(localStorage.getItem(TEMP_KEY) || '0', 10);
+    return t > Date.now();
+}
+
+function authHeaders() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    return token ? { Authorization: 'Bearer ' + token } : {};
+}
+
+document.getElementById('btn-login').addEventListener('click', async () => {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = '';
+    if (!user || !pass) { errEl.textContent = 'Ingresa usuario y contraseña.'; return; }
+
+    const btn = document.getElementById('btn-login');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Verificando...';
+    try {
+        const res  = await fetch('/api/auth/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, password: pass })
+        });
+        const data = await res.json();
+        if (res.ok && data.token) { localStorage.setItem(TOKEN_KEY, data.token); showAdmin(); }
+        else { errEl.textContent = data.message || 'Credenciales incorrectas.'; }
+    } catch {
+        errEl.textContent = 'No se pudo conectar. Usa Acceso temporal.';
+    } finally {
+        btn.disabled = false; btn.textContent = 'Iniciar sesión';
+    }
+});
+
+document.getElementById('login-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+});
+
+document.getElementById('btn-temp-access').addEventListener('click', () => {
+    localStorage.setItem(TEMP_KEY, String(Date.now() + TEMP_TTL));
+    showAdmin();
+    toast('Acceso temporal activado (24 h)', 'success');
+});
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TEMP_KEY);
+    document.getElementById('login-overlay').classList.remove('hidden');
+    document.getElementById('admin-panel').classList.remove('visible');
+});
+
+function showAdmin() {
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('admin-panel').classList.add('visible');
+    initCardPanels();
+    loadContentIntoForm();
+}
+
+// ═══════════════════════════════════════════════
+//  Navigation
+// ═══════════════════════════════════════════════
+const LABELS = {
+    general: 'Configuración General', hero: 'Sección Hero',
+    'card-0': 'Cuerpo Académico 1', 'card-1': 'Cuerpo Académico 2',
+    'card-2': 'Cuerpo Académico 3', footer: 'Pie de página'
+};
+document.querySelectorAll('.sidebar__nav a').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const s = link.dataset.section;
+        document.querySelectorAll('.sidebar__nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('panel-' + s).classList.add('active');
+        document.getElementById('panel-title').textContent = LABELS[s] || s;
+    });
+});
+
+// ═══════════════════════════════════════════════
+//  Image upload boxes — generic handler
+// ═══════════════════════════════════════════════
+function handleImageUpload(input, imgId, pathKey) {
+    const file = input.files[0];
+    if (!file) return;
+    pendingFiles[pathKey] = file;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        setBoxImage(imgId, e.target.result, file.name);
+        paths[pathKey] = null; // will be resolved on save after upload
+    };
+    reader.readAsDataURL(file);
+}
+
+function setBoxImage(imgId, src, filename) {
+    const img = document.getElementById('img-' + imgId);
+    const box = document.getElementById('box-' + imgId);
+    const fn  = document.getElementById('fn-' + imgId);
+    if (!img || !box) return;
+
+    img.src = src;
+    img.style.display = 'block';
+    box.classList.remove('img-upload-box--empty');
+    // Update overlay text
+    const overlay = box.querySelector('.img-upload-box__overlay');
+    if (overlay) {
+        overlay.innerHTML = '📷 Haz clic para cambiar';
+        overlay.style.minHeight = '';
+    }
+    if (fn) fn.textContent = filename || basename(src);
+}
+
+function basename(p) {
+    return decodeURIComponent(p).split('/').pop().split('\\').pop();
+}
+
+// ═══════════════════════════════════════════════
+//  Card panels (generated dynamically)
+// ═══════════════════════════════════════════════
+function initCardPanels() {
+    [0, 1, 2].forEach(ci => {
+        const panel = document.getElementById('panel-card-' + ci);
+        if (panel.dataset.built) return;
+        panel.dataset.built = '1';
+        panel.innerHTML = buildCardPanel(ci);
+    });
+}
+
+function buildCardPanel(ci) {
+    const n = ci + 1;
+    return `
+    <div class="editor-card">
+        <div class="editor-card__head">
+            <span class="editor-card__title">Información del Cuerpo Académico ${n}</span>
+            <span class="editor-card__badge">Tarjeta ${n}</span>
+        </div>
+        <div class="two-col">
+            <div class="field-group">
+                <label>Tipo de reconocimiento</label>
+                <select id="card-${ci}-type">
+                    <option value="CAC">CAC — Consolidado</option>
+                    <option value="CAEC">CAEC — En consolidación</option>
+                    <option value="CAEF">CAEF — En formación</option>
+                </select>
+            </div>
+            <div class="field-group">
+                <label>Texto del enlace</label>
+                <input type="text" id="card-${ci}-linktext" value="Ver cuerpo académico">
+            </div>
+        </div>
+        <div class="field-group">
+            <label>Nombre del cuerpo académico</label>
+            <input type="text" id="card-${ci}-title" value="">
+        </div>
+        <div class="field-group">
+            <label>URL de destino</label>
+            <input type="url" id="card-${ci}-link" value="">
+        </div>
+    </div>
+
+    <div class="editor-card">
+        <div class="editor-card__head">
+            <span class="editor-card__title">Imagen principal de la tarjeta</span>
+            <span class="editor-card__badge green">Imagen</span>
+        </div>
+        <div class="img-upload-box img-upload-box--empty" id="box-card-${ci}">
+            <input type="file" accept="image/*"
+                   onchange="handleImageUpload(this,'card-${ci}','section.cards.${ci}.image')">
+            <img id="img-card-${ci}" class="img-upload-box__img" style="display:none" alt="">
+            <div class="img-upload-box__overlay">
+                <span class="icon">🖼</span>
+                Haz clic para subir la imagen del cuerpo académico
+            </div>
+        </div>
+        <div id="fn-card-${ci}" class="img-filename"></div>
+    </div>
+
+    <div class="editor-card">
+        <div class="editor-card__head">
+            <span class="editor-card__title">Integrantes del Cuerpo Académico ${n}</span>
+            <span class="editor-card__badge orange">Integrantes</span>
+        </div>
+        <div class="members-header">
+            <span class="members-header__title">Fotografías y datos de los integrantes</span>
+            <button class="btn-add-member" onclick="addMember(${ci})">+ Agregar integrante</button>
+        </div>
+        <div class="members-list" id="members-list-${ci}">
+            <div class="members-empty">Aún no hay integrantes. Haz clic en "Agregar integrante".</div>
+        </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+//  Members management
+// ═══════════════════════════════════════════════
+function renderMembersList(ci) {
+    const list = document.getElementById('members-list-' + ci);
+    if (!list) return;
+    const members = membersData[ci];
+    if (!members || members.length === 0) {
+        list.innerHTML = '<div class="members-empty">Aún no hay integrantes. Haz clic en "Agregar integrante".</div>';
+        return;
+    }
+    list.innerHTML = members.map((m, mi) => `
+        <div class="member-item" id="member-${ci}-${mi}">
+            <div class="member-item__photo-box" id="member-box-${ci}-${mi}">
+                <input type="file" accept="image/*"
+                       onchange="handleMemberPhoto(this, ${ci}, ${mi})">
+                ${m.photo
+                    ? `<img class="member-item__photo" src="${m.photo}" alt="">`
+                    : `<div class="member-item__photo-placeholder">👤</div>`
+                }
+                <div class="member-item__photo-overlay">📷 Cambiar foto</div>
+            </div>
+            <div class="field-group" style="margin:0">
+                <label>Nombre completo</label>
+                <input type="text" value="${m.name || ''}"
+                       oninput="membersData[${ci}][${mi}].name = this.value"
+                       placeholder="Dr. Nombre Apellido">
+            </div>
+            <div class="field-group" style="margin:0">
+                <label>Cargo / Grado académico</label>
+                <input type="text" value="${m.role || ''}"
+                       oninput="membersData[${ci}][${mi}].role = this.value"
+                       placeholder="Responsable / Doctor en ...">
+            </div>
+            <button class="btn-remove-member" onclick="removeMember(${ci}, ${mi})">✕</button>
+        </div>
+    `).join('');
+}
+
+function addMember(ci) {
+    membersData[ci].push({ name: '', role: '', photo: '' });
+    renderMembersList(ci);
+}
+
+function removeMember(ci, mi) {
+    membersData[ci].splice(mi, 1);
+    renderMembersList(ci);
+}
+
+function handleMemberPhoto(input, ci, mi) {
+    const file = input.files[0];
+    if (!file) return;
+    const key = `member_${ci}_${mi}`;
+    memberPendingFiles[key] = file;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        membersData[ci][mi].photo = e.target.result;
+        renderMembersList(ci);
+    };
+    reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════════════
+//  Load content into form
+// ═══════════════════════════════════════════════
+async function loadContentIntoForm() {
+    let data = DEFAULT_CONTENT;
+    try {
+        const res = await fetch('/api/content', { signal: AbortSignal.timeout(2000) });
+        if (res.ok) { data = await res.json(); }
+        else { throw new Error('not ok'); }
+    } catch {
+        // Intentar desde localStorage (guardado sin servidor)
+        const local = localStorage.getItem('ca_feca_content');
+        if (local) { try { data = JSON.parse(local); } catch { /* corrupt */ } }
+    }
+
+    // ── General
+    document.getElementById('site-title').value          = data.header?.title || DEFAULT_CONTENT.header.title;
+    document.getElementById('section-title-input').value = data.section?.title || DEFAULT_CONTENT.section.title;
+
+    // ── Header logo
+    setBoxFromPath('header-logo', data.header?.logo, 'header.logo');
+
+    // ── Hero logo
+    setBoxFromPath('hero-logo', data.hero?.logo, 'hero.logo');
+
+    // ── Hero slides
+    (data.hero?.slides || DEFAULT_CONTENT.hero.slides).forEach((s, i) => {
+        if (s.bg) setBoxFromPath('slide-' + i, s.bg, `hero.slides.${i}.bg`);
+        else paths[`hero.slides.${i}.bg`] = '';
+    });
+
+    // ── Cards
+    [0, 1, 2].forEach(ci => {
+        const c = data.section?.cards?.[ci] || DEFAULT_CONTENT.section.cards[ci];
+        const sel = document.getElementById(`card-${ci}-type`);
+        if (sel) {
+            for (let o of sel.options) if (o.value === c.type) { o.selected = true; break; }
+        }
+        const titleEl = document.getElementById(`card-${ci}-title`);
+        const linkEl  = document.getElementById(`card-${ci}-link`);
+        const ltEl    = document.getElementById(`card-${ci}-linktext`);
+        if (titleEl) titleEl.value = c.title;
+        if (linkEl)  linkEl.value  = c.link;
+        if (ltEl)    ltEl.value    = c.linkText;
+        setBoxFromPath('card-' + ci, c.image, `section.cards.${ci}.image`);
+
+        // Members
+        membersData[ci] = Array.isArray(c.members) ? JSON.parse(JSON.stringify(c.members)) : [];
+        renderMembersList(ci);
+    });
+
+    // ── Footer
+    document.getElementById('footer-title-input').value   = data.footer?.title   || DEFAULT_CONTENT.footer.title;
+    document.getElementById('footer-address-input').value = data.footer?.address || DEFAULT_CONTENT.footer.address;
+    document.getElementById('footer-contact-input').value = data.footer?.contact || DEFAULT_CONTENT.footer.contact;
+    setBoxFromPath('footer-feca', data.footer?.logoFeca, 'footer.logoFeca');
+    setBoxFromPath('footer-ujed', data.footer?.logoUjed, 'footer.logoUjed');
+}
+
+function setBoxFromPath(imgId, src, pathKey) {
+    if (!src) { paths[pathKey] = ''; return; }
+    paths[pathKey] = src;
+    setBoxImage(imgId, src, basename(src));
+}
+
+// ═══════════════════════════════════════════════
+//  Save
+// ═══════════════════════════════════════════════
+document.getElementById('btn-save').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-save');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Guardando...';
+
+    // Upload pending image files
+    for (const [key, file] of Object.entries(pendingFiles)) {
+        try {
+            const fd = new FormData();
+            fd.append('image', file);
+            const res = await fetch('/api/upload', { method: 'POST', headers: authHeaders(), body: fd });
+            if (res.ok) { const d = await res.json(); paths[key] = d.path; }
+        } catch { /* keep original */ }
+    }
+
+    // Upload pending member photo files
+    for (const [key, file] of Object.entries(memberPendingFiles)) {
+        try {
+            const [,ci, mi] = key.split('_').map(Number);
+            const fd = new FormData();
+            fd.append('image', file);
+            const res = await fetch('/api/upload', { method: 'POST', headers: authHeaders(), body: fd });
+            if (res.ok) {
+                const d = await res.json();
+                if (membersData[ci]?.[mi]) membersData[ci][mi].photo = d.path;
+            }
+        } catch { /* keep base64 */ }
+    }
+
+    // Build content object
+    const content = {
+        header: {
+            logo:  paths['header.logo']  || DEFAULT_CONTENT.header.logo,
+            title: document.getElementById('site-title').value
+        },
+        hero: {
+            logo: paths['hero.logo'] || DEFAULT_CONTENT.hero.logo,
+            slides: [0, 1, 2].map(i => ({
+                bg: paths[`hero.slides.${i}.bg`] || ''
+            }))
+        },
+        section: {
+            title: document.getElementById('section-title-input').value,
+            cards: [0, 1, 2].map(ci => ({
+                id: ci + 1,
+                type:     document.getElementById(`card-${ci}-type`)?.value    || DEFAULT_CONTENT.section.cards[ci].type,
+                title:    document.getElementById(`card-${ci}-title`)?.value   || DEFAULT_CONTENT.section.cards[ci].title,
+                link:     document.getElementById(`card-${ci}-link`)?.value    || DEFAULT_CONTENT.section.cards[ci].link,
+                linkText: document.getElementById(`card-${ci}-linktext`)?.value || DEFAULT_CONTENT.section.cards[ci].linkText,
+                image:    paths[`section.cards.${ci}.image`] || DEFAULT_CONTENT.section.cards[ci].image,
+                members:  membersData[ci] || []
+            }))
+        },
+        footer: {
+            title:    document.getElementById('footer-title-input').value,
+            address:  document.getElementById('footer-address-input').value,
+            contact:  document.getElementById('footer-contact-input').value,
+            logoFeca: paths['footer.logoFeca'] || DEFAULT_CONTENT.footer.logoFeca,
+            logoUjed: paths['footer.logoUjed'] || DEFAULT_CONTENT.footer.logoUjed
+        }
+    };
+
+    try {
+        const res = await fetch('/api/content', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', ...authHeaders() },
+            body: JSON.stringify(content),
+            signal: AbortSignal.timeout(3000)
+        });
+        if (res.ok) {
+            localStorage.setItem('ca_feca_content', JSON.stringify(content));
+            toast('✓ Guardado en servidor correctamente', 'success');
+        } else {
+            toast('✗ El servidor respondió con error.', 'error');
+        }
+    } catch {
+        // Sin servidor: guardar solo en localStorage
+        localStorage.setItem('ca_feca_content', JSON.stringify(content));
+        toast('💾 Guardado localmente (sin servidor activo)', 'success');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '💾 Guardar cambios';
+    }
+});
+
+// ═══════════════════════════════════════════════
+//  Toast
+// ═══════════════════════════════════════════════
+function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + type;
+    setTimeout(() => { el.className = ''; }, 3500);
+}
+
+// ═══════════════════════════════════════════════
+//  Credentials toggle (expand/collapse)
+// ═══════════════════════════════════════════════
+document.getElementById('credentials-toggle').addEventListener('click', () => {
+    const toggle = document.getElementById('credentials-toggle');
+    const form   = document.getElementById('credentials-form');
+    toggle.classList.toggle('open');
+    form.classList.toggle('open');
+});
+
+// ═══════════════════════════════════════════════
+//  Init
+// ═══════════════════════════════════════════════
+if (isAuthenticated()) showAdmin();
+</script>
+</body>
+</html>
