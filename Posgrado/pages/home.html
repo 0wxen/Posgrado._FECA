@@ -117,12 +117,15 @@
     <div class="seccion-header">
       <span class="kicker">Proceso activo · Semestre B-2026</span>
       <h2>Convocatorias Abiertas</h2>
-      <p>Tres programas de maestría con admisión activa para el Semestre B-2026. Inicio de clases: 14 de agosto de 2026.</p>
+      <p>Tres programas de maestría con admisión activa para el Semestre B-2026.</p>
+      <p style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--rojo);background:rgba(227,19,19,0.07);padding:5px 14px;border-radius:99px;margin-top:8px;">
+        <i class="ti ti-calendar-event"></i> Inicio de clases: 14 de agosto de 2026
+      </p>
     </div>
 
     <div class="conv-grid">
 
-      <div class="conv-card">
+      <div class="conv-card" data-cierre="2026-08-14">
         <span class="conv-badge">Semestre B-2026</span>
         <h3>Maestría en Gestión Pública</h3>
         <p>Forma líderes para el desarrollo y modernización del sector público con visión estratégica e institucional. Duración 2 años, modalidad híbrida.</p>
@@ -134,7 +137,7 @@
         </div>
       </div>
 
-      <div class="conv-card">
+      <div class="conv-card" data-cierre="2026-08-14">
         <span class="conv-badge">Semestre B-2026</span>
         <h3>Maestría en Gestión de Negocios</h3>
         <p>Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Duración 2 años, modalidad híbrida.</p>
@@ -146,7 +149,7 @@
         </div>
       </div>
 
-      <div class="conv-card">
+      <div class="conv-card" data-cierre="2026-08-14">
         <span class="conv-badge">Semestre B-2026</span>
         <h3>Maestría en Estrategias Contables</h3>
         <p>Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva. Duración 14 meses, modalidad híbrida.</p>
@@ -167,6 +170,36 @@
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var hoy = new Date(); hoy.setHours(0,0,0,0);
+  var cards = document.querySelectorAll('.conv-grid .conv-card[data-cierre]');
+  var grid  = document.querySelector('.conv-grid');
+  var activas = 0;
+  cards.forEach(function (c) {
+    var cierre = new Date(c.dataset.cierre + 'T00:00:00');
+    if (cierre < hoy) {
+      c.style.display = 'none';
+    } else {
+      activas++;
+    }
+  });
+  if (!activas && grid) {
+    grid.innerHTML =
+      '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#bbb;">' +
+        '<i class="ti ti-calendar-off" style="font-size:44px;display:block;margin-bottom:10px;color:#ddd;"></i>' +
+        '<p style="font-size:15px;font-weight:600;color:#aaa;margin-bottom:4px;">No hay convocatorias activas en este momento.</p>' +
+        '<p style="font-size:13px;">Sigue pendiente de nuestras redes y del sitio para la próxima apertura.</p>' +
+      '</div>';
+    /* Actualizar el kicker y subtítulo */
+    var kicker = document.querySelector('.seccion-header .kicker');
+    if (kicker) kicker.textContent = 'Sin convocatorias activas';
+    var fechaChip = document.querySelector('.seccion-header p[style]');
+    if (fechaChip) fechaChip.style.display = 'none';
+  }
+})();
+</script>
 
 <!-- ===== NOTICIAS ===== -->
 <section class="seccion seccion-gris">

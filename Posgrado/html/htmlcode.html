@@ -252,20 +252,41 @@
       /* ===== ESTADOS DE CARGA ===== */
       .pg-loading {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 400px;
+        min-height: 420px;
+        gap: 22px;
+        padding: 40px 24px;
       }
       .pg-spinner {
-        width: 44px;
-        height: 44px;
-        border: 3px solid rgba(0, 0, 0, 0.08);
+        width: 52px;
+        height: 52px;
+        border: 3px solid rgba(0, 0, 0, 0.07);
         border-top-color: var(--rojo);
         border-radius: 50%;
-        animation: pg-spin 0.75s linear infinite;
+        animation: pg-spin 0.8s linear infinite;
+        flex-shrink: 0;
       }
       @keyframes pg-spin {
         to { transform: rotate(360deg); }
+      }
+      .pg-frase {
+        font-size: 17px;
+        font-weight: 700;
+        color: #444;
+        text-align: center;
+        max-width: 380px;
+        line-height: 1.5;
+        opacity: 1;
+        transition: opacity 0.35s ease;
+      }
+      .pg-frase-sub {
+        font-size: 12px;
+        color: #bbb;
+        text-align: center;
+        margin-top: -10px;
+        letter-spacing: .03em;
       }
       .pg-error {
         padding: 80px 40px;
@@ -3635,7 +3656,7 @@
               </span>
             </div>
             <div class="footer-contact-item">
-              <i class="ti ti-building-cog"></i>
+              <i class="ti ti-user-cog"></i>
               <span>
                 <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.06em;">Coord. Administrativa</span><br>
                 MPyDE César A. Gurrola Pérez<br>

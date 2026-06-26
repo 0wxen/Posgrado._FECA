@@ -26,7 +26,7 @@
     <div class="conv-vigentes-grid">
 
       <!-- MGP – Maestría en Gestión Pública -->
-      <div class="conv-card-vigente"
+      <div class="conv-card-vigente" data-cierre="2026-08-14"
            onclick="openConvModal({
              img:      '',
              badge:    'Semestre B-2026',
@@ -66,7 +66,7 @@
       </div>
 
       <!-- MGN – Maestría en Gestión de Negocios -->
-      <div class="conv-card-vigente"
+      <div class="conv-card-vigente" data-cierre="2026-08-14"
            onclick="openConvModal({
              img:      '',
              badge:    'Semestre B-2026',
@@ -106,7 +106,7 @@
       </div>
 
       <!-- MEC – Maestría en Estrategias Contables -->
-      <div class="conv-card-vigente"
+      <div class="conv-card-vigente" data-cierre="2026-08-14"
            onclick="openConvModal({
              img:      '',
              badge:    'Semestre B-2026',
@@ -147,91 +147,23 @@
 
     </div>
 
-    <!-- ===== CRONOGRAMA B-2026 ===== -->
+    <!-- ===== CONVOCATORIAS CERRADAS (auto-visible al vencer) ===== -->
+    <div id="conv-cerradas-section" hidden style="margin-top:44px;">
+      <div class="conv-section-title" style="margin-bottom:20px;">
+        <h3 style="color:#777;">Convocatorias Cerradas</h3>
+        <span style="background:#eee;color:#888;padding:3px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.07em;display:inline-flex;align-items:center;gap:5px;">
+          <i class="ti ti-lock" style="font-size:10px;"></i> Proceso finalizado
+        </span>
+      </div>
+      <div class="conv-vigentes-grid" id="conv-cerradas-grid"></div>
+    </div>
+
+    <!-- ===== CRONOGRAMA B-2026 (dinámico) ===== -->
     <div style="margin-top:44px; margin-bottom:16px;">
       <div class="conv-section-title" style="margin-bottom:20px;">
         <h3>Cronograma Semestre B-2026</h3>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;">
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid #2e7d32; border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:#e8f5e9;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-check" style="color:#2e7d32;font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#2e7d32;margin-bottom:2px;">Completado</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Inscripción al proceso</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">13 – 29 de mayo de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid #2e7d32; border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:#e8f5e9;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-check" style="color:#2e7d32;font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#2e7d32;margin-bottom:2px;">Completado</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Inducción al proceso</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">5 de junio de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid var(--rojo); border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:rgba(227,19,19,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-loader-2" style="color:var(--rojo);font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rojo);margin-bottom:2px;">En curso</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Curso Propedéutico</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">5 de junio – 8 de agosto de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid var(--dorado); border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:rgba(168,127,61,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-language" style="color:var(--dorado);font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dorado);margin-bottom:2px;">Próximo</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Examen de inglés</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">31 de julio de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid var(--dorado); border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:rgba(168,127,61,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-users" style="color:var(--dorado);font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dorado);margin-bottom:2px;">Próximo</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Entrevistas de admisión</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">27 – 31 de julio de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid #888; border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-mail-check" style="color:#888;font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:2px;">Pendiente</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Entrega de resultados</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">9 de agosto de 2026</div>
-          </div>
-        </div>
-
-        <div style="background:#fff; border:1px solid #eee; border-left:3px solid #888; border-radius:4px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start;">
-          <div style="width:36px;height:36px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <i class="ti ti-school" style="color:#888;font-size:18px;"></i>
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:2px;">Pendiente</div>
-            <div style="font-size:14px;font-weight:700;color:#333;">Sesión de bienvenida e inicio de clases</div>
-            <div style="font-size:12px;color:#888;margin-top:2px;">14 de agosto de 2026</div>
-          </div>
-        </div>
-
-      </div>
+      <div id="conv-crono-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;"></div>
       <p style="font-size:12px;color:#aaa;margin-top:14px;font-style:italic;">
         <i class="ti ti-alert-triangle" style="font-size:13px;color:var(--dorado);"></i>
         Las fechas están sujetas a cambios por parte de la División de Estudios de Posgrado.
@@ -330,6 +262,129 @@
 
   </div>
 </section>
+
+<script>
+(function () {
+  /* ── 1. Clasificar tarjetas vigentes / cerradas ──────────────────── */
+  var hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+
+  var vigsGrid    = document.querySelector('.conv-vigentes-grid');
+  var cerradasSec = document.getElementById('conv-cerradas-section');
+  var cerradasGrid= document.getElementById('conv-cerradas-grid');
+
+  if (vigsGrid && cerradasGrid) {
+    var cards = Array.from(vigsGrid.querySelectorAll('.conv-card-vigente'));
+    var hayCerradas = false;
+
+    cards.forEach(function (card) {
+      var cierre = card.dataset.cierre ? new Date(card.dataset.cierre + 'T00:00:00') : null;
+      var vencida = cierre && cierre < hoy;
+
+      if (vencida) {
+        hayCerradas = true;
+        card.style.opacity = '0.6';
+        card.style.cursor  = 'default';
+        card.removeAttribute('onclick');
+
+        /* Cambiar badges a "Cerrada" */
+        card.querySelectorAll('.conv-vigente-badge').forEach(function (b) {
+          b.style.background = '#aaa';
+          b.style.color      = '#fff';
+          b.style.borderColor= '#aaa';
+          b.innerHTML        = '<i class="ti ti-lock" style="font-size:7px;"></i> Cerrada';
+        });
+
+        /* Ocultar botón de ver detalles (mantener descarga) */
+        var detalleBtn = card.querySelector('.btn-sm-rojo');
+        if (detalleBtn) detalleBtn.style.display = 'none';
+
+        /* Etiqueta "CERRADA" en esquina */
+        var tag = document.createElement('div');
+        tag.style.cssText = 'position:absolute;top:10px;right:10px;background:#888;color:#fff;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:3px;pointer-events:none;';
+        tag.textContent = 'CERRADA';
+        card.style.position = 'relative';
+        card.insertBefore(tag, card.firstChild);
+
+        cerradasGrid.appendChild(card);
+      }
+    });
+
+    if (hayCerradas && cerradasSec) cerradasSec.hidden = false;
+
+    /* Si no quedan vigentes, mostrar mensaje */
+    var restantes = vigsGrid.querySelectorAll('.conv-card-vigente');
+    if (!restantes.length) {
+      var noVig = document.querySelector('.conv-section-title');
+      if (noVig) {
+        noVig.querySelector('span.conv-vigente-badge').innerHTML =
+          '<i class="ti ti-calendar-off" style="font-size:8px;"></i> Sin convocatorias activas';
+      }
+      vigsGrid.innerHTML =
+        '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:#bbb;">' +
+          '<i class="ti ti-calendar-off" style="font-size:48px;display:block;margin-bottom:12px;color:#ddd;"></i>' +
+          '<p style="font-size:15px;font-weight:600;margin-bottom:6px;color:#aaa;">No hay convocatorias vigentes por el momento.</p>' +
+          '<p style="font-size:13px;">Mantente atento a nuestras redes o contáctanos para conocer las próximas fechas.</p>' +
+        '</div>';
+    }
+  }
+
+  /* ── 2. Renderizar cronograma dinámico ───────────────────────────── */
+  var PASOS = [
+    { label:'Inscripción al proceso',              fechas:'13 – 29 de mayo de 2026',         desde:'2026-05-13', hasta:'2026-05-29', icon:'ti-clipboard-list' },
+    { label:'Inducción al proceso de admisión',    fechas:'5 de junio de 2026',              desde:'2026-06-05', hasta:'2026-06-05', icon:'ti-presentation'  },
+    { label:'Curso Propedéutico',                  fechas:'5 de junio – 8 de agosto de 2026',desde:'2026-06-05', hasta:'2026-08-08', icon:'ti-book'          },
+    { label:'Examen de inglés',                    fechas:'31 de julio de 2026',             desde:'2026-07-31', hasta:'2026-07-31', icon:'ti-language'      },
+    { label:'Entrevistas de admisión',             fechas:'27 – 31 de julio de 2026',        desde:'2026-07-27', hasta:'2026-07-31', icon:'ti-users'         },
+    { label:'Entrega de resultados',               fechas:'9 de agosto de 2026',             desde:'2026-08-09', hasta:'2026-08-09', icon:'ti-mail-check'    },
+    { label:'Sesión de bienvenida e inicio de clases', fechas:'14 de agosto de 2026',        desde:'2026-08-14', hasta:'2026-08-14', icon:'ti-school'        },
+  ];
+
+  function parseFecha(str) {
+    var d = new Date(str + 'T00:00:00');
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  /* Determinar estado de cada paso */
+  var primeraFutura = true;
+  var html = '';
+  PASOS.forEach(function (paso) {
+    var desde = parseFecha(paso.desde);
+    var hasta = parseFecha(paso.hasta);
+    var enCurso    = hoy >= desde && hoy <= hasta;
+    var completado = hasta < hoy;
+    var esSiguiente= !completado && !enCurso && primeraFutura;
+    if (esSiguiente) primeraFutura = false;
+
+    var color, bgColor, etiqueta, icono;
+    if (completado) {
+      color   = '#2e7d32'; bgColor = '#e8f5e9'; etiqueta = 'Completado'; icono = 'ti-check';
+    } else if (enCurso) {
+      color   = 'var(--rojo)'; bgColor = 'rgba(227,19,19,0.08)'; etiqueta = 'En curso'; icono = 'ti-loader-2';
+    } else if (esSiguiente) {
+      color   = 'var(--dorado)'; bgColor = 'rgba(168,127,61,0.1)'; etiqueta = 'Próximo'; icono = paso.icon;
+    } else {
+      color   = '#aaa'; bgColor = '#f5f5f5'; etiqueta = 'Pendiente'; icono = paso.icon;
+    }
+
+    html +=
+      '<div style="background:#fff;border:1px solid #eee;border-left:3px solid ' + color + ';border-radius:4px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">' +
+        '<div style="width:36px;height:36px;background:' + bgColor + ';border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+          '<i class="ti ' + icono + '" style="color:' + color + ';font-size:18px;"></i>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:' + color + ';margin-bottom:2px;">' + etiqueta + '</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#333;">' + paso.label + '</div>' +
+          '<div style="font-size:12px;color:#888;margin-top:2px;">' + paso.fechas + '</div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  var cronoGrid = document.getElementById('conv-crono-grid');
+  if (cronoGrid) cronoGrid.innerHTML = html;
+})();
+</script>
 
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">

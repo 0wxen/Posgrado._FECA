@@ -32,6 +32,14 @@ function getPageFile(pagina) {
   return PAGE_FILE_MAP[pagina] ?? pagina;
 }
 
+function registrarVisita(pageId) {
+  try {
+    var stats = JSON.parse(localStorage.getItem('dep_stats_v1') || '{}');
+    stats[pageId] = (stats[pageId] || 0) + 1;
+    localStorage.setItem('dep_stats_v1', JSON.stringify(stats));
+  } catch (_) {}
+}
+
 // Intenta PHP (con timeout de 3 s); si falla, carga el .html estático.
 async function fetchContenido(nombre) {
   if (location.port !== '8001' && location.port !== '80' && location.port !== '') {
@@ -58,16 +66,63 @@ async function fetchContenido(nombre) {
   return await r2.text();
 }
 
+var PG_FRASES = [
+  'Tu futuro académico está a un paso…',
+  'El conocimiento que buscas está en camino.',
+  'Los grandes logros requieren un poco de paciencia.',
+  'Cargando las oportunidades de tu vida.',
+  'Tu dedicación hoy construye el éxito de mañana.',
+  'La excelencia académica siempre vale la espera.',
+  'Cada segundo invertido en aprender cuenta.',
+  'Sigue soñando en grande, ya casi estamos.',
+  'El camino al éxito pasa por la preparación.',
+  'Estamos listos para acompañarte en este camino.',
+  'Tu próxima gran decisión está a punto de cargarse.',
+  'Invertir en educación es la mejor decisión que puedes tomar.',
+  'Preparando todo para ti. ¡Un momento!',
+  'Los líderes de mañana se forman hoy aquí.',
+  'La División de Posgrado FECA te abre las puertas.',
+];
+
+function pgFraseAleatoria() {
+  return PG_FRASES[Math.floor(Math.random() * PG_FRASES.length)];
+}
+
 function cargarPagina(nombre) {
   const contenido = document.getElementById('contenido');
   if (!contenido) return;
 
-  contenido.innerHTML = '<div class="pg-loading"><span class="pg-spinner"></span></div>';
+  var fraseInicial = pgFraseAleatoria();
+  contenido.innerHTML =
+    '<div class="pg-loading">' +
+      '<span class="pg-spinner"></span>' +
+      '<p class="pg-frase" id="pg-frase-txt">' + fraseInicial + '</p>' +
+      '<p class="pg-frase-sub">Un momento por favor&hellip;</p>' +
+    '</div>';
+
+  var fraseIdx = PG_FRASES.indexOf(fraseInicial);
+  var fraseTimer = setInterval(function () {
+    var el = document.getElementById('pg-frase-txt');
+    if (!el) { clearInterval(fraseTimer); return; }
+    el.style.opacity = '0';
+    setTimeout(function () {
+      var el2 = document.getElementById('pg-frase-txt');
+      if (!el2) return;
+      fraseIdx = (fraseIdx + 1) % PG_FRASES.length;
+      el2.textContent = PG_FRASES[fraseIdx];
+      el2.style.opacity = '1';
+    }, 350);
+  }, 2800);
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   fetchContenido(nombre)
     .then(html => {
+      clearInterval(fraseTimer);
       contenido.innerHTML = html;
+      // Registrar visita usando el hash actual de la URL
+      var pageId = window.location.hash.replace('#', '') || 'inicio';
+      registrarVisita(pageId);
       // Los scripts inyectados via innerHTML no se ejecutan; hay que recrearlos
       contenido.querySelectorAll('script').forEach(function (viejo) {
         var nuevo = document.createElement('script');
@@ -79,6 +134,7 @@ function cargarPagina(nombre) {
       });
     })
     .catch(() => {
+      clearInterval(fraseTimer);
       contenido.innerHTML = `
         <div class="pg-error inner">
           <p>No se pudo cargar el contenido.</p>

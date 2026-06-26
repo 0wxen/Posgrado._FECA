@@ -42,6 +42,9 @@
       <button class="admin-tab-btn" data-admin-tab="blog" role="tab">
         <i class="ti ti-news"></i> Blog
       </button>
+      <button class="admin-tab-btn" data-admin-tab="estadisticas" role="tab">
+        <i class="ti ti-chart-bar"></i> Estadísticas
+      </button>
     </div>
 
     <!-- ── Convocatorias (cartel vertical 2:3) ── -->
@@ -126,6 +129,65 @@
         </button>
       </div>
       <div class="admin-grid admin-grid-blog" id="grid-blog"></div>
+    </div>
+
+    <!-- ── Estadísticas de uso ── -->
+    <div id="admin-panel-estadisticas" class="admin-panel" hidden role="tabpanel">
+      <style>
+        .stats-kpis { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:28px; }
+        .stats-kpi { background:#fff; border:1px solid rgba(0,0,0,0.07); border-radius:8px; padding:18px 20px; }
+        .stats-kpi--top { border-left:3px solid var(--dorado); }
+        .stats-kpi-num { font-size:34px; font-weight:800; color:var(--rojo); line-height:1; }
+        .stats-kpi-lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#aaa; margin-top:5px; }
+        .stats-kpi-sub { font-size:12px; font-weight:600; color:var(--dorado); margin-top:2px; }
+        .stats-chart-wrap { background:#fff; border:1px solid rgba(0,0,0,0.07); border-radius:8px; padding:24px 28px; }
+        .stats-chart-ttl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:#aaa; margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+        .stats-bar-row { display:grid; grid-template-columns:160px 1fr 44px; align-items:center; gap:12px; padding:5px 0; }
+        .stats-bar-lbl { font-size:13px; font-weight:600; color:#444; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .stats-bar-track { height:24px; background:#f4f4f4; border-radius:4px; overflow:hidden; position:relative; }
+        .stats-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--rojo-oscuro),var(--rojo)); transition:width .7s cubic-bezier(.4,0,.2,1); min-width:4px; }
+        .stats-bar-fill--top { background:linear-gradient(90deg,var(--dorado),#c8993e); }
+        .stats-bar-num { font-size:13px; font-weight:800; color:#555; text-align:right; }
+        .stats-bar-pct { position:absolute; right:6px; top:50%; transform:translateY(-50%); font-size:10px; font-weight:700; color:rgba(255,255,255,0.85); pointer-events:none; }
+        .stats-empty { text-align:center; padding:48px 20px; color:#ccc; }
+        .stats-empty i { font-size:52px; display:block; margin-bottom:12px; color:#ddd; }
+        .stats-empty p { font-size:13px; color:#bbb; }
+        .stats-divider { height:1px; background:#f0f0f0; margin:6px 0; }
+      </style>
+
+      <div class="admin-panel-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3>Estadísticas de Uso</h3>
+          <span style="font-size:11px;font-weight:600;color:#aaa;padding:3px 8px;background:#f5f5f5;border-radius:99px;">Este dispositivo</span>
+        </div>
+        <button class="btn-sm-outline" onclick="statsReset()" style="color:#e31313;border-color:#e31313;">
+          <i class="ti ti-trash"></i> Borrar datos
+        </button>
+      </div>
+
+      <!-- KPIs -->
+      <div class="stats-kpis" id="stats-kpis">
+        <div class="stats-kpi"><div class="stats-kpi-num">—</div><div class="stats-kpi-lbl">Visitas totales</div></div>
+      </div>
+
+      <!-- Gráfico de barras -->
+      <div class="stats-chart-wrap">
+        <div class="stats-chart-ttl">
+          <i class="ti ti-chart-bar" style="font-size:14px;"></i>
+          Visitas por sección · ordenadas de mayor a menor
+        </div>
+        <div id="stats-bars">
+          <div class="stats-empty">
+            <i class="ti ti-chart-bar-off"></i>
+            <p>Sin datos todavía.<br>Navega por las secciones del sitio para que aparezcan aquí.</p>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;color:#bbb;margin-top:12px;font-style:italic;display:flex;align-items:center;gap:5px;">
+        <i class="ti ti-info-circle" style="font-size:13px;color:var(--dorado);"></i>
+        Los datos se almacenan en este navegador (localStorage). Solo reflejan visitas desde este dispositivo.
+      </p>
     </div>
 
   </div>
@@ -452,7 +514,7 @@
     document.querySelectorAll('.admin-panel').forEach(function(p) {
       p.hidden = (p.id !== 'admin-panel-' + tab);
     });
-    renderGrid(tab);
+    if (tab === 'estadisticas') { statsRender(); } else { renderGrid(tab); }
   }
 
   /* ── Construir campo del formulario ── */
@@ -578,6 +640,80 @@
     var m = document.getElementById('admin-modal');
     if (e.key === 'Escape' && m && !m.hidden) adminCerrarModal();
   });
+
+  /* ── Estadísticas ── */
+  var STATS_KEY = 'dep_stats_v1';
+  var STATS_LABELS = {
+    inicio:              'Inicio',
+    convocatorias:       'Convocatorias',
+    nosotros:            'Nosotros',
+    oferta_educativa:    'Oferta Educativa',
+    investigacion:       'Investigación',
+    comunidad:           'Comunidad',
+    contacto:            'Contacto',
+    blog:                'Blog / Noticias',
+    transparencia:       'Transparencia',
+    titulacion:          'Titulación',
+    publicaciones:       'Publicaciones',
+    cuerpos_academicos:  'Cuerpos Académicos',
+    grupos_disciplinares:'Grupos Disciplinares',
+    admin:               'Administración',
+    perfil:              'Perfil',
+  };
+
+  function statsRender() {
+    var raw  = {};
+    try { raw = JSON.parse(localStorage.getItem(STATS_KEY) || '{}'); } catch(_) {}
+    var entries = Object.entries(raw).sort(function(a,b){ return b[1]-a[1]; });
+    var total   = entries.reduce(function(s,e){ return s+e[1]; }, 0);
+    var max     = entries.length ? entries[0][1] : 1;
+    var top     = entries.length ? entries[0]    : null;
+    var secUnicas = entries.length;
+
+    var kpisEl = document.getElementById('stats-kpis');
+    if (kpisEl) {
+      kpisEl.innerHTML =
+        '<div class="stats-kpi"><div class="stats-kpi-num">' + total + '</div><div class="stats-kpi-lbl">Visitas totales</div></div>' +
+        '<div class="stats-kpi"><div class="stats-kpi-num">' + secUnicas + '</div><div class="stats-kpi-lbl">Secciones visitadas</div></div>' +
+        (top
+          ? '<div class="stats-kpi stats-kpi--top"><div class="stats-kpi-num" style="font-size:20px;line-height:1.2;">' + (STATS_LABELS[top[0]] || top[0]) + '</div><div class="stats-kpi-lbl">Más visitada</div><div class="stats-kpi-sub">' + top[1] + ' visita' + (top[1]!==1?'s':'') + '</div></div>'
+          : '');
+    }
+
+    var barsEl = document.getElementById('stats-bars');
+    if (!barsEl) return;
+    if (!entries.length) {
+      barsEl.innerHTML = '<div class="stats-empty"><i class="ti ti-chart-bar-off"></i><p>Sin datos todavía.<br>Navega por las secciones del sitio para que aparezcan aquí.</p></div>';
+      return;
+    }
+
+    var html = '';
+    entries.forEach(function(entry, idx) {
+      var key   = entry[0];
+      var val   = entry[1];
+      var label = STATS_LABELS[key] || key;
+      var pct   = Math.round((val / max) * 100);
+      var pctTotal = total ? Math.round((val / total) * 100) : 0;
+      var isTop = idx === 0;
+      if (idx > 0 && idx % 5 === 0) html += '<div class="stats-divider"></div>';
+      html +=
+        '<div class="stats-bar-row">' +
+          '<div class="stats-bar-lbl" title="' + label + '">' + label + '</div>' +
+          '<div class="stats-bar-track">' +
+            '<div class="stats-bar-fill' + (isTop?' stats-bar-fill--top':'') + '" style="width:' + pct + '%"></div>' +
+            '<span class="stats-bar-pct">' + (pct > 20 ? pctTotal + '%' : '') + '</span>' +
+          '</div>' +
+          '<div class="stats-bar-num">' + val + '</div>' +
+        '</div>';
+    });
+    barsEl.innerHTML = html;
+  }
+
+  window.statsReset = function() {
+    if (!confirm('¿Borrar todas las estadísticas de uso? Esta acción no se puede deshacer.')) return;
+    localStorage.removeItem(STATS_KEY);
+    statsRender();
+  };
 
   /* ── Inicializar ── */
   cambiarTab('convocatorias');
