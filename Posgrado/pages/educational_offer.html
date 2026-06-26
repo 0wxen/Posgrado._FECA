@@ -22,34 +22,51 @@
       </p>
     </div>
 
-    <div class="programs-grid">
+    <!-- Pestañas de filtrado -->
+    <div class="comunidad-tab-header" id="oferta-tabs" style="margin-bottom:32px;">
+      <button class="comunidad-tab-title activo" data-filtro="todos">
+        <i class="ti ti-layout-grid"></i> Todos
+      </button>
+      <button class="comunidad-tab-title" data-filtro="maestria">
+        <i class="ti ti-school"></i> Maestrías
+      </button>
+      <button class="comunidad-tab-title" data-filtro="doctorado">
+        <i class="ti ti-award"></i> Doctorado
+      </button>
+      <button class="comunidad-tab-title" data-filtro="especialidad">
+        <i class="ti ti-stethoscope"></i> Especialidad
+      </button>
+    </div>
+
+    <div class="programs-grid" id="programs-grid">
 
       <!-- DGO -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="doctorado">
         <div class="program-card-hdr">
           <span class="program-level level-doc">Doctorado</span>
+          <span class="program-pnpc"><i class="ti ti-star"></i> PNPC · CONAHCYT</span>
           <span class="program-sigla">DGO</span>
         </div>
         <div class="program-card-body">
           <h3>Doctorado en Gestión de las Organizaciones</h3>
           <p>
-            Forma investigadores y académicos con capacidad para generar
-            conocimiento científico aplicado a la gestión organizacional en
-            contextos complejos y globalizados.
+            Forma recursos humanos de alto nivel que generen alternativas de innovación y
+            desarrollo sustentable mediante investigación, diagnóstico y planeación aplicada
+            a los problemas organizacionales del entorno.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 4 años</span>
             <span class="program-tag"><i class="ti ti-building-university"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_dgo" class="btn-sm-rojo" data-page="programa_dgo"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- EAH -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="especialidad">
         <div class="program-card-hdr">
           <span class="program-level level-esp">Especialidad</span>
           <span class="program-sigla">EAH</span>
@@ -57,23 +74,23 @@
         <div class="program-card-body">
           <h3>Especialidad en Administración de Hospitales</h3>
           <p>
-            Desarrolla habilidades de gestión en el sector salud para
-            optimizar los recursos y mejorar la calidad en la atención
-            de unidades hospitalarias.
+            Prepara profesionales en técnicas administrativas para la adecuada toma de
+            decisiones en instituciones hospitalarias, dotándolos de capacidad para
+            relacionar y aprovechar los recursos del sector salud.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 1 año</span>
             <span class="program-tag"><i class="ti ti-building-hospital"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_eah" class="btn-sm-rojo" data-page="programa_eah"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- MAG -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
           <span class="program-sigla">MAG</span>
@@ -81,23 +98,23 @@
         <div class="program-card-body">
           <h3>Maestría en Auditoría Gubernamental</h3>
           <p>
-            Capacita profesionales para ejercer la auditoría en organismos
-            públicos con un enfoque de transparencia, legalidad y eficiencia
-            en el uso de recursos gubernamentales.
+            Forma maestros capacitados en la revisión de operaciones con apego a las normas
+            de auditoría gubernamental, leyes de ingresos y presupuestos de egresos de la
+            federación, verificando metas y resultados obtenidos.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-building-community"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_mag" class="btn-sm-rojo" data-page="programa_mag"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- ME -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
           <span class="program-pnpc"><i class="ti ti-star"></i> PNPC · CONAHCYT</span>
@@ -106,23 +123,23 @@
         <div class="program-card-body">
           <h3>Maestría en Economía</h3>
           <p>
-            Desarrolla competencias analíticas avanzadas para comprender
-            y resolver los desafíos económicos locales, regionales y
-            globales mediante la investigación aplicada.
+            Desarrolla habilidades en análisis económico y toma de decisiones para abordar
+            desafíos y oportunidades económicas en un mundo globalizado, promoviendo
+            la economía y el desarrollo sostenible.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-chart-line"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_me" class="btn-sm-rojo" data-page="programa_me"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- MEC -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
           <span class="program-sigla">MEC</span>
@@ -130,47 +147,48 @@
         <div class="program-card-body">
           <h3>Maestría en Estrategias Contables</h3>
           <p>
-            Especialízate en análisis financiero, planeación fiscal y
-            estrategias contables para la toma de decisiones efectiva
-            en organizaciones públicas y privadas.
+            Forma maestros integrales y altamente calificados para solucionar problemas
+            en los sectores público y privado, generando especialistas en Auditoría,
+            Fiscal, Contaduría y Finanzas.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-receipt"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_mec" class="btn-sm-rojo" data-page="programa_mec"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- MGN -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
+          <span class="program-pnpc"><i class="ti ti-award"></i> Acreditada CIEES</span>
           <span class="program-sigla">MGN</span>
         </div>
         <div class="program-card-body">
           <h3>Maestría en Gestión de Negocios</h3>
           <p>
-            Forma competencias estratégicas para liderar y transformar
-            organizaciones en entornos dinámicos, globales y altamente
-            competitivos con visión empresarial.
+            Forma maestros con conciencia global para generar soluciones creativas e
+            innovadoras que permitan el crecimiento y la competitividad, dando
+            preferencia al enfoque social y sustentable.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-briefcase"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_mgn" class="btn-sm-rojo" data-page="programa_mgn"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- MGP -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
           <span class="program-sigla">MGP</span>
@@ -178,23 +196,23 @@
         <div class="program-card-body">
           <h3>Maestría en Gestión Pública</h3>
           <p>
-            Prepara servidores públicos y gestores con capacidad de
-            análisis, diseño e implementación de políticas para impulsar
-            la modernización y el desarrollo institucional.
+            Forma maestros de alto nivel en Administración Pública que generen alternativas
+            de innovación y desarrollo sustentable mediante investigación, diagnóstico y
+            planeación en problemáticas del sector gubernamental.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-building"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_mgp" class="btn-sm-rojo" data-page="programa_mgp"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
       </div>
 
       <!-- MM -->
-      <div class="program-card">
+      <div class="program-card" data-nivel="maestria">
         <div class="program-card-hdr">
           <span class="program-level">Maestría</span>
           <span class="program-sigla">MM</span>
@@ -202,16 +220,16 @@
         <div class="program-card-body">
           <h3>Maestría en Mercadotecnia</h3>
           <p>
-            Desarrolla habilidades para diseñar, ejecutar y evaluar
-            estrategias de marketing en entornos digitales y tradicionales,
-            orientadas al posicionamiento y creación de valor.
+            Capacita en técnicas de mercadeo para hacer frente a los retos que plantean
+            los entornos, los clientes y la competencia, con énfasis en la innovación
+            y el desarrollo de productos y servicios de alto impacto.
           </p>
           <div class="program-tags">
             <span class="program-tag"><i class="ti ti-clock"></i> 2 años</span>
             <span class="program-tag"><i class="ti ti-speakerphone"></i> Presencial</span>
           </div>
           <div class="program-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-info-circle"></i> Más info</a>
+            <a href="#programa_mm" class="btn-sm-rojo" data-page="programa_mm"><i class="ti ti-info-circle"></i> Más info</a>
             <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Convocatoria</a>
           </div>
         </div>
@@ -226,6 +244,28 @@
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var tabs  = document.querySelectorAll('#oferta-tabs [data-filtro]');
+  var cards = document.querySelectorAll('#programs-grid [data-nivel]');
+  if (!tabs.length || !cards.length) return;
+
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filtro = btn.dataset.filtro;
+
+      tabs.forEach(function (b) { b.classList.remove('activo'); });
+      btn.classList.add('activo');
+
+      cards.forEach(function (card) {
+        var visible = filtro === 'todos' || card.dataset.nivel === filtro;
+        card.style.display = visible ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
 
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">

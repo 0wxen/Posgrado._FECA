@@ -26,6 +26,15 @@ const PAGE_FILE_MAP = {
   perfiles:            'profile',
   admin:               'admin',
   titulacion:          'titulacion',
+  // Páginas de detalle de cada programa
+  programa_dgo:        'program_dgo',
+  programa_eah:        'program_eah',
+  programa_mag:        'program_mag',
+  programa_me:         'program_me',
+  programa_mec:        'program_mec',
+  programa_mgn:        'program_mgn',
+  programa_mgp:        'program_mgp',
+  programa_mm:         'program_mm',
 };
 
 function getPageFile(pagina) {
