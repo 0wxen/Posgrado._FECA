@@ -25,6 +25,7 @@ const PAGE_FILE_MAP = {
   grupos_disciplinares:'disciplinary_groups',
   perfiles:            'profile',
   admin:               'admin',
+  titulacion:          'titulacion',
 };
 
 function getPageFile(pagina) {

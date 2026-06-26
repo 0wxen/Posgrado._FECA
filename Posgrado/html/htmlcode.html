@@ -58,7 +58,11 @@
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
+      }
+      .top-bar-right {
+        display: flex;
+        align-items: center;
         gap: 18px;
       }
 
@@ -2630,6 +2634,18 @@
       .topbar-login-label { display: inline; }
       @media (max-width: 480px) { .topbar-login-label { display: none; } }
 
+      /* ===== SUMA+ TOPBAR LINK ===== */
+      .topbar-suma-link {
+        display: flex;
+        align-items: center;
+        line-height: 0;
+        text-decoration: none;
+        opacity: 0.85;
+        transition: opacity 0.2s;
+      }
+      .topbar-suma-link:hover { opacity: 1; }
+      .topbar-suma-img { height: 90px; width: auto; display: block; border-radius: 2px; }
+
       /* ===== MODAL DE LOGIN ===== */
       .login-overlay {
         position: fixed;
@@ -3439,25 +3455,31 @@
     <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
       <div class="inner">
-        <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook">
-          <i class="ti ti-brand-facebook"></i>
+        <a href="https://sumafeca.ujed.mx/" target="_blank" rel="noopener"
+           class="topbar-suma-link" aria-label="Portal SUMA+ FECA">
+          <img src="../assets/img/suma-plus.png" alt="SUMA+" class="topbar-suma-img">
         </a>
-        <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter">
-          <i class="ti ti-brand-x"></i>
-        </a>
-        <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram">
-          <i class="ti ti-brand-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok">
-          <i class="ti ti-brand-tiktok"></i>
-        </a>
-        <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo electrónico">
-          <i class="ti ti-mail"></i>
-        </a>
-        <button id="btn-abrir-login" class="topbar-login-btn" aria-label="Ingresar al portal">
-          <i class="ti ti-user-circle"></i>
-          <span class="topbar-login-label">Ingresar</span>
-        </button>
+        <div class="top-bar-right">
+          <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="ti ti-brand-facebook"></i>
+          </a>
+          <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" aria-label="X / Twitter">
+            <i class="ti ti-brand-x"></i>
+          </a>
+          <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" aria-label="Instagram">
+            <i class="ti ti-brand-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" aria-label="TikTok">
+            <i class="ti ti-brand-tiktok"></i>
+          </a>
+          <a href="mailto:posgradofeca@ujed.mx" aria-label="Correo electrónico">
+            <i class="ti ti-mail"></i>
+          </a>
+          <button id="btn-abrir-login" class="topbar-login-btn" aria-label="Ingresar al portal">
+            <i class="ti ti-user-circle"></i>
+            <span class="topbar-login-label">Ingresar</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -3586,10 +3608,7 @@
             <div class="footer-col-title">Contacto</div>
             <div class="footer-contact-item">
               <i class="ti ti-map-pin"></i>
-              <span
-                >Circuito Universitario s/n, C.P. 34120<br />Durango, Dgo.,
-                México</span
-              >
+              <span>Circuito Universitario s/n, C.P. 34120<br />Durango, Dgo., México</span>
             </div>
             <div class="footer-contact-item">
               <i class="ti ti-phone"></i>
@@ -3598,6 +3617,30 @@
             <div class="footer-contact-item">
               <i class="ti ti-mail"></i>
               <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a>
+            </div>
+            <div class="footer-contact-item">
+              <i class="ti ti-school"></i>
+              <span>
+                <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.06em;">Jefe de la División</span><br>
+                Dr. Eliú J. Reyes Reyes<br>
+                <a href="mailto:jefaturaposgrado.feca@ujed.mx">jefaturaposgrado.feca@ujed.mx</a>
+              </span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="ti ti-user-check"></i>
+              <span>
+                <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.06em;">Coord. Académica</span><br>
+                Dra. María C. Sosa Álvarez<br>
+                <a href="mailto:academicaposgrado.feca@ujed.mx">academicaposgrado.feca@ujed.mx</a>
+              </span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="ti ti-building-cog"></i>
+              <span>
+                <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.06em;">Coord. Administrativa</span><br>
+                MPyDE César A. Gurrola Pérez<br>
+                <a href="mailto:adminposgrado.feca@ujed.mx">adminposgrado.feca@ujed.mx</a>
+              </span>
             </div>
           </div>
 
