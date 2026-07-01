@@ -21,7 +21,6 @@ const PAGE_FILE_MAP = {
   transparencia:       'transparency',
   convocatorias:       'announcements',
   publicaciones:       'publications',
-  cuerpos_academicos:  'academic_bodies',
   grupos_disciplinares:'disciplinary_groups',
   perfiles:            'profile',
   admin:               'admin',
