@@ -18,7 +18,7 @@ $publicaciones = fetch_public_content(['publicacion'], 6);
 <!-- ===== 3 CAJAS DE ACCIÓN ===== -->
 <div class="invest-grid">
 
-  <a class="invest-card" href="#cuerpos_academicos" data-page="cuerpos_academicos">
+  <a class="invest-card" href="https://cadepfeca.ujed.mx/cuerpos-academicos/gestion-y-desarrollo-de-las-organizaciones" target="_blank" rel="noopener">
     <i class="ti ti-users invest-card-icon"></i>
     <h2>Cuerpos Académicos</h2>
     <p>

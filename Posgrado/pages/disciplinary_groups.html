@@ -85,7 +85,7 @@
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">
   <div class="inner">
-    <a href="#cuerpos_academicos" class="pnb-prev" data-page="cuerpos_academicos">
+    <a href="https://cadepfeca.ujed.mx/cuerpos-academicos/gestion-y-desarrollo-de-las-organizaciones" class="pnb-prev" target="_blank" rel="noopener">
       <span class="pnb-arrow"><i class="ti ti-arrow-left"></i></span>
       <span class="pnb-info">
         <span class="pnb-dir">Ver</span>

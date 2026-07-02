@@ -35,7 +35,7 @@
           <i class="ti ti-flask"></i> Investigación
         </div>
         <ul>
-          <li><a href="#cuerpos_academicos" data-page="cuerpos_academicos"><i class="ti ti-users"></i> Cuerpos Académicos</a></li>
+          <li><a href="https://cadepfeca.ujed.mx/cuerpos-academicos/gestion-y-desarrollo-de-las-organizaciones" target="_blank" rel="noopener"><i class="ti ti-users"></i> Cuerpos Académicos</a></li>
           <li><a href="#grupos_disciplinares" data-page="grupos_disciplinares"><i class="ti ti-microscope"></i> Grupos Disciplinares</a></li>
           <li><a href="#publicaciones" data-page="publicaciones"><i class="ti ti-book-2"></i> Publicaciones</a></li>
         </ul>
