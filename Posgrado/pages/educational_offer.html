@@ -36,6 +36,9 @@
       <button class="comunidad-tab-title" data-filtro="especialidad">
         <i class="ti ti-stethoscope"></i> Especialidad
       </button>
+      <button class="comunidad-tab-title" data-filtro="hibrida">
+        <i class="ti ti-device-laptop"></i> Estudia de Forma Híbrida
+      </button>
     </div>
 
     <div class="programs-grid" id="programs-grid">
@@ -237,19 +240,61 @@
 
     </div>
 
-    <div class="seccion-cta">
-      <a href="#convocatorias" class="btn-link-rojo" data-page="convocatorias">
-        Ver convocatorias abiertas <i class="ti ti-arrow-right"></i>
-      </a>
+    <!-- Contenido: programas normales -->
+    <div id="oferta-cta-normal">
+      <div class="seccion-cta">
+        <a href="#convocatorias" class="btn-link-rojo" data-page="convocatorias">
+          Ver convocatorias abiertas <i class="ti ti-arrow-right"></i>
+        </a>
+      </div>
     </div>
+
+    <!-- Contenido: modalidad híbrida (oculto por defecto) -->
+    <div id="oferta-hibrida" style="display:none;">
+      <div class="directorio-grid" style="margin-bottom:32px;">
+        <div class="directorio-item">
+          <div class="directorio-icon"><i class="ti ti-building-community"></i></div>
+          <div>
+            <div class="directorio-nombre">Sesiones Presenciales</div>
+            <div class="directorio-cargo">Información próximamente disponible.</div>
+          </div>
+        </div>
+        <div class="directorio-item">
+          <div class="directorio-icon"><i class="ti ti-device-laptop"></i></div>
+          <div>
+            <div class="directorio-nombre">Sesiones Virtuales</div>
+            <div class="directorio-cargo">Información próximamente disponible.</div>
+          </div>
+        </div>
+        <div class="directorio-item">
+          <div class="directorio-icon"><i class="ti ti-calendar-event"></i></div>
+          <div>
+            <div class="directorio-nombre">Calendario y Horarios</div>
+            <div class="directorio-cargo">Información próximamente disponible.</div>
+          </div>
+        </div>
+        <div class="directorio-item">
+          <div class="directorio-icon"><i class="ti ti-wifi"></i></div>
+          <div>
+            <div class="directorio-nombre">Plataforma Digital</div>
+            <div class="directorio-cargo">Información próximamente disponible.</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#aaa;line-height:1.7;border-top:1px solid #eee;padding-top:14px;">* La modalidad híbrida combina sesiones presenciales y virtuales, alternando según la naturaleza de cada asignatura y el avance del grupo. Esto permite mantener la cercanía académica del aula cuando el contenido lo requiere, y aprovechar la flexibilidad de lo virtual cuando el proceso de aprendizaje así lo permite. De esta manera, se optimiza el tiempo del estudiante sin comprometer la calidad de la formación.</p>
+    </div>
+
   </div>
 </section>
 
 <script>
 (function () {
-  var tabs  = document.querySelectorAll('#oferta-tabs [data-filtro]');
-  var cards = document.querySelectorAll('#programs-grid [data-nivel]');
-  if (!tabs.length || !cards.length) return;
+  var tabs    = document.querySelectorAll('#oferta-tabs [data-filtro]');
+  var cards   = document.querySelectorAll('#programs-grid [data-nivel]');
+  var grid    = document.getElementById('programs-grid');
+  var hibrida = document.getElementById('oferta-hibrida');
+  var ctaNorm = document.getElementById('oferta-cta-normal');
+  if (!tabs.length) return;
 
   tabs.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -258,10 +303,20 @@
       tabs.forEach(function (b) { b.classList.remove('activo'); });
       btn.classList.add('activo');
 
-      cards.forEach(function (card) {
-        var visible = filtro === 'todos' || card.dataset.nivel === filtro;
-        card.style.display = visible ? '' : 'none';
-      });
+      if (filtro === 'hibrida') {
+        if (grid)    grid.style.display    = 'none';
+        if (ctaNorm) ctaNorm.style.display = 'none';
+        if (hibrida) hibrida.style.display = '';
+      } else {
+        if (grid)    grid.style.display    = '';
+        if (ctaNorm) ctaNorm.style.display = '';
+        if (hibrida) hibrida.style.display = 'none';
+
+        cards.forEach(function (card) {
+          var visible = filtro === 'todos' || card.dataset.nivel === filtro;
+          card.style.display = visible ? '' : 'none';
+        });
+      }
     });
   });
 })();

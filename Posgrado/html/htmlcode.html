@@ -2149,11 +2149,11 @@
       .faq-card-a a { color: var(--rojo); text-decoration: none; font-weight: 600; }
       .faq-card-a a:hover { text-decoration: underline; }
 
-      /* ===== FAQ — fondo rojo discreto (paleta oficial) ===== */
-      .seccion-faq-roja {
-        background: linear-gradient(180deg, rgba(227,19,19,0.05) 0%, rgba(149,24,35,0.03) 100%);
+      /* ===== FAQ — fondo dorado discreto (paleta oficial) ===== */
+      .seccion-faq-dorada {
+        background: linear-gradient(180deg, rgba(168,127,61,0.08) 0%, rgba(183,154,99,0.04) 100%);
       }
-      .seccion-faq-roja .faq-item { border-color: rgba(149,24,35,0.12); }
+      .seccion-faq-dorada .faq-item { border-color: rgba(168,127,61,0.18); }
 
       /* ===== UNIDADES DE APRENDIZAJE ===== */
       .ua-grid {
@@ -2344,15 +2344,35 @@
       }
       .recurso-card {
         background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-top: 3px solid transparent;
         border-radius: 4px;
         padding: 20px;
         display: flex;
         gap: 16px;
         align-items: flex-start;
         box-shadow: 0 1px 10px rgba(0,0,0,0.06);
-        transition: box-shadow 0.2s;
+        transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+        text-decoration: none;
+        color: inherit;
       }
-      .recurso-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.10); }
+      a.recurso-card { cursor: pointer; }
+      .recurso-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.12); transform: translateY(-2px); }
+      .recurso-card:has(.tipo-pdf)  { border-top-color: var(--rojo); }
+      .recurso-card:has(.tipo-doc)  { border-top-color: var(--dorado); }
+      .recurso-card:has(.tipo-link) { border-top-color: #6b7280; }
+      .recurso-destacado { margin-bottom: 14px; }
+      .recurso-info-link {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--rojo);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .recurso-card:hover .recurso-info-link { color: var(--rojo-oscuro); }
       .recurso-icon {
         width: 44px;
         height: 44px;

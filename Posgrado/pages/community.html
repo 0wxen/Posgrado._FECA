@@ -34,89 +34,98 @@
         </div>
 
         <!-- Titulación destacada -->
-        <div class="recurso-card" style="border-left:3px solid var(--rojo); background:#fff;">
+        <a class="recurso-card recurso-destacado" href="#titulacion" data-page="titulacion" style="border-left:3px solid var(--rojo); background:#fff;">
           <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-certificate"></i></div>
           <div class="recurso-info">
             <h4>Titulación por Certificación — Guía Oficial</h4>
             <p>7 pasos para concluir tu proceso de grado: pagos, documentación requerida, tiempos de tramitación y etapas finales ante la UJED y la SEP.</p>
-            <a href="#titulacion" data-page="titulacion"><i class="ti ti-arrow-right"></i> Ver guía completa</a>
+            <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver guía completa</span>
           </div>
-        </div>
+        </a>
 
         <!-- Trabajo Terminal destacado -->
-        <div class="recurso-card" style="border-left:3px solid var(--rojo); background:#fff;">
+        <a class="recurso-card recurso-destacado" href="#" style="border-left:3px solid var(--rojo); background:#fff;">
           <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-notebook"></i></div>
           <div class="recurso-info">
             <h4>Titulación por Trabajo Terminal — Guía Oficial</h4>
             <p>Requisitos, etapas y documentación necesaria para concluir tu proceso de grado mediante la modalidad de Trabajo Terminal ante la División y la UJED.</p>
-            <a href="#"><i class="ti ti-arrow-right"></i> Ver guía completa</a>
+            <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver guía completa</span>
           </div>
-        </div>
+        </a>
 
         <div class="recursos-grid">
 
-          <div class="recurso-card">
+          <a class="recurso-card" href="https://www.sipu.ujed.mx/" target="_blank" rel="noopener">
             <div class="recurso-icon tipo-link"><i class="ti ti-database"></i></div>
             <div class="recurso-info">
               <h4>Sistema de Información de Posgrado Universitario (SIPU)</h4>
               <p>Consulta expedientes, trámites y documentación académica del posgrado a través del portal institucional SIPU.</p>
-              <a href="https://www.sipu.ujed.mx/" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Ir al portal</a>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al portal</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
-            <div class="recurso-info">
-              <h4>Plan de Estudios (por programa)</h4>
-              <p>Mapa curricular con materias, créditos y semestres de cada programa.</p>
-              <a href="#oferta_educativa" data-page="oferta_educativa"><i class="ti ti-arrow-right"></i> Ver programas</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-link"><i class="ti ti-clipboard-list"></i></div>
-            <div class="recurso-info">
-              <h4>Proceso de Tutorías</h4>
-              <p>Conoce el proceso completo de tutorías académicas y descarga el formato de registro correspondiente.</p>
-              <a href="#procesos_academicos" data-page="procesos_academicos"><i class="ti ti-arrow-right"></i> Ver proceso completo</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-            <div class="recurso-info">
-              <h4>Guía para Pagados de Módulos de Asignatura</h4>
-              <p>Procedimiento e indicaciones para realizar el pago correspondiente a los módulos de asignatura de posgrado.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar guía</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
+          <a class="recurso-card" href="https://sumafeca.ujed.mx/" target="_blank" rel="noopener">
             <div class="recurso-icon tipo-link"><i class="ti ti-link"></i></div>
             <div class="recurso-info">
               <h4>Sistema Único de Monitoreo Académico (SUMA)</h4>
               <p>Consulta calificaciones, historial académico y trámites en línea a través del portal SUMA+ de la FECA.</p>
-              <a href="https://sumafeca.ujed.mx/" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Ir al portal</a>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al portal</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+          <a class="recurso-card" href="#procesos_academicos" data-page="procesos_academicos">
+            <div class="recurso-icon tipo-link"><i class="ti ti-clipboard-list"></i></div>
             <div class="recurso-info">
-              <h4>Guía para Elaboración de Tesis</h4>
-              <p>Lineamientos de formato, citas y estructura para la presentación del trabajo de grado.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar guía</a>
+              <h4>Proceso de Tutorías</h4>
+              <p>Conoce el proceso completo de tutorías académicas y descarga el formato de registro correspondiente.</p>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver proceso completo</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
+          <a class="recurso-card" href="#contacto" data-page="contacto">
             <div class="recurso-icon tipo-link"><i class="ti ti-mail"></i></div>
             <div class="recurso-info">
               <h4>Contacto con la División</h4>
               <p>¿Tienes alguna duda? Comunícate directamente con la coordinación de tu programa.</p>
-              <a href="#contacto" data-page="contacto"><i class="ti ti-arrow-right"></i> Ir a contacto</a>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ir a contacto</span>
             </div>
-          </div>
+          </a>
+
+          <a class="recurso-card" href="../assets/img/calendario.png" target="_blank" rel="noopener">
+            <div class="recurso-icon tipo-doc"><i class="ti ti-calendar-event"></i></div>
+            <div class="recurso-info">
+              <h4>Calendario Escolar 2026</h4>
+              <p>Periodos de inscripción, inicio y fin de clases, exámenes y fechas clave del ciclo escolar de posgrado.</p>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ver calendario</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="#oferta_educativa" data-page="oferta_educativa">
+            <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
+            <div class="recurso-info">
+              <h4>Plan de Estudios (por programa)</h4>
+              <p>Mapa curricular con materias, créditos y semestres de cada programa.</p>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver programas</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+            <div class="recurso-info">
+              <h4>Guía para Pagados de Módulos de Asignatura</h4>
+              <p>Procedimiento e indicaciones para realizar el pago correspondiente a los módulos de asignatura de posgrado.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar guía</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+            <div class="recurso-info">
+              <h4>Guía para Elaboración de Tesis</h4>
+              <p>Lineamientos de formato, citas y estructura para la presentación del trabajo de grado.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar guía</span>
+            </div>
+          </a>
 
         </div>
       </div><!-- /panel alumnado -->
@@ -130,106 +139,108 @@
         </div>
 
         <!-- PRODEP/SNI destacado (probando la misma posición que Alumnado) -->
-        <div class="recurso-card" style="border-left:3px solid var(--rojo); background:#fff;">
+        <a class="recurso-card recurso-destacado" href="#" target="_blank" rel="noopener" style="border-left:3px solid var(--rojo); background:#fff;">
           <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-award"></i></div>
           <div class="recurso-info">
             <h4>PRODEP / SNI</h4>
             <p>Información y enlaces relacionados con el Programa de Desarrollo Profesional Docente y el Sistema Nacional de Investigadores.</p>
-            <a href="#" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Más información</a>
+            <span class="recurso-info-link"><i class="ti ti-external-link"></i> Más información</span>
           </div>
-        </div>
+        </a>
+
+        <!-- DIPI destacado -->
+        <a class="recurso-card recurso-destacado" href="https://dipi.ujed.mx/#/" target="_blank" rel="noopener" style="border-left:3px solid var(--rojo); background:#fff;">
+          <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-link"></i></div>
+          <div class="recurso-info">
+            <h4>DIPI</h4>
+            <p>Dirección de Investigación y Posgrado Institucional de la UJED.</p>
+            <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al portal</span>
+          </div>
+        </a>
+
+        <!-- CADEP FECA destacado -->
+        <a class="recurso-card recurso-destacado" href="https://cadepfeca.ujed.mx/" target="_blank" rel="noopener" style="border-left:3px solid var(--rojo); background:#fff;">
+          <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-link"></i></div>
+          <div class="recurso-info">
+            <h4>CADEP FECA</h4>
+            <p>Centro de Actualización y Desarrollo Profesional Docente de la FECA.</p>
+            <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al portal</span>
+          </div>
+        </a>
 
         <div class="recursos-grid">
 
-          <div class="recurso-card">
+          <a class="recurso-card" href="#unidades_aprendizaje" data-page="unidades_aprendizaje">
             <div class="recurso-icon tipo-link"><i class="ti ti-books"></i></div>
             <div class="recurso-info">
               <h4>Unidades de Aprendizaje por Programa Académico</h4>
               <p>Consulta las materias de cada programa de posgrado y descarga los documentos de cada unidad de aprendizaje.</p>
-              <a href="#unidades_aprendizaje" data-page="unidades_aprendizaje"><i class="ti ti-arrow-right"></i> Ver programas</a>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver programas</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-            <div class="recurso-info">
-              <h4>Lineamientos de Evaluación</h4>
-              <p>Criterios y ponderaciones institucionales para la evaluación del aprendizaje en posgrado.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar PDF</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-            <div class="recurso-info">
-              <h4>Protocolo de Exámenes de Grado</h4>
-              <p>Procedimiento institucional para la organización y desarrollo de los exámenes de grado de posgrado.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar PDF</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
-            <div class="recurso-info">
-              <h4>Protocolo de Dirección de Tesis</h4>
-              <p>Guía para directores y codirectores sobre procedimientos de seguimiento de trabajos de grado.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-            <div class="recurso-info">
-              <h4>Reglamento de Personal Académico</h4>
-              <p>Marco normativo que regula las obligaciones, derechos y actividades del profesorado en la UJED.</p>
-              <a href="#"><i class="ti ti-download"></i> Descargar PDF</a>
-            </div>
-          </div>
-
-          <div class="recurso-card">
+          <a class="recurso-card" href="#procesos_academicos" data-page="procesos_academicos">
             <div class="recurso-icon tipo-link"><i class="ti ti-chalkboard"></i></div>
             <div class="recurso-info">
               <h4>Proceso de Impartición de Clases</h4>
               <p>Constancias, lista de asistencia y lineamientos para la impartición de clases en los programas de posgrado.</p>
-              <a href="#procesos_academicos" data-page="procesos_academicos"><i class="ti ti-arrow-right"></i> Ver proceso completo</a>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver proceso completo</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
+          <a class="recurso-card" href="#" target="_blank" rel="noopener">
             <div class="recurso-icon tipo-link"><i class="ti ti-award"></i></div>
             <div class="recurso-info">
               <h4>PRODEP / SNI</h4>
               <p>Información y enlaces relacionados con el Programa de Desarrollo Profesional Docente y el SNI.</p>
-              <a href="#" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Más información</a>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Más información</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
+          <a class="recurso-card" href="#investigacion" data-page="investigacion">
             <div class="recurso-icon tipo-link"><i class="ti ti-flask"></i></div>
             <div class="recurso-info">
               <h4>Cuerpos Académicos</h4>
               <p>Consulta los cuerpos académicos activos, sus integrantes y sus líneas de investigación.</p>
-              <a href="#investigacion" data-page="investigacion"><i class="ti ti-arrow-right"></i> Ver investigación</a>
+              <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver investigación</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-link"><i class="ti ti-link"></i></div>
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
             <div class="recurso-info">
-              <h4>DIPI</h4>
-              <p>Dirección de Investigación y Posgrado Institucional de la UJED.</p>
-              <a href="https://dipi.ujed.mx/#/" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Ir al portal</a>
+              <h4>Protocolo de Dirección de Tesis</h4>
+              <p>Guía para directores y codirectores sobre procedimientos de seguimiento de trabajos de grado.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span>
             </div>
-          </div>
+          </a>
 
-          <div class="recurso-card">
-            <div class="recurso-icon tipo-link"><i class="ti ti-link"></i></div>
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
             <div class="recurso-info">
-              <h4>CADEP FECA</h4>
-              <p>Centro de Actualización y Desarrollo Profesional Docente de la FECA.</p>
-              <a href="https://cadepfeca.ujed.mx/" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Ir al portal</a>
+              <h4>Lineamientos de Evaluación</h4>
+              <p>Criterios y ponderaciones institucionales para la evaluación del aprendizaje en posgrado.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar PDF</span>
             </div>
-          </div>
+          </a>
+
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+            <div class="recurso-info">
+              <h4>Protocolo de Exámenes de Grado</h4>
+              <p>Procedimiento institucional para la organización y desarrollo de los exámenes de grado de posgrado.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar PDF</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="#">
+            <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+            <div class="recurso-info">
+              <h4>Reglamento de Personal Académico</h4>
+              <p>Marco normativo que regula las obligaciones, derechos y actividades del profesorado en la UJED.</p>
+              <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar PDF</span>
+            </div>
+          </a>
 
         </div>
       </div><!-- /panel profesorado -->
@@ -238,8 +249,8 @@
   </div>
 </section>
 
-<!-- ===== PREGUNTAS FRECUENTES (acordeón, fondo rojo discreto) ===== -->
-<section class="seccion seccion-faq-roja">
+<!-- ===== PREGUNTAS FRECUENTES (acordeón, fondo dorado discreto) ===== -->
+<section class="seccion seccion-faq-dorada">
   <div class="inner">
     <div class="seccion-header" style="text-align:center; margin-left:auto; margin-right:auto;">
       <span class="kicker">¿Tienes dudas?</span>

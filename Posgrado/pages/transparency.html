@@ -22,63 +22,59 @@
 
     <div class="recursos-grid">
 
-      <div class="recurso-card">
+      <a class="recurso-card" href="https://www.ujed.mx" target="_blank" rel="noopener">
         <div class="recurso-icon tipo-link"><i class="ti ti-world"></i></div>
         <div class="recurso-info">
           <h4>Portal de Transparencia UJED</h4>
           <p>Accede al portal institucional de transparencia y solicitudes de información de la UJED.</p>
-          <a href="https://www.ujed.mx" target="_blank" rel="noopener">
-            <i class="ti ti-external-link"></i> Ir al portal
-          </a>
+          <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al portal</span>
         </div>
-      </div>
+      </a>
 
-      <div class="recurso-card">
-        <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-        <div class="recurso-info">
-          <h4>Plan de Desarrollo Institucional</h4>
-          <p>Documento rector con los objetivos estratégicos de la División de Estudios de Posgrado.</p>
-          <a href="#"><i class="ti ti-download"></i> Descargar</a>
-        </div>
-      </div>
-
-      <div class="recurso-card">
-        <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
-        <div class="recurso-info">
-          <h4>Presupuesto y Ejercicio del Gasto</h4>
-          <p>Información sobre el presupuesto asignado y el ejercicio del gasto de la División.</p>
-          <a href="#"><i class="ti ti-download"></i> Descargar</a>
-        </div>
-      </div>
-
-      <div class="recurso-card">
-        <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
-        <div class="recurso-info">
-          <h4>Directorio de Personal</h4>
-          <p>Listado de docentes, investigadores y personal administrativo de la División.</p>
-          <a href="#nosotros" data-page="nosotros"><i class="ti ti-arrow-right"></i> Ver directorio</a>
-        </div>
-      </div>
-
-      <div class="recurso-card">
+      <a class="recurso-card" href="https://www.ujed.mx" target="_blank" rel="noopener">
         <div class="recurso-icon tipo-link"><i class="ti ti-scale"></i></div>
         <div class="recurso-info">
           <h4>Marco Normativo</h4>
           <p>Reglamentos, estatutos y disposiciones legales que rigen a la División y a la UJED.</p>
-          <a href="https://www.ujed.mx" target="_blank" rel="noopener">
-            <i class="ti ti-external-link"></i> Ver normatividad
-          </a>
+          <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ver normatividad</span>
         </div>
-      </div>
+      </a>
 
-      <div class="recurso-card">
+      <a class="recurso-card" href="mailto:posgradofeca@ujed.mx">
         <div class="recurso-icon tipo-link"><i class="ti ti-mail"></i></div>
         <div class="recurso-info">
           <h4>Solicitudes de Acceso a la Información</h4>
           <p>Para realizar una solicitud formal de información, comunícate con la coordinación de la División.</p>
-          <a href="mailto:posgradofeca@ujed.mx"><i class="ti ti-mail"></i> Enviar solicitud</a>
+          <span class="recurso-info-link"><i class="ti ti-mail"></i> Enviar solicitud</span>
         </div>
-      </div>
+      </a>
+
+      <a class="recurso-card" href="#">
+        <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
+        <div class="recurso-info">
+          <h4>Presupuesto y Ejercicio del Gasto</h4>
+          <p>Información sobre el presupuesto asignado y el ejercicio del gasto de la División.</p>
+          <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span>
+        </div>
+      </a>
+
+      <a class="recurso-card" href="#">
+        <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+        <div class="recurso-info">
+          <h4>Plan de Desarrollo Institucional</h4>
+          <p>Documento rector con los objetivos estratégicos de la División de Estudios de Posgrado.</p>
+          <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span>
+        </div>
+      </a>
+
+      <a class="recurso-card" href="#nosotros" data-page="nosotros">
+        <div class="recurso-icon tipo-pdf"><i class="ti ti-file-type-pdf"></i></div>
+        <div class="recurso-info">
+          <h4>Directorio de Personal</h4>
+          <p>Listado de docentes, investigadores y personal administrativo de la División.</p>
+          <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver directorio</span>
+        </div>
+      </a>
 
     </div>
   </div>
