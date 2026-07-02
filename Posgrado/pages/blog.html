@@ -10,109 +10,186 @@
   </div>
 </section>
 
-<!-- ===== ENTRADA DESTACADA ===== -->
+<!-- ===== TABS ===== -->
 <section class="seccion seccion-blanca">
   <div class="inner">
-    <div class="seccion-header">
-      <span class="kicker">Lo más reciente</span>
-      <h2>Entrada Destacada</h2>
-    </div>
 
-    <div class="blog-featured">
-      <div class="blog-featured-img">
-        <img src="../assets/img/blog-destacado.jpg" alt="Entrada destacada del Blog">
+    <div data-tabs>
+      <!-- Barra de pestañas -->
+      <div class="comunidad-tab-header">
+        <button class="comunidad-tab-title activo" data-tab="noticias">
+          <i class="ti ti-news"></i> Noticias
+        </button>
+        <button class="comunidad-tab-title" data-tab="semana-eca">
+          <i class="ti ti-calendar-event"></i> Semana ECA
+        </button>
       </div>
-      <div class="blog-featured-body">
-        <span class="noticia-tag">Noticia</span>
-        <h2>Abierta la convocatoria de admisión Ciclo A-2025</h2>
-        <p>
-          La División de Estudios de Posgrado FECA UJED anuncia la apertura del proceso de
-          admisión para el ciclo escolar A-2025 en sus programas de maestría y especialidad.
-          Los interesados pueden descargar la convocatoria y consultar los requisitos de admisión.
-        </p>
-        <a href="#convocatorias" class="btn-sm-rojo" data-page="convocatorias" style="margin-top:8px;">
-          <i class="ti ti-file-text"></i> Ver convocatoria
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ===== TODAS LAS ENTRADAS ===== -->
-<section class="seccion seccion-gris">
-  <div class="inner">
-    <div class="seccion-header">
-      <span class="kicker">Archivo</span>
-      <h2>Todas las Entradas</h2>
-    </div>
+      <!-- ===== PANEL: NOTICIAS ===== -->
+      <div data-panel="noticias">
 
-    <div class="noticias-grid">
-
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Noticia</span>
-          <h3>Maestría en Economía reconocida en el PNPC-CONAHCYT</h3>
-          <p>El programa mantiene su reconocimiento dentro del Padrón Nacional de Posgrados de Calidad.</p>
-          <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+        <!-- Entrada destacada -->
+        <div class="seccion-header" style="margin-top:0;margin-bottom:28px;">
+          <span class="kicker">Lo más reciente</span>
+          <h2>Entrada Destacada</h2>
         </div>
-      </article>
 
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Evento</span>
-          <h3>Conferencia Internacional de Gestión Pública en la FECA</h3>
-          <p>La División fue sede del encuentro académico con ponentes de México, Colombia y España.</p>
-          <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+        <div class="blog-featured" style="margin-bottom:40px;">
+          <div class="blog-featured-img">
+            <img src="../assets/img/blog-destacado.jpg" alt="Entrada destacada del Blog">
+          </div>
+          <div class="blog-featured-body">
+            <span class="noticia-tag">Noticia</span>
+            <h2>Abierta la convocatoria de admisión Ciclo A-2025</h2>
+            <p>
+              La División de Estudios de Posgrado FECA UJED anuncia la apertura del proceso de
+              admisión para el ciclo escolar A-2025 en sus programas de maestría y especialidad.
+              Los interesados pueden descargar la convocatoria y consultar los requisitos de admisión.
+            </p>
+            <a href="#convocatorias" class="btn-sm-rojo" data-page="convocatorias" style="margin-top:8px;">
+              <i class="ti ti-file-text"></i> Ver convocatoria
+            </a>
+          </div>
         </div>
-      </article>
 
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Aviso</span>
-          <h3>Actualización de fechas: entrega de tesis ciclo A-2025</h3>
-          <p>Nuevas fechas para la entrega y defensa de tesis para alumnos próximos a titularse.</p>
-          <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+        <!-- Todas las entradas -->
+        <div class="seccion-header" style="margin-bottom:24px;">
+          <span class="kicker">Archivo</span>
+          <h2>Todas las Entradas</h2>
         </div>
-      </article>
 
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Investigación</span>
-          <h3>Publicación en revista indexada por docentes del Cuerpo Académico</h3>
-          <p>Investigadores del CA-FECA publican artículo sobre finanzas públicas en revista de alto impacto.</p>
-          <a href="#investigacion" class="noticia-leer" data-page="investigacion">
-            Ver publicaciones <i class="ti ti-arrow-right"></i>
-          </a>
+        <div class="noticias-grid">
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Noticia</span>
+              <h3>Maestría en Economía reconocida en el PNPC-CONAHCYT</h3>
+              <p>El programa mantiene su reconocimiento dentro del Padrón Nacional de Posgrados de Calidad.</p>
+              <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Evento</span>
+              <h3>Conferencia Internacional de Gestión Pública en la FECA</h3>
+              <p>La División fue sede del encuentro académico con ponentes de México, Colombia y España.</p>
+              <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Aviso</span>
+              <h3>Actualización de fechas: entrega de tesis ciclo A-2025</h3>
+              <p>Nuevas fechas para la entrega y defensa de tesis para alumnos próximos a titularse.</p>
+              <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Investigación</span>
+              <h3>Publicación en revista indexada por docentes del Cuerpo Académico</h3>
+              <p>Investigadores del CA-FECA publican artículo sobre finanzas públicas en revista de alto impacto.</p>
+              <a href="#investigacion" class="noticia-leer" data-page="investigacion">
+                Ver publicaciones <i class="ti ti-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Convocatoria</span>
+              <h3>Convocatoria para el Doctorado en Gestión de las Organizaciones</h3>
+              <p>La División abre proceso de admisión para el programa doctoral. Revisa requisitos y fechas.</p>
+              <a href="#convocatorias" class="noticia-leer" data-page="convocatorias">
+                Ver convocatoria <i class="ti ti-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="noticia-card">
+            <div class="noticia-img"><i class="ti ti-news"></i></div>
+            <div class="noticia-body">
+              <span class="noticia-tag">Comunidad</span>
+              <h3>Egresados distinguidos del Posgrado FECA en puestos directivos</h3>
+              <p>Reconocemos a egresados que ocupan cargos de alto impacto en el sector público y privado de Durango.</p>
+              <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+            </div>
+          </article>
+
         </div>
-      </article>
+      </div><!-- /panel noticias -->
 
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Convocatoria</span>
-          <h3>Convocatoria para el Doctorado en Gestión de las Organizaciones</h3>
-          <p>La División abre proceso de admisión para el programa doctoral. Revisa requisitos y fechas.</p>
-          <a href="#convocatorias" class="noticia-leer" data-page="convocatorias">
-            Ver convocatoria <i class="ti ti-arrow-right"></i>
-          </a>
+      <!-- ===== PANEL: SEMANA ECA ===== -->
+      <div data-panel="semana-eca" hidden>
+        <div class="seccion-header" style="margin-top:0;margin-bottom:28px;">
+          <span class="kicker">Evento Institucional · FECA UJED</span>
+          <h2>Semana ECA</h2>
+          <p>Semana de la Economía, Contaduría y Administración</p>
         </div>
-      </article>
 
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-news"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Comunidad</span>
-          <h3>Egresados distinguidos del Posgrado FECA en puestos directivos</h3>
-          <p>Reconocemos a egresados que ocupan cargos de alto impacto en el sector público y privado de Durango.</p>
-          <a href="#" class="noticia-leer">Leer más <i class="ti ti-arrow-right"></i></a>
+        <!-- Tarjeta descriptiva principal -->
+        <div style="background:linear-gradient(135deg,var(--rojo-oscuro) 0%,#6b1010 100%);border-radius:8px;padding:36px 40px;color:#fff;margin-bottom:32px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-20px;right:-20px;font-size:140px;opacity:0.06;line-height:1;pointer-events:none;">
+            <i class="ti ti-building-community"></i>
+          </div>
+          <span style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:rgba(255,255,255,0.15);color:#fff;padding:4px 12px;border-radius:99px;margin-bottom:16px;">
+            <i class="ti ti-star"></i> Evento Anual
+          </span>
+          <h3 style="font-size:26px;font-weight:800;margin:0 0 16px;color:#fff;">SEMANA ECA</h3>
+          <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.9);margin:0;max-width:700px;">
+            La Semana ECA (Semana de la Contaduría y Administración) es un espacio de encuentro que convoca
+            a todas las áreas de la FECA en torno a un objetivo común: fortalecer la formación integral del
+            profesionista más allá de lo técnico. A través de actividades culturales, artísticas y de convivencia,
+            busca reforzar aquellas competencias culturales indispensables para un desempeño profesional ético,
+            sensible y socialmente comprometido. Es, en esencia, una pausa formativa que recuerda que la
+            excelencia profesional se construye también desde la cultura, la identidad y el encuentro humano.
+          </p>
         </div>
-      </article>
 
-    </div>
+        <!-- Pilares del evento -->
+        <div class="directorio-grid" style="margin-bottom:32px;">
+          <div class="directorio-item">
+            <div class="directorio-icon"><i class="ti ti-palette"></i></div>
+            <div>
+              <div class="directorio-nombre">Actividades Culturales y Artísticas</div>
+              <div class="directorio-cargo">Expresión artística, cultura y creatividad como parte de la formación profesional integral.</div>
+            </div>
+          </div>
+          <div class="directorio-item">
+            <div class="directorio-icon"><i class="ti ti-users"></i></div>
+            <div>
+              <div class="directorio-nombre">Convivencia y Comunidad</div>
+              <div class="directorio-cargo">Espacio de encuentro entre alumnado, profesorado y egresados de todas las áreas de la FECA.</div>
+            </div>
+          </div>
+          <div class="directorio-item">
+            <div class="directorio-icon"><i class="ti ti-heart-handshake"></i></div>
+            <div>
+              <div class="directorio-nombre">Formación Ética y Social</div>
+              <div class="directorio-cargo">Refuerzo de competencias culturales para un desempeño profesional ético y socialmente comprometido.</div>
+            </div>
+          </div>
+          <div class="directorio-item">
+            <div class="directorio-icon"><i class="ti ti-building-community"></i></div>
+            <div>
+              <div class="directorio-nombre">Identidad Institucional</div>
+              <div class="directorio-cargo">Encuentro desde la cultura, la identidad y el sentido de pertenencia a la FECA UJED.</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:11px;color:#aaa;line-height:1.7;border-top:1px solid #eee;padding-top:14px;">* La información específica sobre fechas, actividades y ponentes de la próxima edición de la Semana ECA se publicará oportunamente a través de los canales oficiales de la FECA UJED.</p>
+      </div><!-- /panel semana-eca -->
+
+    </div><!-- /data-tabs -->
   </div>
 </section>
 
