@@ -53,7 +53,7 @@ $resto     = $items;
     <?php else: ?>
     <div class="blog-featured">
       <div class="blog-featured-img">
-        <img src="../assets/img/blog-destacado.jpg" alt="Entrada destacada del Blog">
+        <img src="../assets/img/blog-destacado.png" alt="Entrada destacada del Blog">
       </div>
       <div class="blog-featured-body">
         <span class="noticia-tag">Noticia</span>

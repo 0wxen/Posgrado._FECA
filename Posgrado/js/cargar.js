@@ -25,6 +25,8 @@ const PAGE_FILE_MAP = {
   perfiles:            'profile',
   admin:               'admin',
   titulacion:          'titulacion',
+  procesos_academicos: 'procesos_academicos',
+  unidades_aprendizaje: 'unidades_aprendizaje',
   // Páginas de detalle de cada programa
   programa_dgo:        'program_dgo',
   programa_eah:        'program_eah',
