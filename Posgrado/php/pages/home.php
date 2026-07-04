@@ -4,11 +4,51 @@ $noticias         = fetch_public_content(['noticia'], 3);
 $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 ?>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-inner">
+<!-- ===== HERO — banner horizontal de convocatorias a pantalla completa ===== -->
+<section class="hero" id="hero-slideshow">
 
-    <!-- Columna izquierda: texto y llamadas a la acción -->
+  <!-- Fondo: slideshow de banners de convocatorias (imagen horizontal, cubre todo el hero) -->
+  <div class="hero-slide activo"
+       style="background-image:url('../assets/img/convocatoria-a2025.png')"
+       data-conv-title="Maestría en Gestión de Negocios · Ciclo A-2025"
+       data-conv-img="../assets/img/convocatoria-a2025.png"
+       data-conv-badge="Vigente"
+       data-conv-ciclo="Ciclo A-2025"
+       data-conv-limite="Límite de registro: 31 de enero de 2025"
+       data-conv-desc="Programa orientado al desarrollo de competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Reconocido por el PNPC-CONAHCyT."
+       data-conv-registro="#"
+       data-conv-doc="#"></div>
+
+  <div class="hero-slide"
+       style="background-image:url('../assets/img/convocatoria-me.png')"
+       data-conv-title="Maestría en Economía · Ciclo A-2025"
+       data-conv-img="../assets/img/convocatoria-me.png"
+       data-conv-badge="Vigente"
+       data-conv-ciclo="Ciclo A-2025"
+       data-conv-limite="Límite de registro: 15 de enero de 2025"
+       data-conv-desc="Desarrolla competencias analíticas avanzadas para comprender y resolver los desafíos económicos regionales y nacionales. Programa PNPC."
+       data-conv-registro="#"
+       data-conv-doc="#"></div>
+
+  <!-- Velo oscuro para legibilidad del texto — clic en el fondo abre el detalle -->
+  <div class="hero-bg-overlay" title="Ver detalle de convocatoria"></div>
+
+  <!-- Barra de progreso tipo "stories" — indica y permite saltar de banner -->
+  <div class="hero-progress">
+    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+  </div>
+
+  <!-- Flechas de navegación -->
+  <button class="hero-nav-btn hero-nav-prev" aria-label="Convocatoria anterior">
+    <i class="ti ti-chevron-left"></i>
+  </button>
+  <button class="hero-nav-btn hero-nav-next" aria-label="Siguiente convocatoria">
+    <i class="ti ti-chevron-right"></i>
+  </button>
+
+  <!-- Contenido: texto y llamadas a la acción, siempre a la izquierda -->
+  <div class="hero-inner">
     <div class="hero-content">
       <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
       <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
@@ -39,51 +79,12 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
         </div>
       </div>
     </div>
-
-    <!-- Columna derecha: carrusel de imágenes de convocatorias -->
-    <div class="hero-image-panel">
-      <div class="hero-conv-carousel" id="hero-conv-carousel" title="Ver detalle de convocatoria">
-        <div class="hero-conv-slides-inner">
-          <div class="hero-conv-slide activo"
-               data-conv-title="Maestría en Gestión de Negocios · Ciclo A-2025"
-               data-conv-img="../assets/img/convocatoria-a2025.png"
-               data-conv-badge="Vigente"
-               data-conv-ciclo="Ciclo A-2025"
-               data-conv-limite="Límite de registro: 31 de enero de 2025"
-               data-conv-desc="Programa orientado al desarrollo de competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Reconocido por el PNPC-CONAHCyT."
-               data-conv-registro="#"
-               data-conv-doc="#">
-            <img src="../assets/img/convocatoria-a2025.png" alt="Convocatoria Ciclo A-2025" loading="eager">
-          </div>
-          <div class="hero-conv-slide"
-               data-conv-title="Maestría en Economía · Ciclo A-2025"
-               data-conv-img="../assets/img/convocatoria-me.png"
-               data-conv-badge="Vigente"
-               data-conv-ciclo="Ciclo A-2025"
-               data-conv-limite="Límite de registro: 15 de enero de 2025"
-               data-conv-desc="Desarrolla competencias analíticas avanzadas para comprender y resolver los desafíos económicos regionales y nacionales. Programa PNPC."
-               data-conv-registro="#"
-               data-conv-doc="#">
-            <img src="../assets/img/convocatoria-me.png" alt="Convocatoria Maestría en Economía 2025" loading="lazy">
-          </div>
-        </div>
-        <button class="hero-conv-nav-btn prev" aria-label="Convocatoria anterior">
-          <i class="ti ti-chevron-left"></i>
-        </button>
-        <button class="hero-conv-nav-btn next" aria-label="Siguiente convocatoria">
-          <i class="ti ti-chevron-right"></i>
-        </button>
-      </div>
-      <div class="hero-conv-footer">
-        <div class="hero-conv-dots">
-          <button class="hero-conv-dot activo" aria-label="Convocatoria 1"></button>
-          <button class="hero-conv-dot" aria-label="Convocatoria 2"></button>
-        </div>
-      </div>
-      <p class="hero-conv-label">Convocatoria Activa · Ciclo A-2025 · <span style="cursor:pointer;text-decoration:underline;" id="hero-conv-ver-detalle">Ver detalle</span></p>
-    </div>
-
   </div>
+
+  <!-- Insignia persistente y sutil — se mantiene igual en ambos banners -->
+  <a href="#convocatorias" class="hero-conv-cta" data-page="convocatorias">
+    <i class="ti ti-sparkles"></i> Ver Convocatorias <i class="ti ti-arrow-right"></i>
+  </a>
 </section>
 
 <!-- ===== CONVOCATORIAS ===== -->
@@ -324,27 +325,40 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
 <script>
 (function () {
-  var carousel   = document.getElementById('hero-conv-carousel');
-  var slides     = document.querySelectorAll('#hero-conv-carousel .hero-conv-slide');
-  var dots       = document.querySelectorAll('.hero-conv-dot');
-  var btnPrev    = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.prev');
-  var btnNext    = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.next');
-  var verDetalle = document.getElementById('hero-conv-ver-detalle');
+  var hero    = document.getElementById('hero-slideshow');
+  if (!hero) return;
+  var slides  = hero.querySelectorAll('.hero-slide');
+  var fills   = hero.querySelectorAll('.hero-progress-fill');
+  var bars    = hero.querySelectorAll('.hero-progress-bar');
+  var overlay = hero.querySelector('.hero-bg-overlay');
+  var btnPrev = hero.querySelector('.hero-nav-prev');
+  var btnNext = hero.querySelector('.hero-nav-next');
   if (!slides.length) return;
   var current = 0;
   var timer;
+  var DURACION = 3200;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
+    fills.forEach(function (f, i) {
+      f.classList.remove('completo', 'corriendo');
+      if (i < current) {
+        f.classList.add('completo');
+      } else if (i === current) {
+        void f.offsetWidth; // reinicia la animación
+        f.classList.add('corriendo');
+      }
+    });
+  }
 
   function goTo(idx) {
-    slides[current].classList.remove('activo');
-    dots[current].classList.remove('activo');
     current = (idx + slides.length) % slides.length;
-    slides[current].classList.add('activo');
-    dots[current].classList.add('activo');
+    render();
   }
 
   function resetTimer() {
     clearInterval(timer);
-    timer = setInterval(function () { goTo(current + 1); }, 4500);
+    timer = setInterval(function () { goTo(current + 1); }, DURACION);
   }
 
   function abrirModal() {
@@ -364,14 +378,12 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
   if (btnPrev) btnPrev.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); resetTimer(); });
   if (btnNext) btnNext.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); resetTimer(); });
-  dots.forEach(function (dot, i) {
-    dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+  bars.forEach(function (bar, i) {
+    bar.addEventListener('click', function (e) { e.stopPropagation(); goTo(i); resetTimer(); });
   });
-  if (carousel) carousel.addEventListener('click', function (e) {
-    if (!e.target.closest('.hero-conv-nav-btn')) abrirModal();
-  });
-  if (verDetalle) verDetalle.addEventListener('click', abrirModal);
+  if (overlay) overlay.addEventListener('click', abrirModal);
 
+  render();
   resetTimer();
 })();
 </script>

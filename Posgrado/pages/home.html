@@ -1,8 +1,78 @@
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-inner">
+<!-- ===== HERO — banner horizontal de convocatorias a pantalla completa ===== -->
+<section class="hero" id="hero-slideshow">
 
-    <!-- Columna izquierda: texto y llamadas a la acción -->
+  <!-- Fondo: slideshow de banners de convocatorias (imagen horizontal, cubre todo el hero) -->
+  <div class="hero-slide activo"
+       style="background-image:linear-gradient(135deg,#b71c1c 0%,#7f0000 100%)"
+       data-conv-title="Maestría en Gestión Pública · Semestre B-2026"
+       data-conv-img=""
+       data-conv-badge="Semestre B-2026"
+       data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+       data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+       data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Forma líderes para el desarrollo y modernización del sector público. Costo admisión: $4,550.00 · Materia: $2,950.00."
+       data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+       data-conv-doc="../assets/docs/Convocatoria%20MGP-B2026.pdf">
+    <div class="hero-slide-caption">
+      <i class="ti ti-building-community"></i>
+      <div class="hero-slide-caption-kicker">Semestre B-2026</div>
+      <div class="hero-slide-caption-title">Maestría en Gestión Pública</div>
+    </div>
+  </div>
+
+  <div class="hero-slide"
+       style="background-image:linear-gradient(135deg,#a87f3d 0%,#6d5227 100%)"
+       data-conv-title="Maestría en Gestión de Negocios · Semestre B-2026"
+       data-conv-img=""
+       data-conv-badge="Semestre B-2026"
+       data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+       data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+       data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos. Costo admisión: $4,550.00 · Materia: $2,950.00."
+       data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+       data-conv-doc="../assets/docs/Convocatoria%20MGN-B2026.pdf">
+    <div class="hero-slide-caption">
+      <i class="ti ti-briefcase"></i>
+      <div class="hero-slide-caption-kicker">Semestre B-2026</div>
+      <div class="hero-slide-caption-title">Maestría en Gestión de Negocios</div>
+    </div>
+  </div>
+
+  <div class="hero-slide"
+       style="background-image:linear-gradient(135deg,#1a3a5c 0%,#0d2035 100%)"
+       data-conv-title="Maestría en Estrategias Contables · Semestre B-2026"
+       data-conv-img=""
+       data-conv-badge="Semestre B-2026"
+       data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+       data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+       data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 14 meses, clases modulares. Especialización en análisis financiero y planeación fiscal para decisiones efectivas. Costo admisión: $4,550.00 · Materia: $2,950.00."
+       data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+       data-conv-doc="../assets/docs/Convocatoria%20MEC-B2026.pdf">
+    <div class="hero-slide-caption">
+      <i class="ti ti-calculator"></i>
+      <div class="hero-slide-caption-kicker">Semestre B-2026</div>
+      <div class="hero-slide-caption-title">Maestría en Estrategias Contables</div>
+    </div>
+  </div>
+
+  <!-- Velo oscuro para legibilidad del texto — clic en el fondo abre el detalle -->
+  <div class="hero-bg-overlay" title="Ver detalle de convocatoria"></div>
+
+  <!-- Barra de progreso tipo "stories" — indica y permite saltar de banner -->
+  <div class="hero-progress">
+    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+  </div>
+
+  <!-- Flechas de navegación -->
+  <button class="hero-nav-btn hero-nav-prev" aria-label="Convocatoria anterior">
+    <i class="ti ti-chevron-left"></i>
+  </button>
+  <button class="hero-nav-btn hero-nav-next" aria-label="Siguiente convocatoria">
+    <i class="ti ti-chevron-right"></i>
+  </button>
+
+  <!-- Contenido: texto y llamadas a la acción, siempre a la izquierda -->
+  <div class="hero-inner">
     <div class="hero-content">
       <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
       <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
@@ -33,82 +103,12 @@
         </div>
       </div>
     </div>
-
-    <!-- Columna derecha: carrusel de convocatorias B-2026 -->
-    <div class="hero-image-panel">
-      <div class="hero-conv-carousel" id="hero-conv-carousel" title="Ver detalle de convocatoria">
-        <div class="hero-conv-slides-inner">
-
-          <div class="hero-conv-slide activo"
-               data-conv-title="Maestría en Gestión Pública · Semestre B-2026"
-               data-conv-img=""
-               data-conv-badge="Semestre B-2026"
-               data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
-               data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
-               data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Forma líderes para el desarrollo y modernización del sector público. Costo admisión: $4,550.00 · Materia: $2,950.00."
-               data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
-               data-conv-doc="../assets/docs/Convocatoria%20MGP-B2026.pdf">
-            <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;box-sizing:border-box;background:linear-gradient(135deg,#b71c1c 0%,#7f0000 100%);">
-              <i class="ti ti-building-community" style="font-size:52px;color:rgba(255,255,255,0.25);"></i>
-              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Semestre B-2026</div>
-              <div style="font-size:19px;font-weight:800;color:#fff;text-align:center;line-height:1.25;">Maestría en<br>Gestión Pública</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.75);text-align:center;">Duración 2 años · Modalidad híbrida</div>
-            </div>
-          </div>
-
-          <div class="hero-conv-slide"
-               data-conv-title="Maestría en Gestión de Negocios · Semestre B-2026"
-               data-conv-img=""
-               data-conv-badge="Semestre B-2026"
-               data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
-               data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
-               data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos. Costo admisión: $4,550.00 · Materia: $2,950.00."
-               data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
-               data-conv-doc="../assets/docs/Convocatoria%20MGN-B2026.pdf">
-            <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;box-sizing:border-box;background:linear-gradient(135deg,#a87f3d 0%,#6d5227 100%);">
-              <i class="ti ti-briefcase" style="font-size:52px;color:rgba(255,255,255,0.25);"></i>
-              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Semestre B-2026</div>
-              <div style="font-size:19px;font-weight:800;color:#fff;text-align:center;line-height:1.25;">Maestría en<br>Gestión de Negocios</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.75);text-align:center;">Duración 2 años · Modalidad híbrida</div>
-            </div>
-          </div>
-
-          <div class="hero-conv-slide"
-               data-conv-title="Maestría en Estrategias Contables · Semestre B-2026"
-               data-conv-img=""
-               data-conv-badge="Semestre B-2026"
-               data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
-               data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
-               data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 14 meses, clases modulares. Especialización en análisis financiero y planeación fiscal para decisiones efectivas. Costo admisión: $4,550.00 · Materia: $2,950.00."
-               data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
-               data-conv-doc="../assets/docs/Convocatoria%20MEC-B2026.pdf">
-            <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;box-sizing:border-box;background:linear-gradient(135deg,#1a3a5c 0%,#0d2035 100%);">
-              <i class="ti ti-calculator" style="font-size:52px;color:rgba(255,255,255,0.25);"></i>
-              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Semestre B-2026</div>
-              <div style="font-size:19px;font-weight:800;color:#fff;text-align:center;line-height:1.25;">Maestría en<br>Estrategias Contables</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.75);text-align:center;">Duración 14 meses · Modalidad híbrida</div>
-            </div>
-          </div>
-
-        </div>
-        <button class="hero-conv-nav-btn prev" aria-label="Convocatoria anterior">
-          <i class="ti ti-chevron-left"></i>
-        </button>
-        <button class="hero-conv-nav-btn next" aria-label="Siguiente convocatoria">
-          <i class="ti ti-chevron-right"></i>
-        </button>
-      </div>
-      <div class="hero-conv-footer">
-        <div class="hero-conv-dots">
-          <button class="hero-conv-dot activo" aria-label="Convocatoria 1"></button>
-          <button class="hero-conv-dot" aria-label="Convocatoria 2"></button>
-          <button class="hero-conv-dot" aria-label="Convocatoria 3"></button>
-        </div>
-      </div>
-      <p class="hero-conv-label">Convocatorias Abiertas · Semestre B-2026 · <span style="cursor:pointer;text-decoration:underline;" id="hero-conv-ver-detalle">Ver detalle</span></p>
-    </div>
-
   </div>
+
+  <!-- Insignia persistente y sutil — se mantiene igual en los tres banners -->
+  <a href="#convocatorias" class="hero-conv-cta" data-page="convocatorias">
+    <i class="ti ti-sparkles"></i> Ver Convocatorias <i class="ti ti-arrow-right"></i>
+  </a>
 </section>
 
 <!-- ===== CONVOCATORIAS ===== -->
@@ -305,27 +305,40 @@
 
 <script>
 (function () {
-  var carousel = document.getElementById('hero-conv-carousel');
-  var slides   = document.querySelectorAll('#hero-conv-carousel .hero-conv-slide');
-  var dots     = document.querySelectorAll('.hero-conv-dot');
-  var btnPrev  = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.prev');
-  var btnNext  = document.querySelector('#hero-conv-carousel .hero-conv-nav-btn.next');
-  var verDetalle = document.getElementById('hero-conv-ver-detalle');
+  var hero    = document.getElementById('hero-slideshow');
+  if (!hero) return;
+  var slides  = hero.querySelectorAll('.hero-slide');
+  var fills   = hero.querySelectorAll('.hero-progress-fill');
+  var bars    = hero.querySelectorAll('.hero-progress-bar');
+  var overlay = hero.querySelector('.hero-bg-overlay');
+  var btnPrev = hero.querySelector('.hero-nav-prev');
+  var btnNext = hero.querySelector('.hero-nav-next');
   if (!slides.length) return;
   var current = 0;
   var timer;
+  var DURACION = 3200;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
+    fills.forEach(function (f, i) {
+      f.classList.remove('completo', 'corriendo');
+      if (i < current) {
+        f.classList.add('completo');
+      } else if (i === current) {
+        void f.offsetWidth; // reinicia la animación
+        f.classList.add('corriendo');
+      }
+    });
+  }
 
   function goTo(idx) {
-    slides[current].classList.remove('activo');
-    dots[current].classList.remove('activo');
     current = (idx + slides.length) % slides.length;
-    slides[current].classList.add('activo');
-    dots[current].classList.add('activo');
+    render();
   }
 
   function resetTimer() {
     clearInterval(timer);
-    timer = setInterval(function () { goTo(current + 1); }, 4500);
+    timer = setInterval(function () { goTo(current + 1); }, DURACION);
   }
 
   function abrirModal() {
@@ -345,14 +358,12 @@
 
   if (btnPrev) btnPrev.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); resetTimer(); });
   if (btnNext) btnNext.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); resetTimer(); });
-  dots.forEach(function (dot, i) {
-    dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+  bars.forEach(function (bar, i) {
+    bar.addEventListener('click', function (e) { e.stopPropagation(); goTo(i); resetTimer(); });
   });
-  if (carousel) carousel.addEventListener('click', function (e) {
-    if (!e.target.closest('.hero-conv-nav-btn')) abrirModal();
-  });
-  if (verDetalle) verDetalle.addEventListener('click', abrirModal);
+  if (overlay) overlay.addEventListener('click', abrirModal);
 
+  render();
   resetTimer();
 })();
 </script>
