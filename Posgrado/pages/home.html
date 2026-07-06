@@ -1,7 +1,10 @@
-<!-- ===== HERO — banner horizontal de convocatorias a pantalla completa ===== -->
-<section class="hero" id="hero-slideshow">
+<!--
+  ===== HERO ANTERIOR (comentado el 2026-07-06) =====
+  Slideshow a pantalla completa con texto superpuesto y velo oscuro. Se reemplazó por un
+  diseño de dos columnas (texto institucional a la izquierda, imagen contenida a la derecha)
+  porque no convencía el estilo "imagen de fondo + texto encima".
 
-  <!-- Fondo: slideshow de banners de convocatorias (imagen horizontal, cubre todo el hero) -->
+<section class="hero" id="hero-slideshow">
   <div class="hero-slide activo"
        style="background-image:linear-gradient(135deg,#b71c1c 0%,#7f0000 100%)"
        data-conv-title="Maestría en Gestión Pública · Semestre B-2026"
@@ -53,17 +56,14 @@
     </div>
   </div>
 
-  <!-- Velo oscuro para legibilidad del texto — clic en el fondo abre el detalle -->
   <div class="hero-bg-overlay" title="Ver detalle de convocatoria"></div>
 
-  <!-- Barra de progreso tipo "stories" — indica y permite saltar de banner -->
   <div class="hero-progress">
     <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
     <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
     <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
   </div>
 
-  <!-- Flechas de navegación -->
   <button class="hero-nav-btn hero-nav-prev" aria-label="Convocatoria anterior">
     <i class="ti ti-chevron-left"></i>
   </button>
@@ -71,7 +71,6 @@
     <i class="ti ti-chevron-right"></i>
   </button>
 
-  <!-- Contenido: texto y llamadas a la acción, siempre a la izquierda -->
   <div class="hero-inner">
     <div class="hero-content">
       <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
@@ -105,13 +104,174 @@
     </div>
   </div>
 
-  <!-- Insignia persistente y sutil — se mantiene igual en los tres banners -->
   <a href="#convocatorias" class="hero-conv-cta" data-page="convocatorias">
     <i class="ti ti-sparkles"></i> Ver Convocatorias <i class="ti ti-arrow-right"></i>
   </a>
 </section>
 
-<!-- ===== CONVOCATORIAS ===== -->
+  ===== FIN DEL HERO ANTERIOR =====
+-->
+
+<!-- ===== HERO (v6) — dos columnas: texto institucional + imagen contenida ===== -->
+<section class="hero-split" id="hero-inicio">
+  <div class="hero-split-inner">
+
+    <div class="hero-split-content">
+      <span class="hero-split-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+      <h1 class="hero-split-title">La herramienta para el futuro<br>que tú deseas</h1>
+      <p class="hero-split-desc">
+        Formamos líderes con excelencia académica, investigación y compromiso
+        para el desarrollo de la sociedad.
+      </p>
+      <div class="hero-split-actions">
+        <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
+          <i class="ti ti-file-text"></i> Ver Convocatorias
+        </a>
+        <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
+          Conoce más
+        </a>
+      </div>
+      <div class="hero-split-stats">
+        <div class="hero-split-stat">
+          <div class="hero-split-stat-num">5+</div>
+          <div class="hero-split-stat-label">Programas de Posgrado</div>
+        </div>
+        <div class="hero-split-stat">
+          <div class="hero-split-stat-num">25+</div>
+          <div class="hero-split-stat-label">Años de Trayectoria</div>
+        </div>
+        <div class="hero-split-stat">
+          <div class="hero-split-stat-num">PNPC</div>
+          <div class="hero-split-stat-label">Reconocimiento Nacional</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-split-visual" id="hero-split-visual">
+
+      <div class="hero-split-slide activo"
+           data-conv-title="Maestría en Gestión Pública · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Forma líderes para el desarrollo y modernización del sector público. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MGP-B2026.pdf">
+        <div class="hero-split-media" style="--tint1:#b71c1c; --tint2:#7f0000">
+          <i class="ti ti-building-community"></i>
+        </div>
+        <div class="hero-split-caption">
+          <span class="hero-split-caption-kicker">Semestre B-2026</span>
+          <span class="hero-split-caption-title">Maestría en Gestión Pública</span>
+        </div>
+      </div>
+
+      <div class="hero-split-slide"
+           data-conv-title="Maestría en Gestión de Negocios · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MGN-B2026.pdf">
+        <div class="hero-split-media" style="--tint1:#a87f3d; --tint2:#6d5227">
+          <i class="ti ti-briefcase"></i>
+        </div>
+        <div class="hero-split-caption">
+          <span class="hero-split-caption-kicker">Semestre B-2026</span>
+          <span class="hero-split-caption-title">Maestría en Gestión de Negocios</span>
+        </div>
+      </div>
+
+      <div class="hero-split-slide"
+           data-conv-title="Maestría en Estrategias Contables · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 14 meses, clases modulares. Especialización en análisis financiero y planeación fiscal para decisiones efectivas. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MEC-B2026.pdf">
+        <div class="hero-split-media" style="--tint1:#1a3a5c; --tint2:#0d2035">
+          <i class="ti ti-calculator"></i>
+        </div>
+        <div class="hero-split-caption">
+          <span class="hero-split-caption-kicker">Semestre B-2026</span>
+          <span class="hero-split-caption-title">Maestría en Estrategias Contables</span>
+        </div>
+      </div>
+
+      <button class="hero-split-nav hero-split-nav-prev" aria-label="Convocatoria anterior">
+        <i class="ti ti-chevron-left"></i>
+      </button>
+      <button class="hero-split-nav hero-split-nav-next" aria-label="Siguiente convocatoria">
+        <i class="ti ti-chevron-right"></i>
+      </button>
+
+      <div class="hero-split-dots">
+        <button class="hero-split-dot activo" data-goto="0" aria-label="Ver Maestría en Gestión Pública"></button>
+        <button class="hero-split-dot" data-goto="1" aria-label="Ver Maestría en Gestión de Negocios"></button>
+        <button class="hero-split-dot" data-goto="2" aria-label="Ver Maestría en Estrategias Contables"></button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var visual = document.getElementById('hero-split-visual');
+  if (!visual) return;
+  var slides  = visual.querySelectorAll('.hero-split-slide');
+  var dots    = visual.querySelectorAll('.hero-split-dot');
+  var btnPrev = visual.querySelector('.hero-split-nav-prev');
+  var btnNext = visual.querySelector('.hero-split-nav-next');
+  if (!slides.length) return;
+  var current = 0;
+  var timer;
+  var DURACION = 4500;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
+    dots.forEach(function (d, i) { d.classList.toggle('activo', i === current); });
+  }
+  function goTo(idx) {
+    current = (idx + slides.length) % slides.length;
+    render();
+  }
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(function () { goTo(current + 1); }, DURACION);
+  }
+
+  if (btnPrev) btnPrev.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); resetTimer(); });
+  if (btnNext) btnNext.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); resetTimer(); });
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function (e) { e.stopPropagation(); goTo(i); resetTimer(); });
+  });
+  slides.forEach(function (s) {
+    s.addEventListener('click', function () {
+      if (typeof window.openConvModal !== 'function') return;
+      window.openConvModal({
+        img:      s.dataset.convImg,
+        badge:    s.dataset.convBadge,
+        title:    s.dataset.convTitle,
+        ciclo:    s.dataset.convCiclo,
+        limite:   s.dataset.convLimite,
+        desc:     s.dataset.convDesc,
+        registro: s.dataset.convRegistro,
+        doc:      s.dataset.convDoc
+      });
+    });
+  });
+
+  render();
+  resetTimer();
+})();
+</script>
+
 <section class="seccion seccion-blanca">
   <div class="inner">
     <div class="seccion-header">
@@ -124,7 +284,6 @@
     </div>
 
     <div class="conv-grid">
-
       <div class="conv-card" data-cierre="2026-08-14">
         <span class="conv-badge">Semestre B-2026</span>
         <h3>Maestría en Gestión Pública</h3>
@@ -160,7 +319,6 @@
           <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
         </div>
       </div>
-
     </div>
 
     <div class="seccion-cta">
@@ -192,7 +350,6 @@
         '<p style="font-size:15px;font-weight:600;color:#aaa;margin-bottom:4px;">No hay convocatorias activas en este momento.</p>' +
         '<p style="font-size:13px;">Sigue pendiente de nuestras redes y del sitio para la próxima apertura.</p>' +
       '</div>';
-    /* Actualizar el kicker y subtítulo */
     var kicker = document.querySelector('.seccion-header .kicker');
     if (kicker) kicker.textContent = 'Sin convocatorias activas';
     var fechaChip = document.querySelector('.seccion-header p[style]');
@@ -200,6 +357,270 @@
   }
 })();
 </script>
+
+<!--
+  ===== DISEÑO v5 (comentado el 2026-07-06) =====
+  Banner de imágenes horizontales (carrusel) + sección de convocatorias con tarjetas oscuras
+  y contador regresivo. Se reemplazó porque se decidió volver al diseño original: hero con
+  texto institucional superpuesto + convocatorias en tarjetas simples sobre fondo blanco.
+  Se deja aquí de referencia por si se retoma más adelante.
+
+<section class="hero3" id="hero-inicio">
+  <div class="hero3-viewport" id="hero3-viewport">
+
+    [Cada slide admitía una imagen horizontal real (banner):
+         bastaba con agregar un <img class="hero3-slide-img" src="..."> dentro y quitar
+         el bloque .hero3-slide-media--placeholder.]
+    <div class="hero3-slide activo">
+      <div class="hero3-slide-media hero3-slide-media--placeholder" style="--tint1:#8a0e17; --tint2:#2b0a0a">
+        <i class="ti ti-photo"></i>
+        <span>Banner institucional — imagen horizontal próximamente</span>
+      </div>
+      <div class="hero3-slide-caption">
+        <span class="hero3-slide-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+        <h2 class="hero3-slide-title">Maestría en Gestión Pública</h2>
+      </div>
+    </div>
+
+    <div class="hero3-slide">
+      <div class="hero3-slide-media hero3-slide-media--placeholder" style="--tint1:#8a6423; --tint2:#3a2a0d">
+        <i class="ti ti-photo"></i>
+        <span>Banner institucional — imagen horizontal próximamente</span>
+      </div>
+      <div class="hero3-slide-caption">
+        <span class="hero3-slide-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+        <h2 class="hero3-slide-title">Maestría en Gestión de Negocios</h2>
+      </div>
+    </div>
+
+    <div class="hero3-slide">
+      <div class="hero3-slide-media hero3-slide-media--placeholder" style="--tint1:#1f5a8f; --tint2:#0b2439">
+        <i class="ti ti-photo"></i>
+        <span>Banner institucional — imagen horizontal próximamente</span>
+      </div>
+      <div class="hero3-slide-caption">
+        <span class="hero3-slide-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+        <h2 class="hero3-slide-title">Maestría en Estrategias Contables</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="hero3-nav hero3-nav-prev" aria-label="Banner anterior"><i class="ti ti-chevron-left"></i></button>
+  <button class="hero3-nav hero3-nav-next" aria-label="Banner siguiente"><i class="ti ti-chevron-right"></i></button>
+
+  <div class="hero3-dots">
+    <button class="hero3-dot activo" data-goto="0" aria-label="Ir al banner 1"></button>
+    <button class="hero3-dot" data-goto="1" aria-label="Ir al banner 2"></button>
+    <button class="hero3-dot" data-goto="2" aria-label="Ir al banner 3"></button>
+  </div>
+</section>
+
+<script>
+(function () {
+  var hero = document.getElementById('hero3-viewport');
+  if (!hero) return;
+  var slides = hero.querySelectorAll('.hero3-slide');
+  var dots   = document.querySelectorAll('.hero3-dots .hero3-dot');
+  var btnPrev = document.querySelector('.hero3-nav-prev');
+  var btnNext = document.querySelector('.hero3-nav-next');
+  if (!slides.length) return;
+  var current = 0;
+  var timer;
+  var DURACION = 5000;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
+    dots.forEach(function (d, i) { d.classList.toggle('activo', i === current); });
+  }
+  function goTo(idx) {
+    current = (idx + slides.length) % slides.length;
+    render();
+  }
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(function () { goTo(current + 1); }, DURACION);
+  }
+
+  if (btnPrev) btnPrev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
+  if (btnNext) btnNext.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goTo(i); resetTimer(); });
+  });
+
+  render();
+  resetTimer();
+})();
+</script>
+
+[===== CONVOCATORIAS — debajo del banner institucional =====]
+<section class="convs-section" id="hero2-convs">
+  <div class="inner">
+
+    <div class="hero2-convs-heading">
+      <span class="hero2-convs-eyebrow"><span class="dot"></span> Inscripciones abiertas · Semestre B-2026</span>
+      <h2 class="hero2-convs-title">Convocatorias Abiertas</h2>
+      <p class="hero2-convs-sub">Inicio de clases: 14 de agosto de 2026 · Curso Propedéutico: 5 de junio – 8 de agosto de 2026</p>
+    </div>
+
+    <div class="hero2-convs-track">
+
+      <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#e31313" data-cierre="2026-08-14"
+           data-conv-title="Maestría en Gestión Pública · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Forma líderes para el desarrollo y modernización del sector público. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MGP-B2026.pdf">
+        <div class="hero2-conv-top">
+          <span class="hero2-conv-icon"><i class="ti ti-building-community"></i></span>
+          <span class="hero2-conv-countdown" data-countdown></span>
+        </div>
+        <h3>Maestría en Gestión Pública</h3>
+        <p>Forma líderes para el desarrollo y modernización del sector público con visión estratégica e institucional.</p>
+        <span class="hero2-conv-meta"><i class="ti ti-clock"></i> Propedéutico: 5 jun – 8 ago 2026</span>
+        <span class="hero2-conv-footer">
+          <a href="../assets/docs/Convocatoria%20MGP-B2026.pdf" target="_blank" class="hero2-conv-btn" onclick="event.stopPropagation()">
+            <i class="ti ti-download"></i> Descargar convocatoria
+          </a>
+          <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
+        </span>
+      </div>
+
+      <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#a87f3d" data-cierre="2026-08-14"
+           data-conv-title="Maestría en Gestión de Negocios · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 2 años, clases modulares. Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MGN-B2026.pdf">
+        <div class="hero2-conv-top">
+          <span class="hero2-conv-icon"><i class="ti ti-briefcase"></i></span>
+          <span class="hero2-conv-countdown" data-countdown></span>
+        </div>
+        <h3>Maestría en Gestión de Negocios</h3>
+        <p>Desarrolla competencias estratégicas para liderar organizaciones en entornos dinámicos y globales.</p>
+        <span class="hero2-conv-meta"><i class="ti ti-clock"></i> Propedéutico: 5 jun – 8 ago 2026</span>
+        <span class="hero2-conv-footer">
+          <a href="../assets/docs/Convocatoria%20MGN-B2026.pdf" target="_blank" class="hero2-conv-btn" onclick="event.stopPropagation()">
+            <i class="ti ti-download"></i> Descargar convocatoria
+          </a>
+          <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
+        </span>
+      </div>
+
+      <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#2f6fb0" data-cierre="2026-08-14"
+           data-conv-title="Maestría en Estrategias Contables · Semestre B-2026"
+           data-conv-img=""
+           data-conv-badge="Semestre B-2026"
+           data-conv-ciclo="Semestre B-2026 · Inicio de clases: 14 de agosto de 2026"
+           data-conv-limite="Curso Propedéutico: 5 de junio – 8 de agosto de 2026"
+           data-conv-desc="Programa híbrido (viernes 17:00-22:00 h y sábados 9:00-14:00 h). Duración 14 meses, clases modulares. Especialización en análisis financiero y planeación fiscal para decisiones efectivas. Costo admisión: $4,550.00 · Materia: $2,950.00."
+           data-conv-registro="http://sumafeca.ujed.mx/publico/dep/registro_propedeutico"
+           data-conv-doc="../assets/docs/Convocatoria%20MEC-B2026.pdf">
+        <div class="hero2-conv-top">
+          <span class="hero2-conv-icon"><i class="ti ti-calculator"></i></span>
+          <span class="hero2-conv-countdown" data-countdown></span>
+        </div>
+        <h3>Maestría en Estrategias Contables</h3>
+        <p>Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva.</p>
+        <span class="hero2-conv-meta"><i class="ti ti-clock"></i> Propedéutico: 5 jun – 8 ago 2026</span>
+        <span class="hero2-conv-footer">
+          <a href="../assets/docs/Convocatoria%20MEC-B2026.pdf" target="_blank" class="hero2-conv-btn" onclick="event.stopPropagation()">
+            <i class="ti ti-download"></i> Descargar convocatoria
+          </a>
+          <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
+        </span>
+      </div>
+
+    </div>
+
+    [Identidad institucional — cierra la sección de convocatorias]
+    <div class="hero2-bottombar">
+      <div class="hero2-bottombar-row">
+        <span class="hero2-bottombar-kicker">División de Estudios de Posgrado · FECA · UJED</span>
+        <div class="hero2-bottombar-right">
+          <span class="hero2-chip"><b>5+</b> Programas</span>
+          <span class="hero2-chip"><b>25+</b> Años</span>
+          <span class="hero2-chip"><b>PNPC</b> Reconocimiento</span>
+          <a href="#nosotros" class="hero2-bottombar-more" data-page="nosotros">Conoce más <i class="ti ti-arrow-right"></i></a>
+        </div>
+      </div>
+      <p class="hero2-tagline"><i class="ti ti-quote"></i> La herramienta para el futuro que tú deseas</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var hoy    = new Date(); hoy.setHours(0,0,0,0);
+  var track  = document.querySelector('#hero2-convs .hero2-convs-track');
+  var cards  = document.querySelectorAll('#hero2-convs .hero2-conv-card[data-cierre]');
+  var activas = 0;
+  var MS_DIA = 86400000;
+
+  cards.forEach(function (c) {
+    var cierre = new Date(c.dataset.cierre + 'T00:00:00');
+    if (cierre < hoy) {
+      c.style.display = 'none';
+      return;
+    }
+    activas++;
+    // Conteo regresivo — refuerza la urgencia de inscribirse
+    var dias = Math.round((cierre - hoy) / MS_DIA);
+    var badge = c.querySelector('[data-countdown]');
+    if (badge) {
+      if (dias <= 0) {
+        badge.textContent = 'Cierra hoy';
+      } else if (dias === 1) {
+        badge.textContent = 'Cierra mañana';
+      } else {
+        badge.textContent = 'Cierra en ' + dias + ' días';
+      }
+    }
+  });
+
+  if (!activas && track) {
+    track.innerHTML =
+      '<div class="hero2-convs-empty">' +
+        '<i class="ti ti-calendar-off"></i>' +
+        '<p style="font-weight:700;color:#fff;margin-bottom:4px;">No hay convocatorias activas en este momento.</p>' +
+        '<p style="font-size:12.5px;">Sigue pendiente de nuestras redes y del sitio para la próxima apertura.</p>' +
+      '</div>';
+    var eyebrow = document.querySelector('#hero2-convs .hero2-convs-eyebrow');
+    if (eyebrow) eyebrow.innerHTML = '<i class="ti ti-calendar-off"></i> Sin convocatorias activas';
+  }
+
+  // Clic (o Enter/Espacio) en la tarjeta abre el modal de detalle ya existente
+  cards.forEach(function (c) {
+    function abrir() {
+      if (typeof window.openConvModal !== 'function') return;
+      window.openConvModal({
+        img:      c.dataset.convImg,
+        badge:    c.dataset.convBadge,
+        title:    c.dataset.convTitle,
+        ciclo:    c.dataset.convCiclo,
+        limite:   c.dataset.convLimite,
+        desc:     c.dataset.convDesc,
+        registro: c.dataset.convRegistro,
+        doc:      c.dataset.convDoc
+      });
+    }
+    c.addEventListener('click', abrir);
+    c.addEventListener('keyup', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') abrir();
+    });
+  });
+})();
+</script>
+
+  ===== FIN DEL DISEÑO v5 =====
+-->
 
 <!-- ===== NOTICIAS ===== -->
 <section class="seccion seccion-gris">
@@ -303,6 +724,7 @@
   </div>
 </section>
 
+<!-- Script del slideshow del hero anterior — ya no aplica (no hay #hero-slideshow), se deja comentado
 <script>
 (function () {
   var hero    = document.getElementById('hero-slideshow');
@@ -367,6 +789,7 @@
   resetTimer();
 })();
 </script>
+-->
 
 <!-- ===== GALERÍA ===== -->
 <section class="seccion seccion-oscura">

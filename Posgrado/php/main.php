@@ -595,6 +595,642 @@ function nav_symbol(string $currentPage, string $page): string {
           grid-template-columns: 1fr;
         }
       }
+
+      /* ===== HERO (v6) — dos columnas: texto institucional + imagen contenida ===== */
+      .hero-split {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(1000px 520px at 88% -12%, rgba(168, 127, 61, 0.38) 0%, rgba(168, 127, 61, 0) 60%),
+          radial-gradient(800px 520px at -6% 112%, rgba(227, 19, 19, 0.32) 0%, rgba(227, 19, 19, 0) 60%),
+          linear-gradient(135deg, #1a0508 0%, var(--rojo-oscuro) 55%, #2b1405 100%);
+        padding: 64px 0;
+      }
+      .hero-split::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--rojo-oscuro) 0%, var(--rojo) 50%, var(--dorado) 100%);
+      }
+      .hero-split-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 60px;
+        display: grid;
+        grid-template-columns: 0.78fr 1.22fr;
+        gap: 44px;
+        align-items: center;
+      }
+      .hero-split-content { max-width: 420px; }
+      .hero-split-kicker {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--dorado);
+        margin-bottom: 12px;
+      }
+      .hero-split-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: clamp(26px, 2.8vw, 38px);
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        line-height: 1.08;
+        letter-spacing: 0.01em;
+        margin-bottom: 14px;
+      }
+      .hero-split-desc {
+        font-size: 14.5px;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.62;
+        margin-bottom: 22px;
+      }
+      .hero-split-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+      .hero-split-actions .btn-primary,
+      .hero-split-actions .btn-outline-red {
+        padding: 10px 20px;
+        font-size: 11.5px;
+      }
+      .btn-outline-red {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 13px 28px;
+        background: transparent;
+        color: var(--rojo);
+        font-family: 'Barlow', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        border-radius: 3px;
+        text-decoration: none;
+        border: 2px solid var(--rojo);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+      .btn-outline-red:hover { background: var(--rojo); color: #fff; }
+      .hero-split-stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .hero-split-stat-num {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--dorado);
+        line-height: 1;
+      }
+      .hero-split-stat-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: rgba(255, 255, 255, 0.55);
+        margin-top: 3px;
+      }
+      .hero-split-visual {
+        position: relative;
+        border-radius: 18px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+        background: #111;
+        cursor: pointer;
+      }
+      .hero-split-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .hero-split-slide.activo { opacity: 1; z-index: 1; }
+      .hero-split-media {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(140% 130% at 12% 8%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 42%),
+          radial-gradient(120% 140% at 100% 100%, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 55%),
+          linear-gradient(135deg, var(--tint1, #7f0000) 0%, var(--tint2, #2b0a0a) 100%);
+        overflow: hidden;
+      }
+      .hero-split-media::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.5;
+      }
+      .hero-split-media i {
+        position: absolute;
+        right: 28px;
+        bottom: 24px;
+        font-size: 76px;
+        color: rgba(255, 255, 255, 0.16);
+      }
+      .hero-split-caption {
+        position: relative;
+        z-index: 2;
+        padding: 26px 30px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.15) 70%, rgba(0, 0, 0, 0) 100%);
+      }
+      .hero-split-caption-kicker {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dorado-claro);
+        margin-bottom: 6px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      .hero-split-caption-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: clamp(22px, 2.6vw, 30px);
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Puntos de navegación */
+      .hero-split-dots {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        z-index: 4;
+        display: flex;
+        gap: 7px;
+      }
+      .hero-split-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .hero-split-dot:hover { background: rgba(255, 255, 255, 0.7); }
+      .hero-split-dot.activo { background: #fff; transform: scale(1.2); }
+
+      /* Flechas de navegación */
+      .hero-split-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 4;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.32);
+        border: 1.5px solid rgba(255, 255, 255, 0.28);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      }
+      .hero-split-nav:hover { background: var(--rojo); border-color: var(--rojo); transform: translateY(-50%) scale(1.08); }
+      .hero-split-nav-prev { left: 12px; }
+      .hero-split-nav-next { right: 12px; }
+
+      @media (max-width: 980px) {
+        .hero-split-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 32px; }
+        .hero-split-visual { aspect-ratio: 16 / 9; order: -1; }
+      }
+      @media (max-width: 720px) {
+        .hero-split { padding: 44px 0; }
+        .hero-split-inner { padding: 0 20px; }
+        .hero-split-stats { gap: 22px; }
+        .hero-split-nav { width: 30px; height: 30px; font-size: 13px; }
+      }
+
+      /* ===== BANNER INSTITUCIONAL (v5) — imágenes horizontales, una a la vez ===== */
+      .hero3 {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 21 / 7;
+        max-height: 66vh;
+        min-height: 260px;
+        overflow: hidden;
+        background: #0c0304;
+        isolation: isolate;
+      }
+      .hero3::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 4px;
+        z-index: 3;
+        background: linear-gradient(90deg, var(--rojo-oscuro) 0%, var(--rojo) 50%, var(--dorado) 100%);
+      }
+      .hero3-viewport { position: absolute; inset: 0; }
+      .hero3-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+      .hero3-slide.activo { opacity: 1; z-index: 1; }
+      .hero3-slide-media { position: absolute; inset: 0; }
+      .hero3-slide-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .hero3-slide-media--placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(120deg, var(--tint1, #7f0000) 0%, var(--tint2, #2b0a0a) 100%);
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero3-slide-media--placeholder i { font-size: 34px; color: rgba(255, 255, 255, 0.35); }
+      .hero3-slide-media--placeholder span {
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 0 20px;
+      }
+      .hero3-slide-caption {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        z-index: 2;
+        padding: 26px 110px 24px 48px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+      }
+      .hero3-slide-kicker {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dorado-claro);
+        margin-bottom: 6px;
+      }
+      .hero3-slide-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: clamp(20px, 3vw, 32px);
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+      }
+      .hero3-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 4;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.32);
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      }
+      .hero3-nav:hover { background: var(--rojo); border-color: var(--rojo); transform: translateY(-50%) scale(1.06); }
+      .hero3-nav-prev { left: 18px; }
+      .hero3-nav-next { right: 18px; }
+      .hero3-dots {
+        position: absolute;
+        right: 24px;
+        bottom: 26px;
+        z-index: 4;
+        display: flex;
+        gap: 8px;
+      }
+      .hero3-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .hero3-dot:hover { background: rgba(255, 255, 255, 0.6); }
+      .hero3-dot.activo { background: #fff; transform: scale(1.2); }
+      @media (max-width: 720px) {
+        .hero3 { aspect-ratio: 4 / 3; max-height: 60vh; }
+        .hero3-slide-caption { padding: 20px 20px 60px; }
+        .hero3-nav { width: 38px; height: 38px; font-size: 17px; }
+      }
+
+      /* ===== CONVOCATORIAS — sección debajo del banner institucional ===== */
+      .convs-section {
+        position: relative;
+        overflow: hidden;
+        padding: 64px 0;
+        background:
+          radial-gradient(1000px 500px at 85% -10%, rgba(168, 127, 61, 0.28) 0%, rgba(168, 127, 61, 0) 60%),
+          radial-gradient(800px 450px at -10% 110%, rgba(227, 19, 19, 0.22) 0%, rgba(227, 19, 19, 0) 60%),
+          linear-gradient(150deg, #14060b 0%, #3a0c14 55%, #1a0a12 100%);
+      }
+
+      /* ===== HERO REDISEÑADO (v2/v3) — versiones anteriores, ya sin marcado HTML que las use =====
+         Este archivo no tenía CSS propio para el hero original (lo definía solo html/htmlcode.html).
+         Las clases .hero2-convs-heading / .hero2-conv-card / .hero2-bottombar siguen activas y en
+         uso, ahora dentro de .convs-section (ver php/pages/home.php). */
+      .hero2 {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        background:
+          radial-gradient(1200px 600px at 85% -10%, rgba(168, 127, 61, 0.35) 0%, rgba(168, 127, 61, 0) 60%),
+          radial-gradient(900px 500px at -10% 110%, rgba(227, 19, 19, 0.28) 0%, rgba(227, 19, 19, 0) 60%),
+          linear-gradient(150deg, #12040a 0%, var(--rojo-oscuro) 55%, #1a0a12 100%);
+      }
+      .hero2::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 4px;
+        z-index: 2;
+        background: linear-gradient(90deg, var(--rojo-oscuro) 0%, var(--rojo) 50%, var(--dorado) 100%);
+      }
+      .hero2-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 56px 60px 48px;
+      }
+      /* ----- v4: barra institucional al pie del banner (antes iba arriba) ----- */
+      .hero2-bottombar {
+        margin-top: 34px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .hero2-bottombar-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .hero2-bottombar-kicker {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dorado-claro);
+        white-space: nowrap;
+      }
+      .hero2-bottombar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      .hero2-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 5px 11px;
+        border-radius: 99px;
+        white-space: nowrap;
+      }
+      .hero2-chip b {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 13px;
+        color: var(--dorado-claro);
+      }
+      .hero2-bottombar-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.75;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      .hero2-bottombar-more:hover { opacity: 1; transform: translateX(3px); }
+      /* La frase institucional, tratada como una declaración destacada (fácil de quitar si no convence) */
+      .hero2-tagline {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-style: italic;
+        font-size: clamp(16px, 1.8vw, 22px);
+        color: rgba(255, 255, 255, 0.82);
+        border-left: 3px solid var(--dorado);
+        padding-left: 14px;
+      }
+      .hero2-tagline i { color: var(--dorado-claro); font-size: 20px; font-style: normal; flex-shrink: 0; }
+
+      /* ----- v3: encabezado + tarjetas de convocatorias, protagonistas del banner ----- */
+      .hero2-convs-heading { margin-bottom: 26px; }
+      .hero2-convs-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        background: rgba(227, 19, 19, 0.22);
+        border: 1px solid rgba(227, 19, 19, 0.45);
+        padding: 6px 14px;
+        border-radius: 99px;
+        margin-bottom: 16px;
+      }
+      .hero2-convs-eyebrow .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #ff5c5c;
+        animation: hero2-pulse 1.8s infinite;
+      }
+      @keyframes hero2-pulse {
+        0%   { box-shadow: 0 0 0 0 rgba(255, 92, 92, 0.55); }
+        70%  { box-shadow: 0 0 0 9px rgba(255, 92, 92, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 92, 92, 0); }
+      }
+      .hero2-convs-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: clamp(30px, 3.6vw, 46px);
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        margin-bottom: 10px;
+      }
+      .hero2-convs-sub { font-size: 14px; color: rgba(255, 255, 255, 0.62); }
+
+      .hero2-convs-track {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .hero2-conv-card {
+        --accent: var(--dorado);
+        position: relative;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-top: 4px solid var(--accent);
+        border-radius: 14px;
+        padding: 28px 26px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      }
+      .hero2-conv-card:hover,
+      .hero2-conv-card:focus-visible {
+        background: rgba(255, 255, 255, 0.13);
+        border-color: rgba(255, 255, 255, 0.32);
+        transform: translateY(-6px);
+        box-shadow: 0 22px 48px rgba(0, 0, 0, 0.4);
+        outline: none;
+      }
+      .hero2-conv-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .hero2-conv-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--accent) 25%, transparent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .hero2-conv-countdown {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #fff;
+        background: color-mix(in srgb, var(--accent) 45%, transparent);
+        border: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+        padding: 5px 11px;
+        border-radius: 99px;
+        white-space: nowrap;
+      }
+      .hero2-conv-card h3 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 23px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+      }
+      .hero2-conv-card p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.55;
+      }
+      .hero2-conv-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero2-conv-meta i { color: var(--accent); font-size: 13px; }
+      .hero2-conv-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .hero2-conv-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #fff;
+        background: var(--accent);
+        padding: 11px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: filter 0.2s, transform 0.2s;
+      }
+      .hero2-conv-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+      .hero2-conv-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+        padding: 11px 6px;
+      }
+      .hero2-conv-card:hover .hero2-conv-more-btn { color: #fff; }
+      .hero2-convs-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 32px 20px;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .hero2-convs-empty i {
+        font-size: 38px;
+        display: block;
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      @media (max-width: 980px) {
+        .hero2-inner { padding: 44px 32px 36px; }
+        .hero2-convs-track { grid-template-columns: 1fr 1fr; }
+        .hero2-bottombar-right { width: 100%; justify-content: flex-start; }
+      }
+      @media (max-width: 720px) {
+        .hero2-bottombar-row { flex-direction: column; align-items: flex-start; }
+        .hero2-convs-track { grid-template-columns: 1fr; }
+        .hero2-inner { padding: 36px 20px 28px; }
+      }
     </style>
   </head>
 
