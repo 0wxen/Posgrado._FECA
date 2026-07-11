@@ -54,7 +54,7 @@ export default function LoginModal({ open, onClose }) {
             <span>o continúa sin cuenta</span>
           </div>
 
-          <NavLink to="/perfil" className="btn-sin-cuenta" onClick={onClose}>
+          <NavLink to="/admin/contenido" className="btn-sin-cuenta" onClick={onClose}>
             <i className="ti ti-door-enter"></i> Entrar sin iniciar sesión
           </NavLink>
 

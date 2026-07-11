@@ -21,6 +21,7 @@ import UnidadesAprendizaje from './pages/UnidadesAprendizaje.jsx';
 import Profile from './pages/Profile.jsx';
 import AdminLogin from './admin/AdminLogin.jsx';
 import AdminPanel from './admin/AdminPanel.jsx';
+import ContentCMS from './admin/ContentCMS.jsx';
 
 // Portado de $pages + el switch de main.php: cada entrada de ese arreglo
 // es ahora una <Route>. /admin/* queda fuera del <Layout> público porque
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/procesos-academicos" element={<ProcesosAcademicos />} />
         <Route path="/unidades-aprendizaje" element={<UnidadesAprendizaje />} />
         <Route path="/perfil" element={<Profile />} />
+        <Route path="/admin/contenido" element={<ContentCMS />} />
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>

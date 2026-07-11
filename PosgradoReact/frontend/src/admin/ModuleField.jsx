@@ -62,22 +62,38 @@ export default function ModuleField({ campo, value, onChange }) {
       );
 
     case 'imagen':
-    case 'documento':
+    case 'documento': {
+      const esImagenConValor = campo.tipo === 'imagen' && typeof value === 'string' && value;
+      const onFile = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => onChange(ev.target.result);
+        reader.readAsDataURL(file);
+      };
       return (
         <div className="form-group">
           {label}
-          <div className="admin-upload-zona" style={{ cursor: 'default' }}>
-            <i className="ti ti-upload"></i>
-            <span>Sin archivo todavía</span>
+          <div className="admin-upload-zona" onClick={() => document.getElementById(id).click()}>
+            {esImagenConValor ? (
+              <img className="admin-upload-preview" src={value} alt="" />
+            ) : (
+              <>
+                <i className="ti ti-upload"></i>
+                <span>{value ? 'Archivo cargado' : 'Sin archivo todavía'}</span>
+              </>
+            )}
             <input
               type="file"
+              id={id}
               accept={campo.tipo === 'imagen' ? 'image/*' : '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp'}
-              style={{ position: 'static', opacity: 1, height: 'auto', marginTop: 8 }}
-              onChange={(e) => onChange(e.target.files?.[0] ?? null)}
+              style={{ display: 'none' }}
+              onChange={onFile}
             />
           </div>
         </div>
       );
+    }
 
     default: {
       const tipoInput = ['text', 'email', 'url', 'date', 'number'].includes(campo.tipo) ? campo.tipo : 'text';

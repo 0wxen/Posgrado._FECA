@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { TELEFONO_GENERAL, CORREO_GENERAL } from '../data/contactInfo.js';
 import LoginModal from './LoginModal.jsx';
+import { useVisitTracking } from '../hooks/useVisitTracking.js';
 
 // Portado de la cabecera/pie de Posgrado/html/htmlcode.html (más
 // actualizado que php/main.php: ese último todavía tenía el logo de
@@ -28,6 +29,7 @@ function NavChevron({ isActive }) {
 export default function Layout() {
   const [navAbierta, setNavAbierta] = useState(false);
   const [loginAbierto, setLoginAbierto] = useState(false);
+  useVisitTracking();
 
   return (
     <>
