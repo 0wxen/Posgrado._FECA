@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/content.php';
-$items = fetch_public_content(['publicacion', 'documento'], 20);
+$items = listar_publicaciones();
 ?>
 
 <!-- ===== BANNER ===== -->
@@ -27,87 +27,32 @@ $items = fetch_public_content(['publicacion', 'documento'], 20);
       <?php if (!empty($items)): ?>
         <?php foreach ($items as $item): ?>
           <article class="noticia-card">
-            <div class="noticia-img">
-              <?php if (!empty($item['file_path']) && str_starts_with((string)$item['mime_type'], 'image/')): ?>
-                <img src="<?= h('../' . ltrim($item['file_path'], '/')) ?>"
-                     alt="<?= h($item['title']) ?>">
-              <?php else: ?>
-                <i class="ti ti-book-2"></i>
-              <?php endif; ?>
-            </div>
+            <div class="noticia-img"><i class="ti ti-book-2"></i></div>
             <div class="noticia-body">
-              <span class="noticia-tag"><?= h(ucfirst($item['content_type'] ?? 'Publicación')) ?></span>
-              <h3><?= h($item['title']) ?></h3>
-              <?php if (!empty($item['description'])): ?>
-                <p><?= h(mb_strimwidth($item['description'], 0, 120, '…')) ?></p>
-              <?php endif; ?>
-              <?php if (!empty($item['file_path'])): ?>
-                <a href="<?= h('../' . ltrim($item['file_path'], '/')) ?>"
+              <span class="noticia-tag"><?= h(ucfirst($item['tipo'] ?? 'Publicación')) ?></span>
+              <h3><?= h($item['titulo']) ?></h3>
+              <p>
+                <?= h($item['autores_texto']) ?><?php if (!empty($item['revista_editorial'])): ?> · <?= h($item['revista_editorial']) ?><?php endif; ?><?php if (!empty($item['anio'])): ?> · <?= (int) $item['anio'] ?><?php endif; ?>
+              </p>
+              <?php if (!empty($item['archivo_url'])): ?>
+                <a href="<?= h(url_subida($item['archivo_url'])) ?>"
                    target="_blank" rel="noopener" class="noticia-leer">
                   Descargar <i class="ti ti-download"></i>
                 </a>
-              <?php else: ?>
-                <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
+              <?php elseif (!empty($item['url_externo'])): ?>
+                <a href="<?= h($item['url_externo']) ?>" target="_blank" rel="noopener" class="noticia-leer">
+                  Ver publicación <i class="ti ti-external-link"></i>
+                </a>
               <?php endif; ?>
             </div>
           </article>
         <?php endforeach; ?>
 
       <?php else: ?>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Artículo</span>
-            <h3>Impacto de la política fiscal en el crecimiento económico regional</h3>
-            <p>Revista de Economía y Administración · Vol. 12 · 2024</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Capítulo de libro</span>
-            <h3>Gestión pública y transparencia: retos para el norte de México</h3>
-            <p>Compilación Iberoamericana de Administración Pública · 2024</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Memorias</span>
-            <h3>Innovación en negocios: estrategias para el mercado duranguense</h3>
-            <p>Congreso Internacional de Gestión · Durango, 2023</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Artículo</span>
-            <h3>Modelos de auditoría en el sector público: evidencia empírica</h3>
-            <p>Revista Contaduría y Administración · UNAM · 2023</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Artículo</span>
-            <h3>Capital humano y competitividad empresarial en Durango</h3>
-            <p>Revista Internacional de Administración y Finanzas · Vol. 16 · 2024</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Libro</span>
-            <h3>Finanzas empresariales en contextos emergentes</h3>
-            <p>Editorial Universitaria UJED · 2023</p>
-            <a href="#" class="noticia-leer">Ver más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
+        <div class="admin-empty">
+          <i class="ti ti-book-off"></i>
+          <p>Por el momento no hay publicaciones registradas. Vuelve a consultar pronto.</p>
+        </div>
       <?php endif; ?>
     </div>
 

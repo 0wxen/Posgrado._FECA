@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/content.php';
-$publicaciones = fetch_public_content(['publicacion'], 6);
+$publicaciones = array_slice(listar_publicaciones(), 0, 6);
 ?>
 
 <!-- ===== BANNER ===== -->
@@ -70,22 +70,13 @@ $publicaciones = fetch_public_content(['publicacion'], 6);
     <div class="noticias-grid">
       <?php foreach ($publicaciones as $pub): ?>
         <article class="noticia-card">
-          <div class="noticia-img">
-            <?php if (!empty($pub['file_path']) && str_starts_with((string)$pub['mime_type'], 'image/')): ?>
-              <img src="<?= h('../' . ltrim($pub['file_path'], '/')) ?>"
-                   alt="<?= h($pub['title']) ?>">
-            <?php else: ?>
-              <i class="ti ti-book-2"></i>
-            <?php endif; ?>
-          </div>
+          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
           <div class="noticia-body">
-            <span class="noticia-tag">Publicación</span>
-            <h3><?= h($pub['title']) ?></h3>
-            <?php if (!empty($pub['description'])): ?>
-              <p><?= h(mb_strimwidth($pub['description'], 0, 110, '…')) ?></p>
-            <?php endif; ?>
-            <?php if (!empty($pub['file_path'])): ?>
-              <a href="<?= h('../' . ltrim($pub['file_path'], '/')) ?>"
+            <span class="noticia-tag"><?= h(ucfirst($pub['tipo'] ?? 'Publicación')) ?></span>
+            <h3><?= h($pub['titulo']) ?></h3>
+            <p><?= h(mb_strimwidth($pub['autores_texto'], 0, 110, '…')) ?></p>
+            <?php if (!empty($pub['archivo_url'])): ?>
+              <a href="<?= h(url_subida($pub['archivo_url'])) ?>"
                  target="_blank" rel="noopener" class="noticia-leer">
                 Descargar <i class="ti ti-download"></i>
               </a>
@@ -112,45 +103,9 @@ $publicaciones = fetch_public_content(['publicacion'], 6);
       <span class="kicker">Producción académica</span>
       <h2>Publicaciones Recientes</h2>
     </div>
-    <div class="noticias-grid">
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Artículo</span>
-          <h3>Impacto de la política fiscal en el crecimiento económico regional</h3>
-          <p>Revista de Economía y Administración · Año 2024 · Vol. 12</p>
-          <a href="#publicaciones" class="noticia-leer" data-page="publicaciones">
-            Ver publicación <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
-      </article>
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Capítulo de libro</span>
-          <h3>Gestión pública y transparencia: retos para el norte de México</h3>
-          <p>Compilación Iberoamericana de Administración Pública · 2024</p>
-          <a href="#publicaciones" class="noticia-leer" data-page="publicaciones">
-            Ver publicación <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
-      </article>
-      <article class="noticia-card">
-        <div class="noticia-img"><i class="ti ti-book-2"></i></div>
-        <div class="noticia-body">
-          <span class="noticia-tag">Memorias de congreso</span>
-          <h3>Innovación en negocios: estrategias para el mercado duranguense</h3>
-          <p>Congreso Internacional de Gestión · Durango, 2023</p>
-          <a href="#publicaciones" class="noticia-leer" data-page="publicaciones">
-            Ver publicación <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
-      </article>
-    </div>
-    <div class="seccion-cta">
-      <a href="#publicaciones" class="btn-link-rojo" data-page="publicaciones">
-        Ver todas las publicaciones <i class="ti ti-arrow-right"></i>
-      </a>
+    <div class="admin-empty">
+      <i class="ti ti-book-off"></i>
+      <p>Por el momento no hay publicaciones registradas. Vuelve a consultar pronto.</p>
     </div>
   </div>
 </section>

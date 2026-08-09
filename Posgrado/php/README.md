@@ -1,60 +1,67 @@
 # Estructura PHP + PostgreSQL
 
-Esta carpeta contiene la base del sitio dinámico.
+Esta carpeta contiene el backend dinámico del sitio.
 
 ## Entrada principal
 
-- `principal.php`: conserva encabezado, navegación y pie de página.
-- `pages/`: contiene el contenido central de cada sección.
+El sitio público real es `Posgrado/html/htmlcode.html` (una sola página, navegación
+por hash `#seccion` vía `Posgrado/js/cargar.js`). Ese JS pide el contenido de cada
+sección directo a `pages/<nombre>.php` (por ejemplo `pages/home.php`) — cada archivo
+en `pages/` es autocontenido (incluye `includes/content.php` por su cuenta), así que
+no depende de ningún archivo "envoltorio" para funcionar.
 
-Ejemplos:
-
-- `principal.php?page=inicio`
-- `principal.php?page=nosotros`
-- `principal.php?page=blog`
-
-Si no se manda `page`, se carga `inicio`.
+`main.php` existió como una versión alterna server-rendered de todo el sitio, pero
+nada lo enlazaba ni lo usaba — se eliminó.
 
 ## Base de datos
 
-- `config/database.php`: conexión PostgreSQL con PDO.
-- `tools/probar_conexion.php`: página simple para comprobar que PHP conecta con PostgreSQL.
-- `tools/iniciar_servidor_php.bat`: inicia el servidor local con XAMPP PHP.
-- `database/schema.sql`: tablas iniciales para contenidos cargados desde el panel.
+- `config/database.php`: conexión PostgreSQL con PDO. Lee credenciales de variables de
+  entorno, o de `php/.env` si existe (no se sube a git).
+- `database/schema.sql`: esquema completo del sitio (reemplaza cualquier versión anterior).
+- `tools/install_db.php`: aplica `schema.sql`.
+- `tools/test_connection.php`: página simple para comprobar que PHP conecta con PostgreSQL.
+- `tools/cargar_env.ps1`: carga `php/.env` como variables de entorno en una sesión de PowerShell.
 
-Variables de entorno recomendadas:
-
-- `PGHOST`
-- `PGPORT`
-- `PGDATABASE`
-- `PGUSER`
-- `PGPASSWORD`
-
-En desarrollo se integró la configuración local recibida:
-
-- Base de datos: `posgrado_Feca`
-- Usuario: `postgres`
-- Puerto: `5432`
-
-La contraseña puede cambiarse después con `PGPASSWORD`.
+Variables de entorno: `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`.
 
 ## Administración
 
-- `admin/login.php`: acceso al panel.
-- `admin/index.php`: apartado privado para futuras cargas.
-- `admin/logout.php`: cierre de sesión.
-- `uploads/`: carpeta preparada para archivos que se suban después.
+- `admin/login.php`: acceso al panel (`admin/panel.php`).
+- `admin/logout.php`: cierre de sesión, regresa al sitio público.
+- `uploads/`: carpeta donde se guardan los archivos subidos desde el panel.
 
-Credenciales temporales de desarrollo:
+El primer usuario (rol `control_maestro`) se crea desde terminal, nunca desde el navegador:
 
-- Usuario: `admin`
-- Contraseña: `Owen1234`
+```
+php php/tools/setup_admin.php
+```
 
-Antes de publicar, cambia esas credenciales con variables de entorno:
+## Panel de administración (`admin/panel.php`)
 
-- `ADMIN_USER`
-- `ADMIN_PASSWORD`
+Deliberadamente simple: sin historial de cambios, sin páginas dinámicas ni bloques de
+texto editables, sin cuerpos académicos propios (esos se enlazan a `cadepfeca.ujed.mx`).
 
-## Imágenes actuales
+**Roles** (tabla `usuarios`, columna `rol`):
+- `control_maestro`: acceso a todas las pestañas, incluida "Usuarios" (crear/editar/eliminar
+  cuentas del panel).
+- `administrador`: acceso a las mismas pestañas de contenido, sin la pestaña "Usuarios".
+- Un tercer rol de solo-edición queda pendiente para más adelante.
 
-La carpeta descargada de `División de Estudios...` no se movió. El sitio puede seguir usando imágenes desde ahí mientras se decide la estructura final de assets.
+**Pestañas de contenido** (una tabla real por pestaña, ver `admin/modulos.php`):
+Convocatorias, Nosotros · Profesores, Oferta Educativa, Investigación (Grupos
+Disciplinares), Comunidad · Documentos, Blog/Noticias, Publicidad, Publicaciones.
+
+**Pestaña "Imágenes del sitio":** reemplaza las imágenes fijas de la galería de Inicio
+(5 espacios) y el Organigrama de Nosotros (tabla `imagenes_sitio`), sin crear/borrar filas.
+
+**Pestaña "Estadísticas":** lee `localStorage` del navegador (visitas registradas por
+`cargar.js` en el sitio público), no toca la base de datos.
+
+**Formulario de contacto** (`pages/contact.php` → `tools/contacto_enviar.php`): envía el
+mensaje por correo a Coordinación General con `mail()` de PHP. En XAMPP/Windows eso
+requiere configurar un servidor SMTP en `php.ini` para entregar correos de verdad.
+
+**Pendiente / fuera de alcance a propósito:**
+- Las 8 páginas de detalle de programa y las páginas legales (`terms`, `privacy_notice`,
+  `titulacion`) siguen siendo estáticas (`Posgrado/pages/*.html`), sin panel de edición.
+- No hay historial/auditoría de cambios ni forma de deshacer una edición o borrado.

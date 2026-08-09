@@ -53,32 +53,32 @@ function require_rol(string ...$roles): void {
 // Login con la tabla usuarios (hash Argon2id / bcrypt)
 // ─────────────────────────────────────────────────────────────
 
-function attempt_login(string $credencial, string $password): bool {
+function attempt_login(string $username, string $password): bool {
     global $pdo;
 
-    if ($credencial === '' || $password === '') {
+    if ($username === '' || $password === '') {
         return false;
     }
 
     $stmt = $pdo->prepare(
-        'SELECT id, password_hash, nombre_completo, rol
+        'SELECT id, contrasena_hash, nombre_completo, rol
          FROM   usuarios
-         WHERE  (username = :c OR email = :c) AND activo = TRUE
+         WHERE  nombre_usuario = :u AND activo = TRUE
          LIMIT  1'
     );
-    $stmt->execute([':c' => $credencial]);
+    $stmt->execute([':u' => $username]);
     $user = $stmt->fetch();
 
-    if (!$user || !password_verify($password, $user['password_hash'])) {
+    if (!$user || !password_verify($password, $user['contrasena_hash'])) {
         // Pausa anti-timing para no revelar si el usuario existe
         usleep(random_int(200_000, 400_000));
         return false;
     }
 
     // Re-hash si el algoritmo cambió (migración transparente)
-    if (password_needs_rehash($user['password_hash'], PASSWORD_ARGON2ID)) {
+    if (password_needs_rehash($user['contrasena_hash'], PASSWORD_ARGON2ID)) {
         $nuevoHash = password_hash($password, PASSWORD_ARGON2ID);
-        $pdo->prepare('UPDATE usuarios SET password_hash = ? WHERE id = ?')
+        $pdo->prepare('UPDATE usuarios SET contrasena_hash = ? WHERE id = ?')
             ->execute([$nuevoHash, $user['id']]);
     }
 
@@ -87,10 +87,6 @@ function attempt_login(string $credencial, string $password): bool {
     $_SESSION['usuario_nombre'] = $user['nombre_completo'];
     $_SESSION['usuario_rol']    = $user['rol'];
     $_SESSION['_ts']            = time();
-
-    $pdo->prepare(
-        'UPDATE usuarios SET ultimo_acceso = NOW(), ip_ultimo = ?::inet WHERE id = ?'
-    )->execute([$_SERVER['REMOTE_ADDR'] ?? null, $user['id']]);
 
     return true;
 }

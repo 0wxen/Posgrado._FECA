@@ -6,21 +6,11 @@ declare(strict_types=1);
  * ─────────────────────────────────────────────────────────────
  * Endpoints públicos (GET):
  *   /php/api/v1/index.php?r=programas
- *   /php/api/v1/index.php?r=noticias
- *   /php/api/v1/index.php?r=noticias&id=5
+ *   /php/api/v1/index.php?r=blog
+ *   /php/api/v1/index.php?r=blog&id=5
  *   /php/api/v1/index.php?r=convocatorias
  *   /php/api/v1/index.php?r=publicaciones
  *   /php/api/v1/index.php?r=profesores
- *
- * Endpoints protegidos (requieren Bearer token):
- *   GET  /php/api/v1/index.php?r=mensajes
- *
- * Endpoints de escritura:
- *   POST /php/api/v1/index.php?r=contacto   (cuerpo JSON)
- *
- * Autenticación API:
- *   Header: Authorization: Bearer <token>
- *   Crear tokens en php/tools/setup_admin.php (modo interactivo)
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -28,8 +18,8 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=UTF-8');
 header('X-Content-Type-Options: nosniff');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Methods: GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
 // Preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -58,33 +48,6 @@ function api_error(string $message, int $status = 400): never {
     exit;
 }
 
-function verificar_token(): void {
-    global $pdo;
-    $auth  = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-    $token = '';
-    if (str_starts_with($auth, 'Bearer ')) {
-        $token = substr($auth, 7);
-    }
-    if ($token === '') {
-        api_error('Se requiere token de autenticación.', 401);
-    }
-    $hash = hash('sha256', $token);
-    $stmt = $pdo->prepare(
-        'SELECT id FROM api_tokens
-         WHERE  token_hash = ? AND activo = TRUE
-           AND  (expira_en IS NULL OR expira_en > NOW())
-         LIMIT  1'
-    );
-    $stmt->execute([$hash]);
-    if (!$stmt->fetch()) {
-        api_error('Token inválido o expirado.', 401);
-    }
-    // Registrar último uso
-    $pdo->prepare('UPDATE api_tokens SET ultimo_uso = NOW() WHERE token_hash = ?')
-        ->execute([$hash]);
-}
-
-$metodo  = $_SERVER['REQUEST_METHOD'];
 $recurso = $_GET['r'] ?? '';
 $id      = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
@@ -94,12 +57,10 @@ $id      = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
 match ($recurso) {
     'programas'     => r_programas(),
-    'noticias'      => r_noticias(),
+    'blog'          => r_blog(),
     'convocatorias' => r_convocatorias(),
     'publicaciones' => r_publicaciones(),
     'profesores'    => r_profesores(),
-    'contacto'      => r_contacto(),
-    'mensajes'      => r_mensajes(),   // protegido
     default         => api_error('Recurso no encontrado.', 404),
 };
 
@@ -112,8 +73,7 @@ function r_programas(): never {
     if ($id) {
         $stmt = $pdo->prepare(
             'SELECT id, codigo, nombre, nivel, modalidad, duracion_semestres,
-                    creditos, descripcion, objetivo, perfil_ingreso, perfil_egreso,
-                    pnpc, pnpc_nivel
+                    creditos, descripcion, objetivo, perfil_ingreso, perfil_egreso
              FROM   programas WHERE id = ? AND activo = TRUE'
         );
         $stmt->execute([$id]);
@@ -125,16 +85,14 @@ function r_programas(): never {
     $nivel = $_GET['nivel'] ?? '';
     if ($nivel !== '') {
         $stmt = $pdo->prepare(
-            'SELECT id, codigo, nombre, nivel, modalidad, duracion_semestres,
-                    creditos, pnpc, pnpc_nivel
+            'SELECT id, codigo, nombre, nivel, modalidad, duracion_semestres, creditos
              FROM   programas WHERE activo = TRUE AND nivel = ?
              ORDER  BY orden_display, nombre'
         );
         $stmt->execute([$nivel]);
     } else {
         $stmt = $pdo->query(
-            'SELECT id, codigo, nombre, nivel, modalidad, duracion_semestres,
-                    creditos, pnpc, pnpc_nivel
+            'SELECT id, codigo, nombre, nivel, modalidad, duracion_semestres, creditos
              FROM   programas WHERE activo = TRUE
              ORDER  BY orden_display, nombre'
         );
@@ -143,46 +101,37 @@ function r_programas(): never {
 }
 
 // ─────────────────────────────────────────────────────────────
-// NOTICIAS  GET /api/v1/?r=noticias[&tipo=evento&limite=10]
+// BLOG  GET /api/v1/?r=blog[&limite=10]
 // ─────────────────────────────────────────────────────────────
-function r_noticias(): never {
+function r_blog(): never {
     global $pdo, $id;
 
     if ($id) {
         $stmt = $pdo->prepare(
-            'SELECT n.*, a.ruta_relativa AS imagen_url, a.alt_texto
-             FROM   noticias n
-             LEFT   JOIN archivos a ON a.id = n.imagen_portada_id
-             WHERE  n.id = ? AND n.es_publicado = TRUE'
+            'SELECT b.*, a.ruta_relativa AS imagen_url, a.alt_texto
+             FROM   blog b
+             LEFT   JOIN archivos a ON a.id = b.imagen_id
+             WHERE  b.id = ? AND b.es_publicado = TRUE'
         );
         $stmt->execute([$id]);
         $row = $stmt->fetch();
-        if (!$row) api_error('Noticia no encontrada.', 404);
+        if (!$row) api_error('Entrada no encontrada.', 404);
         api_ok($row);
     }
 
-    $tipo   = $_GET['tipo']   ?? '';
     $limite = min((int)($_GET['limite'] ?? 20), 100);
-
-    $where = 'WHERE n.es_publicado = TRUE';
-    $params = [];
-    if ($tipo !== '') {
-        $where .= ' AND n.tipo = ?';
-        $params[] = $tipo;
-    }
-
-    $params[] = $limite;
     $stmt = $pdo->prepare(
-        "SELECT n.id, n.tipo, n.titulo, n.slug, n.resumen, n.es_destacado,
-                n.publicado_en, n.fecha_evento, n.lugar_evento,
+        'SELECT b.id, b.titulo, b.slug, b.resumen, b.destacado,
+                b.publicado_en, b.fecha_evento, b.lugar_evento,
                 a.ruta_relativa AS imagen_url, a.alt_texto
-         FROM   noticias n
-         LEFT   JOIN archivos a ON a.id = n.imagen_portada_id
-         $where
-         ORDER  BY n.es_destacado DESC, n.publicado_en DESC NULLS LAST
-         LIMIT  ?"
+         FROM   blog b
+         LEFT   JOIN archivos a ON a.id = b.imagen_id
+         WHERE  b.es_publicado = TRUE
+         ORDER  BY b.destacado DESC, b.publicado_en DESC NULLS LAST
+         LIMIT  ?'
     );
-    $stmt->execute($params);
+    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt->execute();
     api_ok($stmt->fetchAll());
 }
 
@@ -200,14 +149,14 @@ function r_convocatorias(): never {
 
     $stmt = $pdo->query(
         "SELECT c.id, c.titulo, c.descripcion, c.ciclo,
-                c.fecha_inicio, c.fecha_cierre, c.fecha_inicio_clases,
+                c.fecha_inicio, c.fecha_cierre, c.destacado,
                 p.codigo AS programa_codigo, p.nombre AS programa_nombre,
                 af.ruta_relativa AS archivo_url,
-                ap.ruta_relativa AS poster_url
+                ap.ruta_relativa AS imagen_url
          FROM   convocatorias c
          LEFT   JOIN programas p  ON p.id  = c.programa_id
          LEFT   JOIN archivos  af ON af.id = c.archivo_id
-         LEFT   JOIN archivos  ap ON ap.id = c.imagen_poster_id
+         LEFT   JOIN archivos  ap ON ap.id = c.imagen_id
          $where
          ORDER  BY c.fecha_cierre ASC NULLS LAST, c.creado_en DESC"
     );
@@ -238,7 +187,7 @@ function r_publicaciones(): never {
          FROM   publicaciones p
          LEFT   JOIN archivos a ON a.id = p.archivo_id
          $where
-         ORDER  BY p.anio DESC, p.titulo
+         ORDER  BY p.anio DESC NULLS LAST, p.titulo
          LIMIT  ?"
     );
     $stmt->execute($params);
@@ -253,74 +202,12 @@ function r_profesores(): never {
 
     $stmt = $pdo->query(
         'SELECT p.id, p.nombre, p.grado_academico, p.titulo_cargo,
-                p.especialidad, p.sni_nivel, p.orcid,
+                p.especialidad, p.orcid, p.google_scholar_url,
                 a.ruta_relativa AS foto_url
          FROM   profesores p
          LEFT   JOIN archivos a ON a.id = p.foto_id
          WHERE  p.activo = TRUE
          ORDER  BY p.orden_display, p.nombre'
-    );
-    api_ok($stmt->fetchAll());
-}
-
-// ─────────────────────────────────────────────────────────────
-// CONTACTO  POST /api/v1/?r=contacto
-// Body JSON: { nombre, email, asunto, mensaje, programa_interes? }
-// ─────────────────────────────────────────────────────────────
-function r_contacto(): never {
-    global $pdo, $metodo;
-
-    if ($metodo !== 'POST') api_error('Método no permitido.', 405);
-
-    $body = json_decode(file_get_contents('php://input'), true);
-    if (!is_array($body)) api_error('Cuerpo JSON inválido.');
-
-    $nombre  = trim($body['nombre']  ?? '');
-    $email   = trim($body['email']   ?? '');
-    $asunto  = trim($body['asunto']  ?? '');
-    $mensaje = trim($body['mensaje'] ?? '');
-
-    if ($nombre === '' || $email === '' || $asunto === '' || $mensaje === '') {
-        api_error('Campos obligatorios: nombre, email, asunto, mensaje.');
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        api_error('El correo electrónico no es válido.');
-    }
-    if (strlen($mensaje) > 5000) {
-        api_error('El mensaje no puede superar los 5,000 caracteres.');
-    }
-
-    $stmt = $pdo->prepare(
-        'INSERT INTO mensajes_contacto (nombre, email, asunto, programa_interes, mensaje, ip_origen)
-         VALUES (?, ?, ?, ?, ?, ?::inet)'
-    );
-    $stmt->execute([
-        $nombre,
-        $email,
-        substr($asunto, 0, 100),
-        $body['programa_interes'] ?? null,
-        $mensaje,
-        $_SERVER['REMOTE_ADDR'] ?? null,
-    ]);
-
-    api_ok(['mensaje' => 'Mensaje recibido. Te responderemos en un plazo de 2 días hábiles.'], 201);
-}
-
-// ─────────────────────────────────────────────────────────────
-// MENSAJES  GET /api/v1/?r=mensajes  (requiere Bearer token)
-// ─────────────────────────────────────────────────────────────
-function r_mensajes(): never {
-    global $pdo;
-
-    verificar_token();
-
-    $stmt = $pdo->query(
-        'SELECT id, nombre, email, asunto, programa_interes,
-                substring(mensaje, 1, 200) AS mensaje_preview,
-                leido, respondido, creado_en
-         FROM   mensajes_contacto
-         ORDER  BY creado_en DESC
-         LIMIT  100'
     );
     api_ok($stmt->fetchAll());
 }

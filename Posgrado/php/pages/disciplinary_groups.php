@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../includes/content.php';
+$grupos = listar_grupos_disciplinares();
+?>
+
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
@@ -22,7 +27,27 @@
 
     <div class="programas-grid" style="gap:24px;">
 
-      <div class="program-card">
+      <?php if (!empty($grupos)): ?>
+        <?php foreach ($grupos as $g): ?>
+          <div class="program-card" data-page="contacto" style="cursor:pointer;">
+            <div class="program-card-header">
+              <span class="program-nivel"><?= h($g['area_conocimiento'] ?: 'Grupo Activo') ?></span>
+            </div>
+            <h3><?= h($g['nombre']) ?></h3>
+            <?php if (!empty($g['descripcion'])): ?>
+              <p style="font-size:14px; color:#666; line-height:1.75; margin-bottom:12px;">
+                <?= h($g['descripcion']) ?>
+              </p>
+            <?php endif; ?>
+            <a href="#contacto" data-page="contacto" style="font-size:13px; font-weight:700; color:var(--rojo); text-decoration:none;">
+              Más información <i class="ti ti-arrow-right"></i>
+            </a>
+          </div>
+        <?php endforeach; ?>
+
+      <?php else: ?>
+
+      <div class="program-card" data-page="contacto" style="cursor:pointer;">
         <div class="program-card-header">
           <span class="program-nivel">Grupo Activo</span>
         </div>
@@ -36,7 +61,7 @@
         </a>
       </div>
 
-      <div class="program-card">
+      <div class="program-card" data-page="contacto" style="cursor:pointer;">
         <div class="program-card-header">
           <span class="program-nivel">Grupo Activo</span>
         </div>
@@ -50,7 +75,7 @@
         </a>
       </div>
 
-      <div class="program-card">
+      <div class="program-card" data-page="contacto" style="cursor:pointer;">
         <div class="program-card-header">
           <span class="program-nivel">Grupo Activo</span>
         </div>
@@ -64,7 +89,7 @@
         </a>
       </div>
 
-      <div class="program-card">
+      <div class="program-card" data-page="contacto" style="cursor:pointer;">
         <div class="program-card-header">
           <span class="program-nivel">Grupo Activo</span>
         </div>
@@ -77,6 +102,8 @@
           Más información <i class="ti ti-arrow-right"></i>
         </a>
       </div>
+
+      <?php endif; ?>
 
     </div>
   </div>

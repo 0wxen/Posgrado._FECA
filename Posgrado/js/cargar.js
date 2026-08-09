@@ -1,12 +1,13 @@
 // ── Rutas ────────────────────────────────────────────────────────────────────
-// PHP server (puerto 8001) — para contenido dinámico con base de datos.
-// Static pages — respaldo HTML que funciona directamente en Live Server.
-const PHP_SERVER  = 'http://127.0.0.1:8001';
-const _base       = location.pathname.replace(/\/html\/[^/]+$/, '');   // '' ó '/Posgrado'
-const PHP_PAGES   = (location.port === '8001' || location.port === '80' || location.port === '')
-                      ? '/php/pages/'
-                      : PHP_SERVER + '/php/pages/';
-const STATIC_PAGES = _base + '/pages/';
+// Todo el contenido sale del servidor PHP (puerto 8001), conectado a
+// PostgreSQL -- es la única fuente real. Ya no hay respaldo .html: tener dos
+// copias del mismo contenido (una con datos reales, otra desactualizada)
+// causaba más confusión que ayuda. Si el servidor PHP no está corriendo,
+// se muestra un error claro en vez de contenido viejo sin avisar.
+const PHP_SERVER = 'http://127.0.0.1:8001';
+const PHP_PAGES  = (location.port === '8001' || location.port === '80' || location.port === '')
+                     ? '/php/pages/'
+                     : PHP_SERVER + '/php/pages/';
 
 const PAGE_FILE_MAP = {
   inicio:              'home',
@@ -22,23 +23,19 @@ const PAGE_FILE_MAP = {
   convocatorias:       'announcements',
   publicaciones:       'publications',
   grupos_disciplinares:'disciplinary_groups',
-  perfiles:            'profile',
-  admin:               'admin',
   titulacion:          'titulacion',
   procesos_academicos: 'procesos_academicos',
   unidades_aprendizaje: 'unidades_aprendizaje',
-  // Páginas de detalle de cada programa
-  programa_dgo:        'program_dgo',
-  programa_eah:        'program_eah',
-  programa_mag:        'program_mag',
-  programa_me:         'program_me',
-  programa_mec:        'program_mec',
-  programa_mgn:        'program_mgn',
-  programa_mgp:        'program_mgp',
-  programa_mm:         'program_mm',
 };
 
 function getPageFile(pagina) {
+  // Detalle de programa: #program_dgo, #program_me... todos se sirven desde
+  // la misma plantilla dinámica (lee el código de programa por query string),
+  // así cualquier programa creado desde el panel ya tiene su página sin
+  // necesitar un archivo nuevo por cada uno.
+  if (pagina.startsWith('program_')) {
+    return 'program_detalle?codigo=' + encodeURIComponent(pagina.slice('program_'.length));
+  }
   return PAGE_FILE_MAP[pagina] ?? pagina;
 }
 
@@ -50,30 +47,12 @@ function registrarVisita(pageId) {
   } catch (_) {}
 }
 
-// Intenta PHP (con timeout de 3 s); si falla, carga el .html estático.
 async function fetchContenido(nombre) {
-  if (location.port !== '8001' && location.port !== '80' && location.port !== '') {
-    // Intentar PHP server (cross-origin con CORS)
-    try {
-      const ctrl = new AbortController();
-      const tid  = setTimeout(() => ctrl.abort(), 3000);
-      const r    = await fetch(PHP_PAGES + nombre + '.php', { signal: ctrl.signal });
-      clearTimeout(tid);
-      if (r.ok) return await r.text();
-    } catch (_) {
-      // PHP server no disponible → continuar al respaldo estático
-    }
-  } else {
-    // Mismo servidor PHP: ruta directa
-    const r = await fetch(PHP_PAGES + nombre + '.php');
-    if (r.ok) return await r.text();
-    throw new Error('HTTP ' + r.status);
-  }
-
-  // ── Respaldo: página HTML estática ──────────────────────────────────────
-  const r2 = await fetch(STATIC_PAGES + nombre + '.html');
-  if (!r2.ok) throw new Error('HTTP ' + r2.status);
-  return await r2.text();
+  const [archivo, query] = nombre.split('?');
+  const url = PHP_PAGES + archivo + '.php' + (query ? '?' + query : '');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return await r.text();
 }
 
 var PG_FRASES = [
@@ -148,8 +127,8 @@ function cargarPagina(nombre) {
       contenido.innerHTML = `
         <div class="pg-error inner">
           <p>No se pudo cargar el contenido.</p>
-          <small>Las páginas estáticas no se encontraron.<br>
-          Verifica que el proyecto esté completo en la carpeta <strong>Posgrado/pages/</strong>.</small>
+          <small>No se pudo conectar con el servidor PHP.<br>
+          Verifica que <strong>start_php_server.bat</strong> esté abierto y corriendo.</small>
         </div>`;
     });
 }

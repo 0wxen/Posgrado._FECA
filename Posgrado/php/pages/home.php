@@ -1,89 +1,18 @@
 <?php
 require_once __DIR__ . '/../includes/content.php';
-$noticias         = fetch_public_content(['noticia'], 3);
-$convocatorias_db = fetch_public_content(['convocatoria'], 5);
+$noticias         = listar_blog(3);
+$convocatorias_db = array_slice(listar_convocatorias(true), 0, 5);
+$imagenes_sitio   = listar_imagenes_sitio();
+$mensajes_institucionales = listar_mensajes_institucionales();
+
+// Años de trayectoria: se calculan a partir del año de fundación.
+// AÚN NO SE TIENE LA FECHA EXACTA -- estas dos constantes son placeholders
+// (hoy dan 7 y 10 años) hasta que la División confirme los años reales.
+const ANIO_FUNDACION_FECA     = 2019; // "la escuela" -- ajustar cuando se tenga el dato real
+const ANIO_FUNDACION_POSGRADO = 2016; // "el otro" (la División de Posgrado) -- ajustar cuando se tenga el dato real
+$anios_feca     = (int) date('Y') - ANIO_FUNDACION_FECA;
+$anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
 ?>
-
-<?php /* ===== HERO ANTERIOR — deshabilitado el 2026-07-06, se conserva de referencia =====
-         Slideshow a pantalla completa con texto superpuesto y velo oscuro. Se reemplazó por
-         un diseño de dos columnas (texto institucional a la izquierda, imagen contenida a la
-         derecha) porque no convencía el estilo "imagen de fondo + texto encima". */
-   if (false): ?>
-<section class="hero" id="hero-slideshow">
-  <div class="hero-slide activo"
-       style="background-image:url('../assets/img/convocatoria-a2025.png')"
-       data-conv-title="Maestría en Gestión de Negocios · Ciclo A-2025"
-       data-conv-img="../assets/img/convocatoria-a2025.png"
-       data-conv-badge="Vigente"
-       data-conv-ciclo="Ciclo A-2025"
-       data-conv-limite="Límite de registro: 31 de enero de 2025"
-       data-conv-desc="Programa orientado al desarrollo de competencias estratégicas para liderar organizaciones en entornos dinámicos y globales. Reconocido por el PNPC-CONAHCyT."
-       data-conv-registro="#"
-       data-conv-doc="#"></div>
-
-  <div class="hero-slide"
-       style="background-image:url('../assets/img/convocatoria-me.png')"
-       data-conv-title="Maestría en Economía · Ciclo A-2025"
-       data-conv-img="../assets/img/convocatoria-me.png"
-       data-conv-badge="Vigente"
-       data-conv-ciclo="Ciclo A-2025"
-       data-conv-limite="Límite de registro: 15 de enero de 2025"
-       data-conv-desc="Desarrolla competencias analíticas avanzadas para comprender y resolver los desafíos económicos regionales y nacionales. Programa PNPC."
-       data-conv-registro="#"
-       data-conv-doc="#"></div>
-
-  <div class="hero-bg-overlay" title="Ver detalle de convocatoria"></div>
-
-  <div class="hero-progress">
-    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
-    <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
-  </div>
-
-  <button class="hero-nav-btn hero-nav-prev" aria-label="Convocatoria anterior">
-    <i class="ti ti-chevron-left"></i>
-  </button>
-  <button class="hero-nav-btn hero-nav-next" aria-label="Siguiente convocatoria">
-    <i class="ti ti-chevron-right"></i>
-  </button>
-
-  <div class="hero-inner">
-    <div class="hero-content">
-      <span class="hero-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-      <h1 class="hero-title">La herramienta para el futuro<br>que tú deseas</h1>
-      <p class="hero-desc">
-        Formamos líderes con excelencia académica, investigación y compromiso
-        para el desarrollo de la sociedad.
-      </p>
-      <div class="hero-actions">
-        <a href="#convocatorias" class="btn-primary" data-page="convocatorias">
-          <i class="ti ti-file-text"></i> Ver Convocatorias
-        </a>
-        <a href="#nosotros" class="btn-outline-white" data-page="nosotros">
-          Conoce más
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="hero-stat-num">5+</div>
-          <div class="hero-stat-label">Programas de Posgrado</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">25+</div>
-          <div class="hero-stat-label">Años de Trayectoria</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">PNPC</div>
-          <div class="hero-stat-label">Reconocimiento Nacional</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <a href="#convocatorias" class="hero-conv-cta" data-page="convocatorias">
-    <i class="ti ti-sparkles"></i> Ver Convocatorias <i class="ti ti-arrow-right"></i>
-  </a>
-</section>
-<?php endif; /* ===== FIN DEL HERO ANTERIOR ===== */ ?>
 
 <!-- ===== HERO (v6) — dos columnas: texto institucional + imagen contenida ===== -->
 <section class="hero-split" id="hero-inicio">
@@ -110,11 +39,15 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
           <div class="hero-split-stat-label">Programas de Posgrado</div>
         </div>
         <div class="hero-split-stat">
-          <div class="hero-split-stat-num">25+</div>
+          <div class="hero-split-stat-num"><?= $anios_posgrado ?>+</div>
           <div class="hero-split-stat-label">Años de Trayectoria</div>
         </div>
         <div class="hero-split-stat">
-          <div class="hero-split-stat-num">PNPC</div>
+          <div class="hero-split-stat-num"><?= $anios_feca ?>+</div>
+          <div class="hero-split-stat-label">Años de la FECA</div>
+        </div>
+        <div class="hero-split-stat">
+          <div class="hero-split-stat-num">SNP</div>
           <div class="hero-split-stat-label">Reconocimiento Nacional</div>
         </div>
       </div>
@@ -131,12 +64,25 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
       if (!empty($convocatorias_db)) {
         $hero_slides = $convocatorias_db;
       } else {
+        // Cartel y PDFs reales (bajados del sitio oficial, que hoy tiene el
+        // certificado SSL vencido -- se hospedan aquí en vez de depender de
+        // ese dominio roto). $hero_conv['imagen_url']/['archivo_url'] pasan
+        // por url_subida(), que ya antepone "../php/" -- por eso aquí solo
+        // se pone el "../" que cancela ese "php/" y deja la ruta en assets/.
+        $CONV_BANNER_A2025 = '../assets/img/convocatoria-abierta-a2025.png';
         $hero_slides = [
-          ['title' => 'Maestría en Economía'],
-          ['title' => 'Maestría en Gestión de Negocios'],
-          ['title' => 'Maestría en Gestión Pública'],
-          ['title' => 'Maestría en Estrategias Contables'],
-          ['title' => 'Especialidad en Administración de Hospitales'],
+          ['titulo' => 'Maestría en Gestión Pública', 'ciclo' => 'A-2025', 'programa' => 'program_mgp',
+           'descripcion' => 'Prepara servidores públicos capaces de impulsar el desarrollo y la modernización institucional.',
+           'imagen_url' => $CONV_BANNER_A2025,
+           'archivo_url' => '../assets/docs/Convocatoria%20MGP-A2025.pdf'],
+          ['titulo' => 'Maestría en Estrategias Contables', 'ciclo' => 'A-2025', 'programa' => 'program_mec',
+           'descripcion' => 'Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva.',
+           'imagen_url' => $CONV_BANNER_A2025,
+           'archivo_url' => '../assets/docs/Convocatoria%20MEC-A2025.pdf'],
+          ['titulo' => 'Especialidad en Administración de Hospitales', 'ciclo' => 'A-2025', 'programa' => 'program_eah',
+           'descripcion' => 'Desarrolla habilidades de gestión en salud para mejorar la calidad de la atención hospitalaria.',
+           'imagen_url' => $CONV_BANNER_A2025,
+           'archivo_url' => '../assets/docs/Convocatoria%20EAH-A2025.pdf'],
         ];
       }
     ?>
@@ -148,20 +94,21 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
           $icono = $hero_iconos[$indice_slide % count($hero_iconos)];
         ?>
         <div class="hero-split-slide<?= $indice_slide === 0 ? ' activo' : '' ?>"
-             data-conv-title="<?= h($hero_conv['title']) ?>"
-             data-conv-img=""
+             data-conv-title="<?= h($hero_conv['titulo']) ?>"
+             data-conv-img="<?= h(url_subida($hero_conv['imagen_url'] ?? null)) ?>"
              data-conv-badge="Convocatoria Abierta"
-             data-conv-ciclo=""
-             data-conv-limite=""
-             data-conv-desc="<?= h($hero_conv['description'] ?? '') ?>"
-             data-conv-registro="#convocatorias"
-             data-conv-doc="">
+             data-conv-ciclo="<?= h($hero_conv['ciclo'] ?? '') ?>"
+             data-conv-limite="<?= !empty($hero_conv['fecha_cierre']) ? 'Límite: ' . h($hero_conv['fecha_cierre']) : '' ?>"
+             data-conv-desc="<?= h($hero_conv['descripcion'] ?? '') ?>"
+             data-conv-requisitos="<?= h($hero_conv['requisitos'] ?? '') ?>"
+             data-conv-programa="<?= h($hero_conv['programa'] ?? '') ?>"
+             data-conv-doc="<?= h(url_subida($hero_conv['archivo_url'] ?? null)) ?>">
           <div class="hero-split-media" style="--tint1:<?= h($par[0]) ?>; --tint2:<?= h($par[1]) ?>">
             <i class="ti <?= h($icono) ?>"></i>
           </div>
           <div class="hero-split-caption">
             <span class="hero-split-caption-kicker">Convocatoria Abierta</span>
-            <span class="hero-split-caption-title"><?= h($hero_conv['title']) ?></span>
+            <span class="hero-split-caption-title"><?= h($hero_conv['titulo']) ?></span>
           </div>
         </div>
       <?php endforeach; ?>
@@ -177,7 +124,7 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
         <?php foreach ($hero_slides as $indice_slide => $hero_conv): ?>
           <button class="hero-split-dot<?= $indice_slide === 0 ? ' activo' : '' ?>"
                   data-goto="<?= $indice_slide ?>"
-                  aria-label="Ver <?= h($hero_conv['title']) ?>"></button>
+                  aria-label="Ver <?= h($hero_conv['titulo']) ?>"></button>
         <?php endforeach; ?>
       </div>
     </div>
@@ -226,7 +173,8 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
         ciclo:    s.dataset.convCiclo,
         limite:   s.dataset.convLimite,
         desc:     s.dataset.convDesc,
-        registro: s.dataset.convRegistro,
+        requisitos: s.dataset.convRequisitos,
+        programa: s.dataset.convPrograma,
         doc:      s.dataset.convDoc
       });
     });
@@ -234,8 +182,27 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
   render();
   resetTimer();
+
+  document.querySelectorAll('.conv-grid .conv-card[data-conv-title]').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return; // deja que "Descargar"/"Más Información" funcionen normal
+      if (typeof window.openConvModal !== 'function') return;
+      window.openConvModal({
+        img:        card.dataset.convImg,
+        badge:      card.dataset.convBadge,
+        title:      card.dataset.convTitle,
+        ciclo:      card.dataset.convCiclo,
+        limite:     card.dataset.convLimite,
+        desc:       card.dataset.convDesc,
+        requisitos: card.dataset.convRequisitos,
+        programa:   card.dataset.convPrograma,
+        doc:        card.dataset.convDoc
+      });
+    });
+  });
 })();
 </script>
+
 
 <section class="seccion seccion-blanca">
   <div class="inner">
@@ -249,15 +216,27 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
       <?php if (!empty($convocatorias_db)): ?>
 
         <?php foreach ($convocatorias_db as $conv): ?>
-          <div class="conv-card">
-            <span class="conv-badge">Convocatoria Abierta</span>
-            <h3><?= h($conv['title']) ?></h3>
-            <?php if (!empty($conv['description'])): ?>
-              <p><?= h($conv['description']) ?></p>
+          <div class="conv-card" style="cursor:pointer;"
+               data-conv-title="<?= h($conv['titulo']) ?>"
+               data-conv-img="<?= h(url_subida($conv['imagen_url'] ?? null)) ?>"
+               data-conv-badge="Convocatoria Abierta"
+               data-conv-ciclo="<?= h($conv['ciclo'] ?? '') ?>"
+               data-conv-limite="<?= !empty($conv['fecha_cierre']) ? 'Límite: ' . h($conv['fecha_cierre']) : '' ?>"
+               data-conv-desc="<?= h($conv['descripcion'] ?? '') ?>"
+               data-conv-requisitos="<?= h($conv['requisitos'] ?? '') ?>"
+               data-conv-doc="<?= h(url_subida($conv['archivo_url'] ?? null)) ?>">
+            <?php if (!empty($conv['imagen_url'])): ?>
+              <img src="<?= h(url_subida($conv['imagen_url'])) ?>"
+                   class="conv-card-poster" alt="<?= h($conv['titulo']) ?>">
+            <?php endif; ?>
+            <span class="conv-badge">Convocatoria Abierta<?= !empty($conv['ciclo']) ? ' · ' . h($conv['ciclo']) : '' ?></span>
+            <h3><?= h($conv['titulo']) ?></h3>
+            <?php if (!empty($conv['descripcion'])): ?>
+              <p><?= h($conv['descripcion']) ?></p>
             <?php endif; ?>
             <div class="conv-card-actions">
-              <?php if (!empty($conv['file_path'])): ?>
-                <a href="<?= h('../' . ltrim($conv['file_path'], '/')) ?>"
+              <?php if (!empty($conv['archivo_url'])): ?>
+                <a href="<?= h(url_subida($conv['archivo_url'])) ?>"
                    target="_blank" rel="noopener" class="btn-sm-rojo">
                   <i class="ti ti-download"></i> Descargar Convocatoria
                 </a>
@@ -271,61 +250,60 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
 
       <?php else: ?>
 
-        <div class="conv-card">
-          <img src="../assets/img/convocatoria-me.png"
-               class="conv-card-poster" alt="Convocatoria Maestría en Economía A-2025">
-          <span class="conv-badge">Ciclo A-2025</span>
-          <h3>Maestría en Economía</h3>
-          <p>Desarrolla competencias analíticas para comprender y resolver los desafíos económicos de la región.</p>
-          <div class="conv-card-actions">
-            <a href="../assets/img/convocatoria-me.png" target="_blank" class="btn-sm-rojo">
-              <i class="ti ti-download"></i> Descargar Convocatoria
-            </a>
-            <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
-          </div>
-        </div>
-
-        <div class="conv-card">
-          <img src="../assets/img/convocatoria-a2025.png"
-               class="conv-card-poster" alt="Convocatoria Ciclo A-2025">
-          <span class="conv-badge">Ciclo A-2025</span>
-          <h3>Maestría en Gestión de Negocios</h3>
-          <p>Forma competencias estratégicas para liderar organizaciones en entornos dinámicos y globales.</p>
-          <div class="conv-card-actions">
-            <a href="../assets/img/convocatoria-a2025.png" target="_blank" class="btn-sm-rojo">
-              <i class="ti ti-download"></i> Descargar Convocatoria
-            </a>
-            <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
-          </div>
-        </div>
-
-        <div class="conv-card">
+        <?php
+          // Cartel y PDFs reales, bajados del sitio oficial (que hoy tiene el
+          // certificado SSL vencido) y hospedados localmente para que sí carguen.
+          $conv_banner_a2025 = '../assets/img/convocatoria-abierta-a2025.png';
+          $conv_pdf_base = '../assets/docs/Convocatoria%20';
+        ?>
+        <div class="conv-card" style="cursor:pointer;"
+             data-conv-title="Maestría en Gestión Pública"
+             data-conv-badge="Convocatoria Abierta"
+             data-conv-ciclo="A-2025"
+             data-conv-desc="Prepara servidores públicos capaces de impulsar el desarrollo y la modernización institucional."
+             data-conv-img="<?= h($conv_banner_a2025) ?>"
+             data-conv-doc="<?= h($conv_pdf_base . 'MGP-A2025.pdf') ?>"
+             data-conv-programa="program_mgp">
           <span class="conv-badge">Ciclo A-2025</span>
           <h3>Maestría en Gestión Pública</h3>
           <p>Prepara servidores públicos capaces de impulsar el desarrollo y la modernización institucional.</p>
           <div class="conv-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
-            <a href="#" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
+            <a href="<?= h($conv_pdf_base . 'MGP-A2025.pdf') ?>" target="_blank" rel="noopener" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
+            <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
           </div>
         </div>
 
-        <div class="conv-card">
+        <div class="conv-card" style="cursor:pointer;"
+             data-conv-title="Maestría en Estrategias Contables"
+             data-conv-badge="Convocatoria Abierta"
+             data-conv-ciclo="A-2025"
+             data-conv-desc="Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva."
+             data-conv-img="<?= h($conv_banner_a2025) ?>"
+             data-conv-doc="<?= h($conv_pdf_base . 'MEC-A2025.pdf') ?>"
+             data-conv-programa="program_mec">
           <span class="conv-badge">Ciclo A-2025</span>
           <h3>Maestría en Estrategias Contables</h3>
           <p>Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva.</p>
           <div class="conv-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
-            <a href="#" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
+            <a href="<?= h($conv_pdf_base . 'MEC-A2025.pdf') ?>" target="_blank" rel="noopener" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
+            <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
           </div>
         </div>
 
-        <div class="conv-card">
+        <div class="conv-card" style="cursor:pointer;"
+             data-conv-title="Especialidad en Administración de Hospitales"
+             data-conv-badge="Convocatoria Abierta"
+             data-conv-ciclo="A-2025"
+             data-conv-desc="Desarrolla habilidades de gestión en salud para mejorar la calidad de la atención hospitalaria."
+             data-conv-img="<?= h($conv_banner_a2025) ?>"
+             data-conv-doc="<?= h($conv_pdf_base . 'EAH-A2025.pdf') ?>"
+             data-conv-programa="program_eah">
           <span class="conv-badge">Ciclo A-2025</span>
           <h3>Especialidad en Administración de Hospitales</h3>
           <p>Desarrolla habilidades de gestión en salud para mejorar la calidad de la atención hospitalaria.</p>
           <div class="conv-card-actions">
-            <a href="#" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
-            <a href="#" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
+            <a href="<?= h($conv_pdf_base . 'EAH-A2025.pdf') ?>" target="_blank" rel="noopener" class="btn-sm-rojo"><i class="ti ti-download"></i> Descargar Convocatoria</a>
+            <a href="#convocatorias" class="btn-sm-outline" data-page="convocatorias">Más Información</a>
           </div>
         </div>
 
@@ -339,267 +317,6 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     </div>
   </div>
 </section>
-
-<?php /* ===== DISEÑO v5 — deshabilitado el 2026-07-06, se conserva de referencia =====
-         Banner de imágenes horizontales (carrusel) + convocatorias en tarjetas oscuras con
-         contador regresivo. Se reemplazó porque se decidió volver al diseño original: hero
-         con texto institucional superpuesto + convocatorias en tarjetas simples. */
-   if (false): ?>
-<section class="hero3" id="hero-inicio">
-  <div class="hero3-viewport" id="hero3-viewport">
-
-    <!-- Cada slide admite una imagen horizontal real (banner) más adelante:
-         basta con agregar <img class="hero3-slide-img" src="..."> dentro y quitar
-         el bloque .hero3-slide-media--placeholder. -->
-    <div class="hero3-slide activo">
-      <div class="hero3-slide-media hero3-slide-media--placeholder" style="--tint1:#8a0e17; --tint2:#2b0a0a">
-        <i class="ti ti-photo"></i>
-        <span>Banner institucional — imagen horizontal próximamente</span>
-      </div>
-      <div class="hero3-slide-caption">
-        <span class="hero3-slide-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-        <h2 class="hero3-slide-title">División de Estudios de Posgrado</h2>
-      </div>
-    </div>
-
-    <div class="hero3-slide">
-      <div class="hero3-slide-media hero3-slide-media--placeholder" style="--tint1:#8a6423; --tint2:#3a2a0d">
-        <i class="ti ti-photo"></i>
-        <span>Banner institucional — imagen horizontal próximamente</span>
-      </div>
-      <div class="hero3-slide-caption">
-        <span class="hero3-slide-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-        <h2 class="hero3-slide-title">Facultad de Economía, Contaduría y Administración</h2>
-      </div>
-    </div>
-
-  </div>
-
-  <button class="hero3-nav hero3-nav-prev" aria-label="Banner anterior"><i class="ti ti-chevron-left"></i></button>
-  <button class="hero3-nav hero3-nav-next" aria-label="Banner siguiente"><i class="ti ti-chevron-right"></i></button>
-
-  <div class="hero3-dots">
-    <button class="hero3-dot activo" data-goto="0" aria-label="Ir al banner 1"></button>
-    <button class="hero3-dot" data-goto="1" aria-label="Ir al banner 2"></button>
-  </div>
-</section>
-
-<script>
-(function () {
-  var hero = document.getElementById('hero3-viewport');
-  if (!hero) return;
-  var slides = hero.querySelectorAll('.hero3-slide');
-  var dots   = document.querySelectorAll('.hero3-dots .hero3-dot');
-  var btnPrev = document.querySelector('.hero3-nav-prev');
-  var btnNext = document.querySelector('.hero3-nav-next');
-  if (!slides.length) return;
-  var current = 0;
-  var timer;
-  var DURACION = 5000;
-
-  function render() {
-    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
-    dots.forEach(function (d, i) { d.classList.toggle('activo', i === current); });
-  }
-  function goTo(idx) {
-    current = (idx + slides.length) % slides.length;
-    render();
-  }
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(function () { goTo(current + 1); }, DURACION);
-  }
-
-  if (btnPrev) btnPrev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
-  if (btnNext) btnNext.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
-  dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { goTo(i); resetTimer(); });
-  });
-
-  render();
-  resetTimer();
-})();
-</script>
-
-<!-- ===== CONVOCATORIAS — debajo del banner institucional, alimentadas desde la base de datos ===== -->
-<section class="convs-section" id="hero2-convs">
-  <div class="inner">
-
-    <div class="hero2-convs-heading">
-      <span class="hero2-convs-eyebrow"><span class="dot"></span> Convocatorias vigentes</span>
-      <h2 class="hero2-convs-title">Convocatorias Abiertas</h2>
-      <p class="hero2-convs-sub">Consulta los programas con admisión abierta e inscríbete para el próximo ciclo escolar.</p>
-    </div>
-
-    <div class="hero2-convs-track">
-        <?php
-          $acentos = ['#e31313', '#a87f3d', '#2f6fb0'];
-          $indice_acento = 0;
-        ?>
-        <?php if (!empty($convocatorias_db)): ?>
-
-          <?php foreach ($convocatorias_db as $conv): ?>
-            <?php
-              $doc    = !empty($conv['file_path']) ? '../' . ltrim($conv['file_path'], '/') : '';
-              $acento = $acentos[$indice_acento % count($acentos)];
-              $indice_acento++;
-            ?>
-            <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:<?= h($acento) ?>"
-                 data-conv-title="<?= h($conv['title']) ?>"
-                 data-conv-img=""
-                 data-conv-badge="Convocatoria Abierta"
-                 data-conv-ciclo=""
-                 data-conv-limite=""
-                 data-conv-desc="<?= h($conv['description']) ?>"
-                 data-conv-registro="#convocatorias"
-                 data-conv-doc="<?= h($doc) ?>">
-              <div class="hero2-conv-top">
-                <span class="hero2-conv-icon"><i class="ti ti-file-text"></i></span>
-              </div>
-              <h3><?= h($conv['title']) ?></h3>
-              <?php if (!empty($conv['description'])): ?>
-                <p><?= h($conv['description']) ?></p>
-              <?php endif; ?>
-              <span class="hero2-conv-footer">
-                <?php if ($doc !== ''): ?>
-                  <a href="<?= h($doc) ?>" target="_blank" rel="noopener" class="hero2-conv-btn" onclick="event.stopPropagation()">
-                    <i class="ti ti-download"></i> Descargar convocatoria
-                  </a>
-                <?php endif; ?>
-                <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-              </span>
-            </div>
-          <?php endforeach; ?>
-
-        <?php else: ?>
-
-          <!-- Respaldo mientras no haya convocatorias publicadas en la base de datos -->
-          <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#e31313"
-               data-conv-title="Maestría en Economía · Ciclo A-2025" data-conv-img=""
-               data-conv-badge="Ciclo A-2025" data-conv-ciclo="Ciclo A-2025" data-conv-limite=""
-               data-conv-desc="Desarrolla competencias analíticas para comprender y resolver los desafíos económicos de la región."
-               data-conv-registro="#convocatorias" data-conv-doc="../assets/img/convocatoria-me.png">
-            <div class="hero2-conv-top">
-              <span class="hero2-conv-icon"><i class="ti ti-chart-line"></i></span>
-            </div>
-            <h3>Maestría en Economía</h3>
-            <p>Desarrolla competencias analíticas para comprender y resolver los desafíos económicos de la región.</p>
-            <span class="hero2-conv-footer">
-              <a href="../assets/img/convocatoria-me.png" target="_blank" class="hero2-conv-btn" onclick="event.stopPropagation()">
-                <i class="ti ti-download"></i> Descargar convocatoria
-              </a>
-              <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-            </span>
-          </div>
-
-          <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#a87f3d"
-               data-conv-title="Maestría en Gestión de Negocios · Ciclo A-2025" data-conv-img=""
-               data-conv-badge="Ciclo A-2025" data-conv-ciclo="Ciclo A-2025" data-conv-limite=""
-               data-conv-desc="Forma competencias estratégicas para liderar organizaciones en entornos dinámicos y globales."
-               data-conv-registro="#convocatorias" data-conv-doc="../assets/img/convocatoria-a2025.png">
-            <div class="hero2-conv-top">
-              <span class="hero2-conv-icon"><i class="ti ti-briefcase"></i></span>
-            </div>
-            <h3>Maestría en Gestión de Negocios</h3>
-            <p>Forma competencias estratégicas para liderar organizaciones en entornos dinámicos y globales.</p>
-            <span class="hero2-conv-footer">
-              <a href="../assets/img/convocatoria-a2025.png" target="_blank" class="hero2-conv-btn" onclick="event.stopPropagation()">
-                <i class="ti ti-download"></i> Descargar convocatoria
-              </a>
-              <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-            </span>
-          </div>
-
-          <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#2f6fb0"
-               data-conv-title="Maestría en Gestión Pública · Ciclo A-2025" data-conv-img=""
-               data-conv-badge="Ciclo A-2025" data-conv-ciclo="Ciclo A-2025" data-conv-limite=""
-               data-conv-desc="Prepara servidores públicos capaces de impulsar el desarrollo y la modernización institucional."
-               data-conv-registro="#convocatorias" data-conv-doc="">
-            <div class="hero2-conv-top">
-              <span class="hero2-conv-icon"><i class="ti ti-building-community"></i></span>
-            </div>
-            <h3>Maestría en Gestión Pública</h3>
-            <p>Prepara servidores públicos capaces de impulsar el desarrollo y la modernización institucional.</p>
-            <span class="hero2-conv-footer">
-              <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-            </span>
-          </div>
-
-          <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#e31313"
-               data-conv-title="Maestría en Estrategias Contables · Ciclo A-2025" data-conv-img=""
-               data-conv-badge="Ciclo A-2025" data-conv-ciclo="Ciclo A-2025" data-conv-limite=""
-               data-conv-desc="Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva."
-               data-conv-registro="#convocatorias" data-conv-doc="">
-            <div class="hero2-conv-top">
-              <span class="hero2-conv-icon"><i class="ti ti-calculator"></i></span>
-            </div>
-            <h3>Maestría en Estrategias Contables</h3>
-            <p>Especialízate en análisis financiero y planeación fiscal para una toma de decisiones efectiva.</p>
-            <span class="hero2-conv-footer">
-              <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-            </span>
-          </div>
-
-          <div class="hero2-conv-card" role="button" tabindex="0" style="--accent:#a87f3d"
-               data-conv-title="Especialidad en Administración de Hospitales · Ciclo A-2025" data-conv-img=""
-               data-conv-badge="Ciclo A-2025" data-conv-ciclo="Ciclo A-2025" data-conv-limite=""
-               data-conv-desc="Desarrolla habilidades de gestión en salud para mejorar la calidad de la atención hospitalaria."
-               data-conv-registro="#convocatorias" data-conv-doc="">
-            <div class="hero2-conv-top">
-              <span class="hero2-conv-icon"><i class="ti ti-heartbeat"></i></span>
-            </div>
-            <h3>Especialidad en Administración de Hospitales</h3>
-            <p>Desarrolla habilidades de gestión en salud para mejorar la calidad de la atención hospitalaria.</p>
-            <span class="hero2-conv-footer">
-              <span class="hero2-conv-more-btn">Ver detalle <i class="ti ti-arrow-right"></i></span>
-            </span>
-          </div>
-
-        <?php endif; ?>
-      </div>
-
-    <!-- Identidad institucional — cierra la sección de convocatorias -->
-    <div class="hero2-bottombar">
-      <div class="hero2-bottombar-row">
-        <span class="hero2-bottombar-kicker">División de Estudios de Posgrado · FECA · UJED</span>
-        <div class="hero2-bottombar-right">
-          <span class="hero2-chip"><b>5+</b> Programas</span>
-          <span class="hero2-chip"><b>25+</b> Años</span>
-          <span class="hero2-chip"><b>PNPC</b> Reconocimiento</span>
-          <a href="#nosotros" class="hero2-bottombar-more" data-page="nosotros">Conoce más <i class="ti ti-arrow-right"></i></a>
-        </div>
-      </div>
-      <p class="hero2-tagline"><i class="ti ti-quote"></i> La herramienta para el futuro que tú deseas</p>
-    </div>
-
-  </div>
-</section>
-
-<script>
-(function () {
-  var cards = document.querySelectorAll('#hero2-convs .hero2-conv-card');
-  cards.forEach(function (c) {
-    function abrir() {
-      if (typeof window.openConvModal !== 'function') return;
-      window.openConvModal({
-        img:      c.dataset.convImg,
-        badge:    c.dataset.convBadge,
-        title:    c.dataset.convTitle,
-        ciclo:    c.dataset.convCiclo,
-        limite:   c.dataset.convLimite,
-        desc:     c.dataset.convDesc,
-        registro: c.dataset.convRegistro,
-        doc:      c.dataset.convDoc
-      });
-    }
-    c.addEventListener('click', abrir);
-    c.addEventListener('keyup', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') abrir();
-    });
-  });
-})();
-</script>
-<?php endif; /* ===== FIN DEL DISEÑO v5 ===== */ ?>
 
 <!-- ===== NOTICIAS ===== -->
 <section class="seccion seccion-gris">
@@ -615,9 +332,9 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
         <?php foreach ($noticias as $noticia): ?>
           <article class="noticia-card">
             <div class="noticia-img">
-              <?php if (!empty($noticia['file_path']) && str_starts_with((string) $noticia['mime_type'], 'image/')): ?>
-                <img src="<?= h('../' . ltrim($noticia['file_path'], '/')) ?>"
-                     alt="<?= h($noticia['title']) ?>">
+              <?php if (!empty($noticia['imagen_url'])): ?>
+                <img src="<?= h(url_subida($noticia['imagen_url'])) ?>"
+                     alt="<?= h($noticia['titulo']) ?>">
               <?php else: ?>
                 <i class="ti ti-news"></i>
                 <span>Imagen de noticia</span>
@@ -625,9 +342,9 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
             </div>
             <div class="noticia-body">
               <span class="noticia-tag">Noticia</span>
-              <h3><?= h($noticia['title']) ?></h3>
-              <?php if (!empty($noticia['description'])): ?>
-                <p><?= h(mb_strimwidth($noticia['description'], 0, 110, '…')) ?></p>
+              <h3><?= h($noticia['titulo']) ?></h3>
+              <?php if (!empty($noticia['resumen'])): ?>
+                <p><?= h(mb_strimwidth($noticia['resumen'], 0, 110, '…')) ?></p>
               <?php endif; ?>
               <a href="#blog" class="noticia-leer" data-page="blog">
                 Leer más <i class="ti ti-arrow-right"></i>
@@ -637,37 +354,10 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
         <?php endforeach; ?>
 
       <?php else: ?>
-
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-news"></i><span>Imagen de noticia</span></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Noticia</span>
-            <h3>Abierta la convocatoria para el Ciclo A-2025 para ME</h3>
-            <p>El programa de Maestría en Economía abre su proceso de admisión para el próximo ciclo escolar con nuevas modalidades.</p>
-            <a href="#blog" class="noticia-leer" data-page="blog">Leer más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-news"></i><span>Imagen de noticia</span></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Noticia</span>
-            <h3>Nuevo programa de posgrado: Maestría en Economía</h3>
-            <p>La División incorpora un nuevo programa reconocido a nivel nacional con el sello de calidad del PNPC-CONAHCYT.</p>
-            <a href="#blog" class="noticia-leer" data-page="blog">Leer más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-news"></i><span>Imagen de noticia</span></div>
-          <div class="noticia-body">
-            <span class="noticia-tag">Noticia</span>
-            <h3>Convocatoria Ciclo A-2025 para MGN, MGP, MEC y EAH</h3>
-            <p>Cuatro programas de posgrado abren simultáneamente su proceso de admisión. Descarga la convocatoria de tu interés.</p>
-            <a href="#blog" class="noticia-leer" data-page="blog">Leer más <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
+        <div class="admin-empty">
+          <i class="ti ti-news-off"></i>
+          <p>Por el momento no hay noticias publicadas. Vuelve a consultar pronto.</p>
+        </div>
       <?php endif; ?>
     </div>
 
@@ -688,115 +378,38 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     </div>
 
     <div class="directivos-grid">
-
-      <div class="directivo-card">
-        <div class="directivo-foto">
-          <!-- Coloca la imagen en: assets/img/director.jpg -->
-          <i class="ti ti-user"></i>
-          <span>Director</span>
+      <?php if (!empty($mensajes_institucionales)): ?>
+        <?php foreach ($mensajes_institucionales as $msg): ?>
+          <div class="directivo-card">
+            <div class="directivo-foto">
+              <?php if (!empty($msg['foto_url'])): ?>
+                <img src="<?= h(url_subida($msg['foto_url'])) ?>" alt="<?= h($msg['nombre']) ?>" style="width:100%;height:100%;object-fit:cover;">
+              <?php else: ?>
+                <i class="ti ti-user"></i>
+                <span><?= h($msg['cargo']) ?></span>
+              <?php endif; ?>
+            </div>
+            <div class="directivo-info">
+              <span class="directivo-rol">Mensaje de <?= h($msg['cargo']) ?></span>
+              <h3><?= h($msg['nombre']) ?></h3>
+              <?php if (!empty($msg['mensaje'])): ?>
+                <p><?= h(mb_strimwidth(trim(preg_replace('/\s+/', ' ', $msg['mensaje'])), 0, 180, '…')) ?></p>
+              <?php endif; ?>
+              <a href="#nosotros" data-page="nosotros">
+                Conoce más <i class="ti ti-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="admin-empty">
+          <i class="ti ti-users-off"></i>
+          <p>Por el momento no hay mensaje institucional publicado.</p>
         </div>
-        <div class="directivo-info">
-          <span class="directivo-rol">Mensaje del Director</span>
-          <h3>Dr. José Ramón Duarte Carranza</h3>
-          <p>
-            Bienvenido a la División de Estudios de Posgrado. Nuestra misión es
-            formar profesionales con visión global y un compromiso genuino con
-            el desarrollo de nuestra región.
-          </p>
-          <a href="#nosotros" data-page="nosotros">
-            Conoce más <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="directivo-card">
-        <div class="directivo-foto">
-          <!-- Coloca la imagen en: assets/img/jefa-posgrado.jpg -->
-          <i class="ti ti-user"></i>
-          <span>Jefa de Posgrado</span>
-        </div>
-        <div class="directivo-info">
-          <span class="directivo-rol">Mensaje de la Jefa de Posgrado</span>
-          <h3>Dra. Jessica Yocaste Castañeda Galván</h3>
-          <p>
-            Los invitamos a ser parte de nuestra comunidad académica, donde el
-            rigor investigativo y la excelencia son el camino hacia el futuro
-            que deseas.
-          </p>
-          <a href="#nosotros" data-page="nosotros">
-            Conoce más <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
+      <?php endif; ?>
     </div>
   </div>
 </section>
-
-<script>
-(function () {
-  var hero    = document.getElementById('hero-slideshow');
-  if (!hero) return;
-  var slides  = hero.querySelectorAll('.hero-slide');
-  var fills   = hero.querySelectorAll('.hero-progress-fill');
-  var bars    = hero.querySelectorAll('.hero-progress-bar');
-  var overlay = hero.querySelector('.hero-bg-overlay');
-  var btnPrev = hero.querySelector('.hero-nav-prev');
-  var btnNext = hero.querySelector('.hero-nav-next');
-  if (!slides.length) return;
-  var current = 0;
-  var timer;
-  var DURACION = 3200;
-
-  function render() {
-    slides.forEach(function (s, i) { s.classList.toggle('activo', i === current); });
-    fills.forEach(function (f, i) {
-      f.classList.remove('completo', 'corriendo');
-      if (i < current) {
-        f.classList.add('completo');
-      } else if (i === current) {
-        void f.offsetWidth; // reinicia la animación
-        f.classList.add('corriendo');
-      }
-    });
-  }
-
-  function goTo(idx) {
-    current = (idx + slides.length) % slides.length;
-    render();
-  }
-
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(function () { goTo(current + 1); }, DURACION);
-  }
-
-  function abrirModal() {
-    if (typeof window.openConvModal !== 'function') return;
-    var s = slides[current];
-    window.openConvModal({
-      img:      s.dataset.convImg,
-      badge:    s.dataset.convBadge,
-      title:    s.dataset.convTitle,
-      ciclo:    s.dataset.convCiclo,
-      limite:   s.dataset.convLimite,
-      desc:     s.dataset.convDesc,
-      registro: s.dataset.convRegistro,
-      doc:      s.dataset.convDoc
-    });
-  }
-
-  if (btnPrev) btnPrev.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); resetTimer(); });
-  if (btnNext) btnNext.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); resetTimer(); });
-  bars.forEach(function (bar, i) {
-    bar.addEventListener('click', function (e) { e.stopPropagation(); goTo(i); resetTimer(); });
-  });
-  if (overlay) overlay.addEventListener('click', abrirModal);
-
-  render();
-  resetTimer();
-})();
-</script>
 
 <!-- ===== GALERÍA ===== -->
 <section class="seccion seccion-oscura">
@@ -807,31 +420,21 @@ $convocatorias_db = fetch_public_content(['convocatoria'], 5);
     </div>
 
     <div class="galeria-grid">
-      <!-- Imagen principal grande — coloca en: assets/img/galeria-1.jpg -->
-      <div class="galeria-item galeria-item--large">
-        <i class="ti ti-photo"></i>
-        <span>Imagen principal · assets/img/galeria-1.jpg</span>
-      </div>
-      <!-- Imagen 2 — assets/img/galeria-2.jpg -->
-      <div class="galeria-item">
-        <i class="ti ti-photo"></i>
-        <span>assets/img/galeria-2.jpg</span>
-      </div>
-      <!-- Imagen 3 — assets/img/galeria-3.jpg -->
-      <div class="galeria-item">
-        <i class="ti ti-photo"></i>
-        <span>assets/img/galeria-3.jpg</span>
-      </div>
-      <!-- Imagen 4 — assets/img/galeria-4.jpg -->
-      <div class="galeria-item">
-        <i class="ti ti-photo"></i>
-        <span>assets/img/galeria-4.jpg</span>
-      </div>
-      <!-- Imagen 5 — assets/img/galeria-5.jpg -->
-      <div class="galeria-item">
-        <i class="ti ti-photo"></i>
-        <span>assets/img/galeria-5.jpg</span>
-      </div>
+      <?php foreach (['galeria_1', 'galeria_2', 'galeria_3', 'galeria_4', 'galeria_5'] as $indice_galeria => $clave_galeria): ?>
+        <?php $clase_galeria = $indice_galeria === 0 ? ' galeria-item--large' : ''; ?>
+        <?php if (isset($imagenes_sitio[$clave_galeria])): ?>
+          <div class="galeria-item<?= $clase_galeria ?>">
+            <img src="<?= h(url_subida($imagenes_sitio[$clave_galeria]['imagen_url'])) ?>"
+                 alt="<?= h($imagenes_sitio[$clave_galeria]['alt_texto'] ?? 'Comunidad Posgrado FECA') ?>"
+                 style="width:100%;height:100%;object-fit:cover;">
+          </div>
+        <?php else: ?>
+          <div class="galeria-item<?= $clase_galeria ?>">
+            <i class="ti ti-photo"></i>
+            <span>Editable desde el panel · Imágenes del sitio</span>
+          </div>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </div>
 
     <div class="seccion-cta" style="margin-top: 32px;">

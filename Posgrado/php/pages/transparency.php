@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../includes/content.php';
+$documentos_db = listar_documentos();
+?>
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
@@ -40,6 +44,15 @@
         </div>
       </a>
 
+      <a class="recurso-card" href="http://feca.ujed.mx" target="_blank" rel="noopener">
+        <div class="recurso-icon tipo-link"><i class="ti ti-building"></i></div>
+        <div class="recurso-info">
+          <h4>Página Principal FECA</h4>
+          <p>Consulta la normatividad y demás información institucional en el sitio oficial de la FECA UJED.</p>
+          <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al sitio de la FECA</span>
+        </div>
+      </a>
+
       <a class="recurso-card" href="mailto:posgradofeca@ujed.mx">
         <div class="recurso-icon tipo-link"><i class="ti ti-mail"></i></div>
         <div class="recurso-info">
@@ -75,6 +88,17 @@
           <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver directorio</span>
         </div>
       </a>
+
+      <?php foreach ($documentos_db as $doc): ?>
+        <a class="recurso-card" href="<?= !empty($doc['archivo_url']) ? h(url_subida($doc['archivo_url'])) : '#' ?>" target="_blank" rel="noopener">
+          <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
+          <div class="recurso-info">
+            <h4><?= h($doc['titulo']) ?></h4>
+            <?php if (!empty($doc['descripcion'])): ?><p><?= h($doc['descripcion']) ?></p><?php endif; ?>
+            <span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span>
+          </div>
+        </a>
+      <?php endforeach; ?>
 
     </div>
   </div>

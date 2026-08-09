@@ -1,0 +1,14 @@
+{
+  "name": "posgrado-feca-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas automatizadas (Playwright) para el proyecto Posgrado FECA -- Estándares y Métricas para el Desarrollo de Software",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:codegen": "playwright codegen"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}

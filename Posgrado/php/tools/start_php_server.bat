@@ -36,16 +36,24 @@ echo PHP: %PHP%
 echo.
 
 REM ─────────────────────────────────────────────────────────────
-REM  CREDENCIALES DE BASE DE DATOS (opcionales)
-REM  Presiona ENTER para omitir; el sitio cargara contenido estatico.
+REM  CREDENCIALES DE BASE DE DATOS
+REM  Si existe php/.env (PGHOST/PGPORT/PGDATABASE/PGUSER/PGPASSWORD,
+REM  un renglon por variable) se cargan de ahi sin preguntar nada.
+REM  Si no existe, se piden por teclado (Enter para omitir BD).
 REM ─────────────────────────────────────────────────────────────
 set PGHOST=127.0.0.1
 set PGPORT=5432
-set PGDATABASE=posgrado_feca
+set PGDATABASE=FECA
 set PGUSER=postgres
 set PGPASSWORD=
 
-set /p PGPASSWORD="Contrasena PostgreSQL (Enter para omitir BD): "
+if exist "%~dp0..\.env" (
+    echo Cargando credenciales desde php\.env
+    for /f "usebackq tokens=1,* delims==" %%A in ("%~dp0..\.env") do set %%A=%%B
+) else (
+    set /p PGDATABASE="Nombre de la base de datos [FECA]: "
+    set /p PGPASSWORD="Contrasena PostgreSQL (Enter para omitir BD): "
+)
 
 echo.
 echo Sitio principal : http://127.0.0.1:8001/html/htmlcode.html

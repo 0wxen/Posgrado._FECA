@@ -69,7 +69,7 @@
             </a>
           </li>
           <li>
-            <a href="https://www.google.com/maps/place/UJED+-+Facultad+de+Economia,+Contaduría+y+Administración/@24.0234569,-104.6793856,17z/"
+            <a href="https://www.google.com/maps/search/?api=1&query=Fanny+Anitua+s%2Fn%2C+Los+%C3%81ngeles%2C+34000+Durango%2C+Dgo."
                target="_blank" rel="noopener">
               <i class="ti ti-map-pin"></i> Cómo llegar
             </a>

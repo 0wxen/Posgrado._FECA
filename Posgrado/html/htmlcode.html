@@ -398,10 +398,10 @@
         z-index: 1;
         background: #fff;
         border-radius: 10px;
-        max-width: 980px;
+        max-width: 640px;
         width: 100%;
         max-height: 90vh;
-        overflow: hidden;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         box-shadow: 0 40px 100px rgba(0,0,0,0.5);
@@ -430,35 +430,39 @@
         transition: background 0.2s, color 0.2s;
       }
       .conv-detail-close:hover { background: var(--rojo); color: #fff; }
-      .conv-detail-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.1fr;
-        min-height: 480px;
-        overflow: hidden;
+      /* Cartel opcional arriba, a todo el ancho de la caja (no franja aparte). */
+      .conv-detail-banner-wrap {
+        position: relative;
+        line-height: 0;
       }
-      .conv-detail-img-col {
-        background: #0c0304;
+      .conv-detail-banner-wrap img {
+        width: 100%;
+        max-height: 260px;
+        object-fit: cover;
+        display: block;
+      }
+      .conv-detail-banner-dl {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.55);
+        color: #fff;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 32px 24px 24px;
-        gap: 14px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background 0.2s;
       }
-      .conv-detail-img-col img {
-        width: 100%;
-        max-height: 420px;
-        object-fit: contain;
-        border-radius: 6px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-      }
+      .conv-detail-banner-dl:hover { background: var(--rojo); }
       .conv-detail-info-col {
-        padding: 36px 28px;
+        padding: 32px 28px 28px;
         display: flex;
         flex-direction: column;
         gap: 0;
-        overflow-y: auto;
-        max-height: 90vh;
       }
       .conv-detail-info-col .conv-badge { margin-bottom: 12px; }
       .conv-detail-title {
@@ -2000,6 +2004,12 @@
         grid-column: span 2;
         aspect-ratio: 16 / 9;
       }
+      /* La celda junto a la grande comparte su fila -- sin esto se queda
+         más baja (su propio 4:3) y deja un hueco vacío debajo. */
+      .galeria-item--large + .galeria-item {
+        aspect-ratio: auto;
+        height: 100%;
+      }
 
       /* ===== NAV ACTIVO ===== */
       .nav-link.is-active {
@@ -2898,73 +2908,6 @@
         gap: 40px;
         align-items: start;
       }
-      .contacto-info-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-      .contacto-info-card {
-        display: flex;
-        gap: 16px;
-        padding: 18px 20px;
-        background: #fff;
-        border-radius: 4px;
-        box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-        align-items: flex-start;
-      }
-      .contacto-info-icon {
-        width: 44px;
-        height: 44px;
-        background: rgba(227,19,19,0.08);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--rojo);
-        font-size: 20px;
-        flex-shrink: 0;
-      }
-      .contacto-info-label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #aaa;
-        margin-bottom: 3px;
-      }
-      .contacto-info-value {
-        font-size: 15px;
-        color: var(--gris-texto);
-        line-height: 1.5;
-      }
-      .contacto-info-value a {
-        color: var(--rojo);
-        text-decoration: none;
-      }
-      .contacto-info-value a:hover { text-decoration: underline; }
-      .contacto-social {
-        display: flex;
-        gap: 10px;
-        margin-top: 8px;
-      }
-      .contacto-social a {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        border: 1.5px solid rgba(0,0,0,0.12);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #666;
-        font-size: 18px;
-        text-decoration: none;
-        transition: border-color 0.2s, color 0.2s, background 0.2s;
-      }
-      .contacto-social a:hover {
-        border-color: var(--rojo);
-        color: #fff;
-        background: var(--rojo);
-      }
       /* Formulario */
       .contacto-form-card {
         background: #fff;
@@ -3470,15 +3413,8 @@
       }
       /* Modal convocatoria responsive */
       @media (max-width: 720px) {
-        .conv-detail-grid {
-          grid-template-columns: 1fr;
-        }
-        .conv-detail-img-col {
-          border-radius: 10px 10px 0 0;
-          padding: 24px;
-        }
-        .conv-detail-img-col img { max-height: 260px; }
-        .conv-detail-info-col { padding: 24px 20px; max-height: none; }
+        .conv-detail-info-col { padding: 24px 20px; }
+        .conv-detail-banner-wrap img { max-height: 200px; }
       }
       @media (max-width: 480px) {
         .conv-vigentes-grid { grid-template-columns: 1fr; }
@@ -4482,7 +4418,7 @@
             <div class="footer-col-title">Contacto</div>
             <div class="footer-contact-item">
               <i class="ti ti-map-pin"></i>
-              <span>Circuito Universitario s/n, C.P. 34120<br />Durango, Dgo., México</span>
+              <span>Fanny Anitua s/n, Col. Los Ángeles, C.P. 34000<br />Durango, Dgo., México</span>
             </div>
             <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--rojo);margin:10px 0 4px;">Coordinación General</div>
             <div class="footer-contact-item">
@@ -4557,37 +4493,21 @@
         </div>
 
         <div class="login-body">
-          <!-- Aviso PostgreSQL pendiente -->
-          <div class="login-db-aviso">
-            <i class="ti ti-database-off"></i>
-            <span>La autenticación con <strong>PostgreSQL</strong> estará disponible próximamente. Por ahora puedes explorar el portal en modo invitado.</span>
-          </div>
-
-          <!-- Campos deshabilitados (futura conexión BD) -->
-          <div class="form-group">
-            <label class="form-label" for="login-email">Correo institucional</label>
-            <input type="email" id="login-email" class="form-control"
-              placeholder="usuario@ujed.mx" disabled
-              style="opacity:0.5; cursor:not-allowed;">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="login-pass">Contraseña</label>
-            <input type="password" id="login-pass" class="form-control"
-              placeholder="••••••••" disabled
-              style="opacity:0.5; cursor:not-allowed;">
-          </div>
-          <button class="btn-submit" disabled
-            style="opacity:0.4; cursor:not-allowed; margin-top:0; margin-bottom:0;">
-            <i class="ti ti-lock"></i> Iniciar Sesión
-          </button>
-
-          <div class="login-divider">
-            <span>o continúa sin cuenta</span>
-          </div>
-
-          <button id="btn-entrar-sin-cuenta" class="btn-sin-cuenta">
-            <i class="ti ti-door-enter"></i> Entrar sin iniciar sesión
-          </button>
+          <form method="post" action="http://127.0.0.1:8001/php/admin/login.php">
+            <div class="form-group">
+              <label class="form-label" for="login-usuario">Usuario</label>
+              <input type="text" id="login-usuario" name="usuario" class="form-control"
+                placeholder="tu usuario" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="login-pass">Contraseña</label>
+              <input type="password" id="login-pass" name="password" class="form-control"
+                placeholder="••••••••" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="btn-submit" style="margin-top:0; margin-bottom:0;">
+              <i class="ti ti-lock"></i> Iniciar Sesión
+            </button>
+          </form>
         </div>
 
         <div class="login-footer-note">
@@ -4601,7 +4521,6 @@
     (function () {
       var modal      = document.getElementById('modal-login');
       var btnAbrir   = document.getElementById('btn-abrir-login');
-      var btnSinCta  = document.getElementById('btn-entrar-sin-cuenta');
       if (!modal) return;
 
       function abrirLogin() {
@@ -4617,15 +4536,6 @@
         btnAbrir.addEventListener('click', function (e) {
           e.preventDefault();
           abrirLogin();
-        });
-      }
-
-      if (btnSinCta) {
-        btnSinCta.addEventListener('click', function () {
-          cerrarLogin();
-          history.pushState({ pagina: 'admin' }, '', '#admin');
-          if (typeof cargarPagina === 'function') cargarPagina('admin');
-          if (typeof actualizarNavActivo === 'function') actualizarNavActivo('admin');
         });
       }
 
@@ -4716,43 +4626,36 @@
         <button class="conv-detail-close" id="conv-detail-close" aria-label="Cerrar">
           <i class="ti ti-x"></i>
         </button>
-        <div class="conv-detail-grid">
-          <!-- Izquierda: imagen grande -->
-          <div class="conv-detail-img-col">
+        <div>
+          <!-- Cartel arriba, a todo el ancho (se oculta si la convocatoria no tiene imagen) -->
+          <div class="conv-detail-banner-wrap" id="conv-detail-img-col" style="display:none;">
             <img src="" alt="" id="conv-detail-img">
-            <a href="#" download class="btn-sm-rojo" id="conv-detail-download-img"
-               style="width:100%;justify-content:center;">
-              <i class="ti ti-photo-down"></i> Descargar imagen
+            <a href="#" download id="conv-detail-download-img" class="conv-detail-banner-dl" title="Descargar imagen">
+              <i class="ti ti-photo-down"></i>
             </a>
           </div>
-          <!-- Derecha: información -->
+          <!-- Información -->
           <div class="conv-detail-info-col">
             <span class="conv-badge" id="conv-detail-badge">Vigente</span>
             <h2 class="conv-detail-title" id="conv-detail-title"></h2>
             <div class="conv-detail-meta">
-              <div class="conv-detail-meta-item">
+              <div class="conv-detail-meta-item" id="conv-detail-ciclo-wrap">
                 <i class="ti ti-calendar"></i>
                 <span id="conv-detail-ciclo"></span>
               </div>
-              <div class="conv-detail-meta-item">
+              <div class="conv-detail-meta-item" id="conv-detail-limite-wrap">
                 <i class="ti ti-clock-hour-4"></i>
                 <span id="conv-detail-limite"></span>
               </div>
               <div class="conv-detail-meta-item">
                 <i class="ti ti-map-pin"></i>
-                <span>Modalidad presencial · Durango, Dgo.</span>
+                <span id="conv-detail-ubicacion">Durango, Dgo.</span>
               </div>
             </div>
             <p class="conv-detail-desc" id="conv-detail-desc"></p>
-            <div class="conv-detail-reqs">
+            <div class="conv-detail-reqs" id="conv-detail-reqs-wrap">
               <h4>Requisitos principales</h4>
-              <ul id="conv-detail-reqs-list">
-                <li>Título de licenciatura con cédula profesional</li>
-                <li>Acta de nacimiento (copia certificada)</li>
-                <li>CURP y dos fotografías tamaño título</li>
-                <li>Carta de exposición de motivos</li>
-                <li>Carta de recomendación académica o laboral</li>
-              </ul>
+              <p id="conv-detail-reqs-texto"></p>
             </div>
             <!-- Registro destacado -->
             <div class="conv-detail-register">
@@ -4760,7 +4663,7 @@
                 <i class="ti ti-alert-circle"></i>
                 Regístrate en línea para iniciar tu proceso de admisión
               </div>
-              <a href="#" target="_blank" rel="noopener" id="conv-detail-register-btn"
+              <a href="#" rel="noopener" id="conv-detail-register-btn"
                  class="btn-primary conv-detail-register-btn">
                 <i class="ti ti-external-link"></i> Registrarse a la Convocatoria
               </a>
@@ -4769,6 +4672,9 @@
             <div class="conv-detail-actions">
               <a href="#" target="_blank" id="conv-detail-download-doc" class="btn-outline-dark">
                 <i class="ti ti-file-type-pdf"></i> Descargar Documento
+              </a>
+              <a href="#" id="conv-detail-ver-programa" class="btn-outline-dark" style="display:none;">
+                <i class="ti ti-school"></i> Ver Programa
               </a>
               <a href="#convocatorias" data-page="convocatorias" class="btn-outline-dark"
                  id="conv-detail-ver-seccion">
@@ -4793,13 +4699,53 @@
         img.src = data.img || '';
         img.alt = data.title || '';
         document.getElementById('conv-detail-download-img').href = data.img || '#';
+        document.getElementById('conv-detail-img-col').style.display = data.img ? '' : 'none';
+
         document.getElementById('conv-detail-badge').textContent  = data.badge  || 'Vigente';
         document.getElementById('conv-detail-title').textContent  = data.title  || '';
         document.getElementById('conv-detail-ciclo').textContent  = data.ciclo  || '';
+        document.getElementById('conv-detail-ciclo-wrap').style.display = data.ciclo ? '' : 'none';
         document.getElementById('conv-detail-limite').textContent = data.limite || '';
+        document.getElementById('conv-detail-limite-wrap').style.display = data.limite ? '' : 'none';
         document.getElementById('conv-detail-desc').textContent   = data.desc   || '';
-        document.getElementById('conv-detail-register-btn').href  = data.registro || '#';
-        document.getElementById('conv-detail-download-doc').href  = data.doc    || '#';
+        document.getElementById('conv-detail-ubicacion').textContent = data.ubicacion || 'Durango, Dgo.';
+
+        // "Registrarse" abre el portal real de registro de SUMA FECA (mismo
+        // para todas las convocatorias); si algún día una trae su propia URL
+        // externa, se usa esa en su lugar.
+        var registroUrl = data.registro || 'http://sumafeca.ujed.mx/publico/dep/registro_propedeutico';
+        var btnRegistro = document.getElementById('conv-detail-register-btn');
+        btnRegistro.href = registroUrl;
+        if (registroUrl.indexOf('#') === 0) {
+          btnRegistro.setAttribute('data-page', registroUrl.slice(1));
+          btnRegistro.removeAttribute('target');
+        } else {
+          btnRegistro.removeAttribute('data-page');
+          btnRegistro.setAttribute('target', '_blank');
+        }
+
+        var btnDoc = document.getElementById('conv-detail-download-doc');
+        btnDoc.href = data.doc || '#';
+        btnDoc.style.display = data.doc ? '' : 'none';
+
+        var btnPrograma = document.getElementById('conv-detail-ver-programa');
+        if (data.programa) {
+          btnPrograma.setAttribute('data-page', data.programa);
+          btnPrograma.href = '#' + data.programa;
+          btnPrograma.style.display = '';
+        } else {
+          btnPrograma.removeAttribute('data-page');
+          btnPrograma.style.display = 'none';
+        }
+
+        var reqsWrap = document.getElementById('conv-detail-reqs-wrap');
+        if (data.requisitos) {
+          document.getElementById('conv-detail-reqs-texto').textContent = data.requisitos;
+          reqsWrap.style.display = '';
+        } else {
+          reqsWrap.style.display = 'none';
+        }
+
         modal.classList.add('abierto');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -4818,6 +4764,14 @@
       });
       var verSec = document.getElementById('conv-detail-ver-seccion');
       if (verSec) verSec.addEventListener('click', window.closeConvModal);
+      var verPrograma = document.getElementById('conv-detail-ver-programa');
+      if (verPrograma) verPrograma.addEventListener('click', window.closeConvModal);
+      var btnRegistroCierre = document.getElementById('conv-detail-register-btn');
+      if (btnRegistroCierre) {
+        btnRegistroCierre.addEventListener('click', function () {
+          if (this.hasAttribute('data-page')) window.closeConvModal();
+        });
+      }
     })();
     </script>
 

@@ -1,10 +1,16 @@
+<?php
+require_once __DIR__ . '/../includes/content.php';
+$directivos_db = listar_profesores();
+$imagenes_sitio = listar_imagenes_sitio();
+$mensajes_institucionales = listar_mensajes_institucionales();
+?>
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
     <span class="page-banner-kicker">FECA UJED · División de Estudios de Posgrado</span>
     <h1>Nosotros</h1>
     <p class="page-banner-desc">
-      Conoce a nuestro equipo directivo, nuestra misión, visión, organigrama
+      Conoce a nuestro equipo directivo, el organigrama
       y el directorio de la estructura de la División.
     </p>
   </div>
@@ -19,91 +25,25 @@
     </div>
 
     <div class="mensaje-grid">
-
-      <!-- Director -->
-      <div class="mensaje-card">
-        <div class="mensaje-card-header">
-          <div class="mensaje-foto">
-            <!-- Coloca la foto en: assets/img/director.jpg -->
-            <i class="ti ti-user"></i>
-            <span>assets/img/director.jpg</span>
+      <?php foreach ($mensajes_institucionales as $msg): ?>
+        <div class="mensaje-card">
+          <div class="mensaje-card-header">
+            <div class="mensaje-foto">
+              <?php if (!empty($msg['foto_url'])): ?>
+                <img src="<?= h(url_subida($msg['foto_url'] ?? null)) ?>" alt="<?= h($msg['nombre']) ?>" style="width:100%;height:100%;object-fit:cover;">
+              <?php else: ?>
+                <i class="ti ti-user"></i>
+              <?php endif; ?>
+            </div>
+            <span class="mensaje-cargo"><?= h($msg['cargo']) ?></span>
+            <div class="mensaje-nombre"><?= h($msg['nombre']) ?></div>
           </div>
-          <span class="mensaje-cargo">Director</span>
-          <div class="mensaje-nombre">Dr. José Ramón Duarte Carranza</div>
-        </div>
-        <div class="mensaje-card-body">
-          <p class="mensaje-texto">
-            Es un honor darles la bienvenida a la División de Estudios de Posgrado de la
-            Facultad de Economía, Contaduría y Administración de la Universidad Juárez del
-            Estado de Durango. En esta División hemos asumido el compromiso de formar
-            profesionales de alto nivel académico, con una sólida base investigativa y un
-            profundo compromiso con el desarrollo de nuestra región y del país.
-            <br><br>
-            Nuestros programas están diseñados para responder a los retos actuales del
-            entorno económico, administrativo y social, ofreciendo a nuestros estudiantes
-            las herramientas necesarias para convertirse en agentes de cambio y líderes
-            en sus respectivas áreas de conocimiento. Los invitamos a ser parte de esta
-            gran familia académica.
-          </p>
-          <p class="mensaje-firma">— Dr. José Ramón Duarte Carranza</p>
-        </div>
-      </div>
-
-      <!-- Jefa de Posgrado -->
-      <div class="mensaje-card">
-        <div class="mensaje-card-header">
-          <div class="mensaje-foto">
-            <!-- Coloca la foto en: assets/img/jefa-posgrado.jpg -->
-            <i class="ti ti-user"></i>
-            <span>assets/img/jefa-posgrado.jpg</span>
+          <div class="mensaje-card-body">
+            <p class="mensaje-texto"><?= nl2br(h($msg['mensaje'] ?? '')) ?></p>
+            <p class="mensaje-firma">— <?= h($msg['nombre']) ?></p>
           </div>
-          <span class="mensaje-cargo">Jefa de Posgrado</span>
-          <div class="mensaje-nombre">Dra. Jessica Yocaste Castañeda Galván</div>
         </div>
-        <div class="mensaje-card-body">
-          <p class="mensaje-texto">
-            La División de Estudios de Posgrado de la FECA UJED es un espacio de
-            crecimiento académico, personal y profesional donde la excelencia, el rigor
-            investigativo y la innovación son el motor de nuestro quehacer cotidiano.
-            <br><br>
-            Contamos con un equipo de docentes altamente calificados, comprometidos
-            con la generación y aplicación del conocimiento, así como con programas
-            reconocidos a nivel nacional por el Programa Nacional de Posgrados de
-            Calidad (PNPC) del CONAHCYT. Los invitamos a descubrir la herramienta
-            para el futuro que tú deseas.
-          </p>
-          <p class="mensaje-firma">— Dra. Jessica Yocaste Castañeda Galván</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== MISIÓN Y VISIÓN ===== -->
-<section class="seccion" style="padding: 0;">
-  <div class="mv-grid" style="gap:0;">
-    <div class="mv-card mv-card--mision">
-      <div class="mv-card-deco">Misión</div>
-      <i class="ti ti-target mv-card-icon"></i>
-      <h3>Misión</h3>
-      <p>
-        Contribuir al desarrollo socioeconómico de la región mediante la formación
-        de profesionales de posgrado de alto nivel, con bases sólidas en investigación
-        científica, innovación tecnológica y compromiso ético con la sociedad,
-        alineados a las necesidades del entorno local, nacional e internacional.
-      </p>
-    </div>
-    <div class="mv-card mv-card--vision">
-      <div class="mv-card-deco">Visión</div>
-      <i class="ti ti-eye mv-card-icon"></i>
-      <h3>Visión</h3>
-      <p>
-        Ser la División de Estudios de Posgrado líder en la región norte del país,
-        reconocida por la calidad de sus programas académicos acreditados
-        nacionalmente, por el impacto de su investigación y por la pertinencia de
-        sus egresados en el desarrollo económico, social y cultural del Estado de Durango.
-      </p>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
@@ -117,12 +57,19 @@
     </div>
 
     <div class="organigrama-wrapper">
-      <div class="organigrama-placeholder">
-        <img src="../assets/img/organigrama.png" alt="Organigrama División de Estudios de Posgrado FECA UJED 2024">
-      </div>
-      <a href="#" class="btn-link-rojo" style="margin-top:16px;display:inline-flex;">
-        <i class="ti ti-download"></i> Descargar organigrama
-      </a>
+      <?php if (isset($imagenes_sitio['organigrama'])): ?>
+        <div class="organigrama-placeholder">
+          <img src="<?= h(url_subida($imagenes_sitio['organigrama']['imagen_url'])) ?>" alt="Organigrama División de Estudios de Posgrado FECA UJED">
+        </div>
+        <a href="<?= h(url_subida($imagenes_sitio['organigrama']['imagen_url'])) ?>" target="_blank" rel="noopener" class="btn-link-rojo" style="margin-top:16px;display:inline-flex;">
+          <i class="ti ti-download"></i> Descargar organigrama
+        </a>
+      <?php else: ?>
+        <div class="admin-empty">
+          <i class="ti ti-sitemap"></i>
+          <p>El organigrama todavía no se ha publicado.</p>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -137,11 +84,30 @@
     </div>
 
     <div class="directorio-grid">
+      <?php if (!empty($directivos_db)): ?>
+        <?php foreach ($directivos_db as $d): ?>
+          <div class="directorio-item">
+            <div class="directorio-icon">
+              <?php if (!empty($d['foto_url'])): ?>
+                <img src="<?= h(url_subida($d['foto_url'] ?? null)) ?>" alt="<?= h($d['nombre']) ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+              <?php else: ?>
+                <i class="ti ti-user"></i>
+              <?php endif; ?>
+            </div>
+            <div>
+              <div class="directorio-nombre"><?= h($d['nombre']) ?></div>
+              <div class="directorio-cargo">
+                <?= h($d['titulo_cargo'] ?? '') ?><?php if (!empty($d['email'])): ?> · <?= h($d['email']) ?><?php endif; ?><?php if (!empty($d['telefono_extension'])): ?> · <?= h($d['telefono_extension']) ?><?php endif; ?>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
 
       <div class="directorio-item">
         <div class="directorio-icon"><i class="ti ti-award"></i></div>
         <div>
-          <div class="directorio-nombre">Dr. José Ramón Duarte Carranza</div>
+          <div class="directorio-nombre">Dr. Jesús Guillermo Sotelo Asef</div>
           <div class="directorio-cargo">Director de la División de Posgrado</div>
         </div>
       </div>
@@ -149,8 +115,8 @@
       <div class="directorio-item">
         <div class="directorio-icon"><i class="ti ti-school"></i></div>
         <div>
-          <div class="directorio-nombre">Dra. Jessica Yocaste Castañeda Galván</div>
-          <div class="directorio-cargo">Jefa de la División de Posgrado</div>
+          <div class="directorio-nombre">Dr. Eliú J. Reyes Reyes</div>
+          <div class="directorio-cargo">Jefe de la División de Posgrado</div>
         </div>
       </div>
 
@@ -182,10 +148,11 @@
         <div class="directorio-icon"><i class="ti ti-building"></i></div>
         <div>
           <div class="directorio-nombre">Soporte Administrativo</div>
-          <div class="directorio-cargo">posgradofeca@ujed.mx · (618) 827 12 00 ext. 5430</div>
+          <div class="directorio-cargo">posgradofeca@ujed.mx · 618 827 1266</div>
         </div>
       </div>
 
+      <?php endif; ?>
     </div>
   </div>
 </section>

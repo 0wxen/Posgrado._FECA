@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 $dbHost = getenv('PGHOST')     ?: '127.0.0.1';
 $dbPort = getenv('PGPORT')     ?: '5432';
-$dbName = getenv('PGDATABASE') ?: 'posgrado_feca';
+$dbName = getenv('PGDATABASE') ?: 'FECA';
 $dbUser = getenv('PGUSER')     ?: 'postgres';
 $dbPass = getenv('PGPASSWORD') ?: '';
 
@@ -20,6 +20,7 @@ if ($dbPass !== '') {
         ]);
         $pdo->exec("SET client_encoding = 'UTF8'");
         $pdo->exec("SET timezone = 'America/Monterrey'");
+        $pdo->exec("SET search_path TO posgrado, public");
     } catch (PDOException $e) {
         error_log('[DEP-FECA] Error de conexión BD: ' . $e->getMessage());
         $pdo = null;

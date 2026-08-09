@@ -1,11 +1,15 @@
+<?php
+require_once __DIR__ . '/../includes/content.php';
+$faq = listar_faq();
+?>
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
     <span class="page-banner-kicker">FECA UJED · División de Estudios de Posgrado</span>
     <h1>Comunidad</h1>
     <p class="page-banner-desc">
-      Recursos, formatos y documentos de utilidad organizados para alumnado
-      y profesorado de la División de Estudios de Posgrado.
+      Recursos, formatos y documentos de utilidad organizados para alumnado,
+      profesorado y personal administrativo de la División de Estudios de Posgrado.
     </p>
   </div>
 </section>
@@ -53,7 +57,7 @@
           </div>
         </a>
 
-        <div class="recursos-grid">
+        <div class="recursos-grid" style="margin-top:20px;">
 
           <a class="recurso-card" href="https://www.sipu.ujed.mx/" target="_blank" rel="noopener">
             <div class="recurso-icon tipo-link"><i class="ti ti-database"></i></div>
@@ -91,21 +95,21 @@
             </div>
           </a>
 
-          <a class="recurso-card" href="../assets/img/calendario.png" target="_blank" rel="noopener">
-            <div class="recurso-icon tipo-doc"><i class="ti ti-calendar-event"></i></div>
-            <div class="recurso-info">
-              <h4>Calendario Escolar 2026</h4>
-              <p>Periodos de inscripción, inicio y fin de clases, exámenes y fechas clave del ciclo escolar de posgrado.</p>
-              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ver calendario</span>
-            </div>
-          </a>
-
           <a class="recurso-card" href="#oferta_educativa" data-page="oferta_educativa">
             <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
             <div class="recurso-info">
               <h4>Plan de Estudios (por programa)</h4>
               <p>Mapa curricular con materias, créditos y semestres de cada programa.</p>
               <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver programas</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="../assets/img/calendario.png" target="_blank" rel="noopener">
+            <div class="recurso-icon tipo-doc"><i class="ti ti-calendar-event"></i></div>
+            <div class="recurso-info">
+              <h4>Calendario Escolar 2026</h4>
+              <p>Periodos de inscripción, inicio y fin de clases, exámenes y fechas clave del ciclo escolar de posgrado.</p>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ver calendario</span>
             </div>
           </a>
 
@@ -138,7 +142,7 @@
           <p>Formatos, lineamientos y materiales de apoyo para la actividad docente y de investigación.</p>
         </div>
 
-        <!-- PRODEP/SNI destacado (probando la misma posición que Alumnado) -->
+        <!-- PRODEP/SNI destacado -->
         <a class="recurso-card recurso-destacado" href="#" target="_blank" rel="noopener" style="border-left:3px solid var(--rojo); background:#fff;">
           <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-award"></i></div>
           <div class="recurso-info">
@@ -168,7 +172,7 @@
           </div>
         </a>
 
-        <div class="recursos-grid">
+        <div class="recursos-grid" style="margin-top:20px;">
 
           <a class="recurso-card" href="#unidades_aprendizaje" data-page="unidades_aprendizaje">
             <div class="recurso-icon tipo-link"><i class="ti ti-books"></i></div>
@@ -188,21 +192,21 @@
             </div>
           </a>
 
-          <a class="recurso-card" href="#" target="_blank" rel="noopener">
-            <div class="recurso-icon tipo-link"><i class="ti ti-award"></i></div>
-            <div class="recurso-info">
-              <h4>PRODEP / SNI</h4>
-              <p>Información y enlaces relacionados con el Programa de Desarrollo Profesional Docente y el SNI.</p>
-              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Más información</span>
-            </div>
-          </a>
-
           <a class="recurso-card" href="#investigacion" data-page="investigacion">
             <div class="recurso-icon tipo-link"><i class="ti ti-flask"></i></div>
             <div class="recurso-info">
               <h4>Cuerpos Académicos</h4>
               <p>Consulta los cuerpos académicos activos, sus integrantes y sus líneas de investigación.</p>
               <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver investigación</span>
+            </div>
+          </a>
+
+          <a class="recurso-card" href="#" target="_blank" rel="noopener">
+            <div class="recurso-icon tipo-link"><i class="ti ti-award"></i></div>
+            <div class="recurso-info">
+              <h4>PRODEP / SNI</h4>
+              <p>Información y enlaces relacionados con el Programa de Desarrollo Profesional Docente y el SNI.</p>
+              <span class="recurso-info-link"><i class="ti ti-external-link"></i> Más información</span>
             </div>
           </a>
 
@@ -260,105 +264,28 @@
       </p>
     </div>
 
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-question">
-          <span>¿Cómo consulto mis calificaciones e historial académico?</span>
-          <i class="ti ti-chevron-down"></i>
-        </summary>
-        <div class="faq-answer">
-          <p>A través del Sistema Único de Monitoreo Académico (SUMA), disponible desde el encabezado del sitio o en
-            <a href="https://sumafeca.ujed.mx/" target="_blank" rel="noopener">sumafeca.ujed.mx</a>.</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary class="faq-question">
-          <span>¿Dónde descargo los formatos y guías de trámites?</span>
-          <i class="ti ti-chevron-down"></i>
-        </summary>
-        <div class="faq-answer">
-          <p>En las pestañas <strong>Alumnado</strong> y <strong>Profesorado</strong> de esta sección de Comunidad encontrarás los formatos, guías y plantillas vigentes.</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary class="faq-question">
-          <span>¿Cuáles son las modalidades de titulación disponibles?</span>
-          <i class="ti ti-chevron-down"></i>
-        </summary>
-        <div class="faq-answer">
-          <p>La División ofrece titulación por <strong>Certificación</strong> y por <strong>Trabajo Terminal</strong>. Ambas guías están disponibles en la pestaña Alumnado.</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary class="faq-question">
-          <span>¿Cómo funciona el proceso de tutorías?</span>
-          <i class="ti ti-chevron-down"></i>
-        </summary>
-        <div class="faq-answer">
-          <p>Consulta el detalle en <a href="#procesos_academicos" data-page="procesos_academicos">Procesos Académicos</a>, donde también podrás descargar el formato correspondiente.</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary class="faq-question">
-          <span>¿A quién contacto si tengo dudas sobre mi programa?</span>
-          <i class="ti ti-chevron-down"></i>
-        </summary>
-        <div class="faq-answer">
-          <p>Puedes comunicarte directamente con la Coordinación Académica de tu programa desde la sección de <a href="#contacto" data-page="contacto">Contacto</a>.</p>
-        </div>
-      </details>
-    </div>
+    <?php if (!empty($faq)): ?>
+      <div class="faq-list">
+        <?php foreach ($faq as $item): ?>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span><?= h($item['pregunta']) ?></span>
+              <i class="ti ti-chevron-down"></i>
+            </summary>
+            <div class="faq-answer">
+              <p><?= nl2br(h($item['respuesta'])) ?></p>
+            </div>
+          </details>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <div class="admin-empty">
+        <i class="ti ti-help-off"></i>
+        <p>Por el momento no hay preguntas frecuentes publicadas.</p>
+      </div>
+    <?php endif; ?>
   </div>
 </section>
-
-<!--
-===== PREGUNTAS FRECUENTES — DISEÑO EN TARJETAS (descartado por ahora) =====
-Se conserva comentado por si se quiere retomar más adelante.
-
-<section class="seccion seccion-gris">
-  <div class="inner">
-    <div class="seccion-header" style="text-align:center; margin-left:auto; margin-right:auto;">
-      <span class="kicker">¿Tienes dudas?</span>
-      <h2>Preguntas Frecuentes</h2>
-      <p style="margin-left:auto; margin-right:auto;">
-        Respuestas rápidas a las consultas más comunes de alumnado y profesorado sobre trámites y recursos de la División.
-      </p>
-    </div>
-
-    <div class="faq-grid">
-      <div class="faq-card">
-        <div class="faq-card-q"><span class="faq-q-badge">Q</span> ¿Cómo consulto mis calificaciones e historial académico?</div>
-        <p class="faq-card-a">A través del Sistema Único de Monitoreo Académico (SUMA), disponible desde el encabezado del sitio o en
-          <a href="https://sumafeca.ujed.mx/" target="_blank" rel="noopener">sumafeca.ujed.mx</a>.</p>
-      </div>
-
-      <div class="faq-card">
-        <div class="faq-card-q"><span class="faq-q-badge">Q</span> ¿Dónde descargo los formatos y guías de trámites?</div>
-        <p class="faq-card-a">En las pestañas <strong>Alumnado</strong> y <strong>Profesorado</strong> de esta sección de Comunidad encontrarás los formatos, guías y plantillas vigentes.</p>
-      </div>
-
-      <div class="faq-card">
-        <div class="faq-card-q"><span class="faq-q-badge">Q</span> ¿Cuáles son las modalidades de titulación disponibles?</div>
-        <p class="faq-card-a">La División ofrece titulación por <strong>Certificación</strong> y por <strong>Trabajo Terminal</strong>. Ambas guías están disponibles en la pestaña Alumnado.</p>
-      </div>
-
-      <div class="faq-card">
-        <div class="faq-card-q"><span class="faq-q-badge">Q</span> ¿Cómo funciona el proceso de tutorías?</div>
-        <p class="faq-card-a">Consulta el detalle en <a href="#procesos_academicos" data-page="procesos_academicos">Procesos Académicos</a>, donde también podrás descargar el formato correspondiente.</p>
-      </div>
-
-      <div class="faq-card">
-        <div class="faq-card-q"><span class="faq-q-badge">Q</span> ¿A quién contacto si tengo dudas sobre mi programa?</div>
-        <p class="faq-card-a">Puedes comunicarte directamente con la Coordinación Académica de tu programa desde la sección de <a href="#contacto" data-page="contacto">Contacto</a>.</p>
-      </div>
-    </div>
-  </div>
-</section>
--->
 
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">

@@ -18,7 +18,7 @@
       <h2>Identidad y Domicilio del Responsable</h2>
       <p>La <strong>División de Estudios de Posgrado de la Facultad de Economía, Contaduría
       y Administración</strong> de la Universidad Juárez del Estado de Durango (UJED), con
-      domicilio en Circuito Universitario s/n, C.P. 34120, Durango, Dgo., México, es
+      domicilio en Fanny Anitua s/n, Col. Los Ángeles, C.P. 34000, Durango, Dgo., México, es
       responsable del tratamiento de sus datos personales.</p>
     </div>
 
@@ -63,7 +63,7 @@
       <p>
         <strong>Correo:</strong> <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a><br>
         <strong>Teléfono:</strong> (618) 827 12 00 ext. 5430<br>
-        <strong>Horario:</strong> Lunes a Viernes, 8:00 a.m. – 3:00 p.m.
+        <strong>Horario:</strong> Lunes a Viernes, 8:00 a.m. – 8:00 p.m. · Sábados, 9:00 a.m. – 2:00 p.m.
       </p>
       <p>La solicitud deberá incluir su nombre completo, una descripción clara del derecho
       que desea ejercer y los datos de contacto para notificarle la respuesta.</p>

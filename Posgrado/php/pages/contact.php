@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/content.php'; ?>
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
@@ -10,83 +11,121 @@
   </div>
 </section>
 
+<!-- ===== AVISO DE ENVÍO (según ?enviado=1 / ?error=campos|servidor en la URL) ===== -->
+<div id="contacto-aviso" hidden style="max-width:900px;margin:24px auto 0;padding:14px 18px;border-radius:4px;font-weight:600;"></div>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var aviso = document.getElementById('contacto-aviso');
+  if (!aviso) return;
+
+  var mensajes = {
+    enviado: { texto: 'Tu mensaje fue enviado correctamente. Te responderemos en un plazo máximo de 2 días hábiles.', tipo: 'ok' },
+    campos:  { texto: 'Revisa los campos obligatorios (nombre, correo, asunto y mensaje) e intenta de nuevo.', tipo: 'error' },
+    servidor:{ texto: 'No se pudo enviar tu mensaje en este momento. Escríbenos directo a posgradofeca@ujed.mx.', tipo: 'error' },
+  };
+
+  var clave = params.has('enviado') ? 'enviado' : (params.get('error') || null);
+  if (!clave || !mensajes[clave]) return;
+
+  aviso.textContent = mensajes[clave].texto;
+  aviso.style.background = mensajes[clave].tipo === 'ok' ? '#e6f7ec' : '#fdecec';
+  aviso.style.color = mensajes[clave].tipo === 'ok' ? '#1f7a3a' : '#951823';
+  aviso.hidden = false;
+})();
+</script>
+
 <!-- ===== INFO + FORMULARIO ===== -->
 <section class="seccion seccion-gris">
   <div class="inner">
     <div class="contacto-grid">
 
       <!-- Columna izquierda: información -->
-      <div class="contacto-info-cards">
+      <div style="display:flex;flex-direction:column;gap:20px;">
 
-        <div class="contacto-info-card">
-          <div class="contacto-info-icon"><i class="ti ti-phone"></i></div>
-          <div>
-            <div class="contacto-info-label">Teléfono</div>
-            <div class="contacto-info-value">
-              <a href="tel:+526188271200">(618) 827 12 00</a><br>
-              <span style="font-size:13px; color:#888;">Extensión 5430</span>
-            </div>
+        <!-- Panel Coordinación General -->
+        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+          <div style="background:var(--rojo);padding:16px 22px;display:flex;align-items:center;gap:10px;">
+            <i class="ti ti-headset" style="font-size:20px;color:#fff;opacity:.9;"></i>
+            <span style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;">Coordinación General</span>
+          </div>
+          <div style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+            <a href="tel:+526188271266" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;padding:12px 14px;border-radius:6px;background:#fafafa;border:1px solid #f0f0f0;">
+              <span style="width:38px;height:38px;border-radius:50%;background:rgba(227,19,19,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="ti ti-phone" style="font-size:17px;color:var(--rojo);"></i>
+              </span>
+              <div>
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:2px;">Teléfono</div>
+                <div style="font-size:16px;font-weight:700;color:#222;">618 827 1266</div>
+              </div>
+            </a>
+            <a href="mailto:posgradofeca@ujed.mx" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;padding:12px 14px;border-radius:6px;background:#fafafa;border:1px solid #f0f0f0;">
+              <span style="width:38px;height:38px;border-radius:50%;background:rgba(227,19,19,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="ti ti-mail" style="font-size:17px;color:var(--rojo);"></i>
+              </span>
+              <div>
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:2px;">Correo electrónico</div>
+                <div style="font-size:15px;font-weight:600;color:#222;">posgradofeca@ujed.mx</div>
+              </div>
+            </a>
           </div>
         </div>
 
-        <div class="contacto-info-card">
-          <div class="contacto-info-icon"><i class="ti ti-mail"></i></div>
-          <div>
-            <div class="contacto-info-label">Correo electrónico</div>
-            <div class="contacto-info-value">
-              <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a>
-            </div>
+        <!-- Panel Ubicación y horario -->
+        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+          <div style="background:var(--dorado);padding:16px 22px;display:flex;align-items:center;gap:10px;">
+            <i class="ti ti-map-pin" style="font-size:20px;color:#fff;opacity:.9;"></i>
+            <span style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;">Dónde encontrarnos</span>
           </div>
-        </div>
-
-        <div class="contacto-info-card">
-          <div class="contacto-info-icon"><i class="ti ti-map-pin"></i></div>
-          <div>
-            <div class="contacto-info-label">Dirección</div>
-            <div class="contacto-info-value">
-              Circuito Universitario s/n<br>
-              C.P. 34120 · Durango, Dgo.<br>
-              <span style="font-size:13px; color:#888;">Edificio FECA, piso 2</span>
+          <div style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:flex-start;gap:14px;">
+              <span style="width:38px;height:38px;border-radius:50%;background:rgba(168,127,61,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                <i class="ti ti-building-community" style="font-size:17px;color:var(--dorado);"></i>
+              </span>
+              <div>
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:4px;">Dirección</div>
+                <div style="font-size:14px;color:#333;line-height:1.6;">Fanny Anitua s/n<br>Col. Los Ángeles · C.P. 34000<br><span style="color:#888;font-size:13px;">Durango, Dgo.</span></div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="contacto-info-card">
-          <div class="contacto-info-icon"><i class="ti ti-clock"></i></div>
-          <div>
-            <div class="contacto-info-label">Horario de atención</div>
-            <div class="contacto-info-value">
-              Lunes a Viernes<br>
-              8:00 a.m. — 3:00 p.m.
-            </div>
-          </div>
-        </div>
-
-        <div class="contacto-info-card">
-          <div class="contacto-info-icon"><i class="ti ti-share"></i></div>
-          <div>
-            <div class="contacto-info-label">Redes sociales</div>
-            <div class="contacto-info-value">
-              Síguenos para estar al tanto de convocatorias y novedades.
-              <div class="contacto-social">
-                <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" title="Facebook">
-                  <i class="ti ti-brand-facebook"></i>
-                </a>
-                <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" title="X / Twitter">
-                  <i class="ti ti-brand-x"></i>
-                </a>
-                <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" title="Instagram">
-                  <i class="ti ti-brand-instagram"></i>
-                </a>
-                <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" title="TikTok">
-                  <i class="ti ti-brand-tiktok"></i>
-                </a>
+            <div style="height:1px;background:#f0f0f0;"></div>
+            <div style="display:flex;align-items:flex-start;gap:14px;">
+              <span style="width:38px;height:38px;border-radius:50%;background:rgba(168,127,61,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                <i class="ti ti-clock" style="font-size:17px;color:var(--dorado);"></i>
+              </span>
+              <div>
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:4px;">Horario de atención</div>
+                <div style="font-size:14px;color:#333;line-height:1.6;">Lunes a Viernes<br><strong>8:00 a.m. — 8:00 p.m.</strong><br>Sábados<br><strong>9:00 a.m. — 2:00 p.m.</strong></div>
               </div>
             </div>
           </div>
         </div>
 
-      </div><!-- /info cards -->
+        <!-- Panel Redes sociales -->
+        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+          <div style="padding:18px 22px;">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#aaa;margin-bottom:12px;">Síguenos en redes</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" title="Facebook"
+                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
+                <i class="ti ti-brand-facebook" style="font-size:18px;"></i> Facebook
+              </a>
+              <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" title="X / Twitter"
+                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
+                <i class="ti ti-brand-x" style="font-size:18px;"></i> X
+              </a>
+              <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" title="Instagram"
+                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
+                <i class="ti ti-brand-instagram" style="font-size:18px;"></i> Instagram
+              </a>
+              <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" title="TikTok"
+                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
+                <i class="ti ti-brand-tiktok" style="font-size:18px;"></i> TikTok
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /info rediseñada -->
 
       <!-- Columna derecha: formulario -->
       <div class="contacto-form-card">
@@ -127,7 +166,7 @@
               <option value="DGO">Doctorado en Gestión de las Organizaciones</option>
               <option value="EAH">Especialidad en Administración de Hospitales</option>
               <option value="MAG">Maestría en Auditoría Gubernamental</option>
-              <option value="ME">Maestría en Economía (PNPC)</option>
+              <option value="ME">Maestría en Economía (SNP)</option>
               <option value="MEC">Maestría en Estrategias Contables</option>
               <option value="MGN">Maestría en Gestión de Negocios</option>
               <option value="MGP">Maestría en Gestión Pública</option>
@@ -169,19 +208,19 @@
 
     <div style="width:100%; aspect-ratio:16/6; border-radius:4px; overflow:hidden;">
       <iframe
-        src="https://maps.google.com/maps?q=Facultad+de+Economia+Contaduria+y+Administracion+UJED+Durango+Mexico&output=embed&hl=es&z=16"
+        src="https://maps.google.com/maps?q=Fanny+Anitua+s%2Fn+Los+Angeles+Durango+Mexico&output=embed&hl=es&z=16"
         width="100%"
         height="100%"
         style="border:0; display:block;"
         allowfullscreen
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="Ubicación FECA UJED · Circuito Universitario, Durango"
+        title="Ubicación FECA UJED · Fanny Anitua, Los Ángeles, Durango"
       ></iframe>
     </div>
 
     <div style="margin-top:20px; display:flex; gap:14px; flex-wrap:wrap;">
-      <a href="https://maps.google.com/?q=FECA+UJED+Durango"
+      <a href="https://maps.google.com/?q=Fanny+Anitua+s%2Fn+Los+Angeles+Durango+Mexico"
          target="_blank" rel="noopener" class="btn-sm-rojo">
         <i class="ti ti-map-pin"></i> Abrir en Google Maps
       </a>

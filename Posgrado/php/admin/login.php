@@ -3,21 +3,21 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/auth.php';
 
 if (is_admin_logged_in()) {
-    header('Location: index.php');
+    header('Location: panel.php');
     exit;
 }
 
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $credencial = trim($_POST['credencial'] ?? '');
-    $password   = $_POST['password'] ?? '';
+    $usuario  = trim($_POST['usuario'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    if (attempt_login($credencial, $password)) {
-        header('Location: index.php');
+    if (attempt_login($usuario, $password)) {
+        header('Location: panel.php');
         exit;
     }
-    $error = 'Usuario/correo o contraseña incorrectos.';
+    $error = 'Usuario o contraseña incorrectos.';
 }
 ?>
 <!doctype html>
@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Panel de marca -->
   <div class="login-brand">
-    <img src="../assets/img/logo-dep.png" class="brand-img" alt="DEP FECA UJED">
+    <img src="../../assets/img/logo-dep.png" class="brand-img" alt="DEP FECA UJED">
     <h1 class="brand-title">Panel de Administración</h1>
     <div class="brand-divider"></div>
     <p class="brand-sub">
@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-card">
 
       <h1>Iniciar sesión</h1>
-      <p class="subtitle">Ingresa con tu usuario o correo institucional</p>
+      <p class="subtitle">Ingresa con tu usuario y contraseña</p>
 
       <?php if ($error): ?>
         <div class="error-msg">
@@ -257,13 +257,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <form method="post" action="login.php" autocomplete="on">
 
         <div class="form-field">
-          <label for="credencial">Usuario o correo</label>
+          <label for="usuario">Usuario</label>
           <div class="input-wrap">
             <i class="ti ti-user"></i>
-            <input type="text" id="credencial" name="credencial"
+            <input type="text" id="usuario" name="usuario"
                    autocomplete="username" required
-                   placeholder="usuario o correo@ujed.mx"
-                   value="<?= htmlspecialchars($_POST['credencial'] ?? '') ?>">
+                   placeholder="usuario"
+                   value="<?= htmlspecialchars($_POST['usuario'] ?? '') ?>">
           </div>
         </div>
 
@@ -283,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       </form>
 
-      <a href="../html/htmlcode.html" class="back-link">
+      <a href="../../html/htmlcode.html" class="back-link">
         <i class="ti ti-arrow-left"></i> Volver al sitio público
       </a>
 
