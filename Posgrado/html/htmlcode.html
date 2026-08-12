@@ -280,6 +280,15 @@
       var btnAbrir   = document.getElementById('btn-abrir-login');
       if (!modal) return;
 
+      // mismo origen que sirve este HTML (php -S combinado en local, o el
+      // servicio único en Render) usa ruta relativa; si no (Live Server
+      // 5500 + PHP aparte), apunta al PHP local -- igual que PHP_PAGES en cargar.js.
+      var formLogin = modal.querySelector('form');
+      if (formLogin) {
+        var mismoOrigen = (location.port === '8001' || location.port === '80' || location.port === '');
+        formLogin.action = mismoOrigen ? '/php/admin/login.php' : 'http://127.0.0.1:8001/php/admin/login.php';
+      }
+
       function abrirLogin() {
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
