@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/content.php';
-$publicaciones = array_slice(listar_publicaciones(), 0, 6);
+$publicaciones = listar_publicaciones_recientes(6);
 ?>
 
 <!-- ===== BANNER ===== -->
@@ -69,22 +69,23 @@ $publicaciones = array_slice(listar_publicaciones(), 0, 6);
     </div>
     <div class="noticias-grid">
       <?php foreach ($publicaciones as $pub): ?>
-        <article class="noticia-card">
-          <div class="noticia-img"><i class="ti ti-book-2"></i></div>
+        <article class="noticia-card noticia-clickable" tabindex="0" role="button"
+                  aria-label="Ver detalle: <?= h($pub['titulo']) ?>"
+                  data-modal="<?= modal_json(modal_data_publicacion($pub)) ?>">
+          <div class="noticia-img">
+            <?php if (!empty($pub['imagen_url'])): ?>
+              <img src="<?= h(url_subida($pub['imagen_url'])) ?>" alt="<?= h($pub['titulo']) ?>">
+            <?php else: ?>
+              <i class="ti ti-book-2"></i>
+            <?php endif; ?>
+          </div>
           <div class="noticia-body">
             <span class="noticia-tag"><?= h(ucfirst($pub['tipo'] ?? 'Publicación')) ?></span>
             <h3><?= h($pub['titulo']) ?></h3>
             <p><?= h(mb_strimwidth($pub['autores_texto'], 0, 110, '…')) ?></p>
-            <?php if (!empty($pub['archivo_url'])): ?>
-              <a href="<?= h(url_subida($pub['archivo_url'])) ?>"
-                 target="_blank" rel="noopener" class="noticia-leer">
-                Descargar <i class="ti ti-download"></i>
-              </a>
-            <?php else: ?>
-              <a href="#publicaciones" class="noticia-leer" data-page="publicaciones">
-                Ver más <i class="ti ti-arrow-right"></i>
-              </a>
-            <?php endif; ?>
+            <span class="noticia-leer">
+              Ver detalles <i class="ti ti-arrow-right"></i>
+            </span>
           </div>
         </article>
       <?php endforeach; ?>
@@ -96,6 +97,22 @@ $publicaciones = array_slice(listar_publicaciones(), 0, 6);
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  document.querySelectorAll('.noticia-clickable[data-modal]').forEach(function (card) {
+    var abrir = function () {
+      var data = {};
+      try { data = JSON.parse(card.dataset.modal || '{}'); } catch (_) {}
+      if (typeof window.openNoticiaModal === 'function') window.openNoticiaModal(data);
+    };
+    card.addEventListener('click', abrir);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+    });
+  });
+})();
+</script>
 <?php else: ?>
 <section class="seccion seccion-blanca">
   <div class="inner">

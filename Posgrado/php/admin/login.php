@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: var(--texto);
     }
 
-    /* ── Panel izquierdo: marca ── */
+    /* panel izquierdo: marca */
     .login-brand {
       background: var(--rojo-osc);
       display: flex;
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       padding-top: 40px;
     }
 
-    /* ── Panel derecho: formulario ── */
+    /* panel derecho: formulario */
     .login-form-wrap {
       display: flex;
       flex-direction: column;
@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     .back-link:hover { color: var(--rojo); }
 
-    /* ── Responsive ── */
+    /* responsive */
     @media (max-width: 720px) {
       body { grid-template-columns: 1fr; }
       .login-brand { display: none; }

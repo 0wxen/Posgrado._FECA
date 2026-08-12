@@ -1,30 +1,19 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Registro central de módulos "normales" del panel: cada uno es una
- * lista de filas con crear/editar/eliminar sobre UNA tabla real.
- * Este es el ÚNICO lugar donde un nombre de módulo (que sí puede venir
- * del navegador, vía ?tab= o POST modulo=) se traduce a un nombre de
- * tabla real -- guardar.php nunca construye SQL con un nombre de tabla
- * que no haya salido de aquí.
- *
- * "usuarios" e "imagenes" NO están aquí: usuarios necesita hashear
- * contraseña y solo lo puede ver el rol control_maestro; imagenes es
- * de clave fija (no se crean/borran filas). Ambos se manejan aparte
- * en panel.php / guardar.php.
- *
- * Tipos de campo soportados: text, textarea, html, date, email, url,
- * number, select, checkbox, imagen (sube a `archivos`, guarda su id),
- * documento (igual que imagen pero sin exigir que sea imagen),
- * programa_id / profesor_id (select con las opciones de esa tabla).
- */
+// registro central de módulos del panel. Único lugar donde un nombre de
+// módulo (viene del navegador) se traduce a nombre de tabla real --
+// guardar.php nunca arma SQL con una tabla que no haya salido de aquí.
+// usuarios/imagenes no están aquí, se manejan aparte (ver panel.php/guardar.php).
+// tipos de campo: text, textarea, html, date, email, url, number, select,
+// checkbox, imagen, documento, programa_id, profesor_id.
 const MODULOS = [
 
   'convocatorias' => [
     'tabla'     => 'convocatorias',
     'etiqueta'  => 'Convocatorias',
     'etiqueta_item' => 'Convocatoria',
+    'layout_imagen' => 'horizontal',
     'icono'     => 'ti-file-text',
     'orden'     => 'fecha_cierre ASC NULLS LAST, creado_en DESC',
     'titulo_campo' => 'titulo',
@@ -129,7 +118,7 @@ const MODULOS = [
 
   'investigacion' => [
     'tabla'     => 'grupos_disciplinares',
-    'etiqueta'  => 'Investigación',
+    'etiqueta'  => 'Grupos Disciplinares',
     'etiqueta_item' => 'Grupo disciplinar',
     'icono'     => 'ti-microscope',
     'orden'     => 'nombre',
@@ -180,13 +169,16 @@ const MODULOS = [
     'tabla'     => 'blog',
     'etiqueta'  => 'Blog / Noticias',
     'etiqueta_item' => 'Entrada',
+    'layout_imagen' => 'horizontal',
     'icono'     => 'ti-news',
     'orden'     => 'destacado DESC, publicado_en DESC NULLS LAST',
     'titulo_campo' => 'titulo',
     'campos' => [
-      ['nombre' => 'titulo',            'etiqueta' => 'Título',                  'tipo' => 'text', 'requerido' => true],
+      ['nombre' => 'titulo',            'etiqueta' => 'Título',                  'tipo' => 'text', 'requerido' => true,
+       'ayuda' => 'Se usa en el buscador de la página pública de Blog.'],
       ['nombre' => 'slug',              'etiqueta' => 'URL amigable (se genera sola si se deja vacía)', 'tipo' => 'text'],
-      ['nombre' => 'resumen',           'etiqueta' => 'Resumen / extracto',      'tipo' => 'textarea'],
+      ['nombre' => 'resumen',           'etiqueta' => 'Resumen / extracto',      'tipo' => 'textarea',
+       'ayuda' => 'Aparece destacado arriba del detalle y también se usa en el buscador -- déjalo siempre lleno para que la entrada sea encontrable.'],
       ['nombre' => 'cuerpo',            'etiqueta' => 'Cuerpo de la nota',       'tipo' => 'html'],
       ['nombre' => 'autor_profesor_id', 'etiqueta' => 'Autor (profesor)',        'tipo' => 'profesor_id'],
       ['nombre' => 'fecha_evento',      'etiqueta' => 'Fecha del evento (si aplica)', 'tipo' => 'date'],
@@ -200,22 +192,30 @@ const MODULOS = [
   'publicaciones' => [
     'tabla'     => 'publicaciones',
     'etiqueta'  => 'Publicaciones',
-    'oculto_en_nav' => true, // se edita dentro de la pestaña Investigación, no tiene tab propio
+    'oculto_en_nav' => true, // se edita dentro de la pestaña Grupos Disciplinares, no tiene tab propio
     'etiqueta_item' => 'Publicación',
+    'layout_imagen' => 'horizontal',
     'icono'     => 'ti-book-2',
     'orden'     => 'anio DESC NULLS LAST, titulo',
     'titulo_campo' => 'titulo',
     'campos' => [
-      ['nombre' => 'tipo',              'etiqueta' => 'Tipo',                     'tipo' => 'select', 'opciones' => ['articulo' => 'Artículo', 'capitulo' => 'Capítulo de libro', 'libro' => 'Libro', 'memoria' => 'Memoria de congreso', 'otro' => 'Otro'], 'requerido' => true],
-      ['nombre' => 'titulo',            'etiqueta' => 'Título',                   'tipo' => 'text', 'requerido' => true],
-      ['nombre' => 'autores_texto',     'etiqueta' => 'Autores (Ej. Pérez J., García M.)', 'tipo' => 'text', 'requerido' => true],
-      ['nombre' => 'anio',              'etiqueta' => 'Año',                      'tipo' => 'number'],
-      ['nombre' => 'revista_editorial', 'etiqueta' => 'Revista / editorial',      'tipo' => 'text'],
+      ['nombre' => 'tipo',              'etiqueta' => 'Tipo',                     'tipo' => 'select', 'opciones' => ['articulo' => 'Artículo', 'capitulo' => 'Capítulo de libro', 'libro' => 'Libro', 'memoria' => 'Memoria de congreso', 'otro' => 'Otro'], 'requerido' => true,
+       'ayuda' => 'Controla la pestaña de filtro en la página pública de Publicaciones (Todos / Artículo / Capítulo de libro / Libro / Memoria de congreso / Otro).'],
+      ['nombre' => 'titulo',            'etiqueta' => 'Título',                   'tipo' => 'text', 'requerido' => true,
+       'ayuda' => 'Se usa en el buscador de la página pública de Publicaciones.'],
+      ['nombre' => 'autores_texto',     'etiqueta' => 'Autores (Ej. Pérez J., García M.)', 'tipo' => 'text', 'requerido' => true,
+       'ayuda' => 'También se usa en el buscador -- capturar los nombres tal como quieras que la gente los busque.'],
+      ['nombre' => 'anio',              'etiqueta' => 'Año',                      'tipo' => 'number',
+       'ayuda' => 'Es solo el año de publicación de la cita. "Publicaciones Recientes" en Investigación NO usa este dato: muestra las últimas 6 que se dieron de alta aquí, sin importar su año.'],
+      ['nombre' => 'revista_editorial', 'etiqueta' => 'Revista / editorial',      'tipo' => 'text',
+       'ayuda' => 'También se usa en el buscador de la página pública de Publicaciones.'],
       ['nombre' => 'volumen_numero',    'etiqueta' => 'Volumen / número',         'tipo' => 'text'],
       ['nombre' => 'paginas',           'etiqueta' => 'Páginas',                  'tipo' => 'text'],
       ['nombre' => 'doi',               'etiqueta' => 'DOI',                      'tipo' => 'text'],
       ['nombre' => 'url_externo',       'etiqueta' => 'Enlace externo',           'tipo' => 'url'],
       ['nombre' => 'resumen',           'etiqueta' => 'Resumen',                  'tipo' => 'textarea'],
+      ['nombre' => 'imagen_id',         'etiqueta' => 'Imagen (opcional)',        'tipo' => 'imagen',
+       'ayuda' => 'Opcional -- no todas las publicaciones tienen una imagen propia. Si la dejas vacía, la tarjeta muestra solo un ícono de libro.'],
       ['nombre' => 'archivo_id',        'etiqueta' => 'Archivo (PDF)',            'tipo' => 'documento'],
       ['nombre' => 'es_publicado',      'etiqueta' => 'Publicar en el sitio',     'tipo' => 'checkbox', 'defecto' => true],
     ],

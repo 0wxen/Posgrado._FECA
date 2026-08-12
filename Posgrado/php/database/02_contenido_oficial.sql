@@ -263,13 +263,13 @@ SELECT
 INSERT INTO grupos_disciplinares (nombre, descripcion, area_conocimiento, activo) VALUES
     ('Mercadotecnia y Comportamiento del Consumidor',
      'Análisis de tendencias de consumo, estrategias de marketing digital y comportamiento del mercado en contextos regionales y globales.',
-     'Grupo Activo', TRUE),
+     'Mercadotecnia', TRUE),
     ('Finanzas Corporativas e Inversión',
      'Modelos de valoración de activos, gestión de riesgo financiero, mercados de capitales y finanzas empresariales en entornos emergentes.',
-     'Grupo Activo', TRUE),
+     'Finanzas', TRUE),
     ('Políticas Públicas y Administración Local',
      'Evaluación de programas gubernamentales, innovación en la gestión municipal y estudios de descentralización administrativa.',
-     'Grupo Activo', TRUE),
+     'Administración Pública', TRUE),
     ('Contabilidad Social y Responsabilidad Empresarial',
      'Informes de sostenibilidad, responsabilidad social corporativa, impacto ambiental de las organizaciones y contabilidad medioambiental.',
-     'Grupo Activo', TRUE);
+     'Contabilidad', TRUE);

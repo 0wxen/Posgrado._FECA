@@ -5,11 +5,9 @@ $convocatorias_db = array_slice(listar_convocatorias(true), 0, 5);
 $imagenes_sitio   = listar_imagenes_sitio();
 $mensajes_institucionales = listar_mensajes_institucionales();
 
-// Años de trayectoria: se calculan a partir del año de fundación.
-// AÚN NO SE TIENE LA FECHA EXACTA -- estas dos constantes son placeholders
-// (hoy dan 7 y 10 años) hasta que la División confirme los años reales.
-const ANIO_FUNDACION_FECA     = 2019; // "la escuela" -- ajustar cuando se tenga el dato real
-const ANIO_FUNDACION_POSGRADO = 2016; // "el otro" (la División de Posgrado) -- ajustar cuando se tenga el dato real
+// placeholders -- ajustar cuando la División confirme los años reales
+const ANIO_FUNDACION_FECA     = 2019;
+const ANIO_FUNDACION_POSGRADO = 2016;
 $anios_feca     = (int) date('Y') - ANIO_FUNDACION_FECA;
 $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
 ?>
@@ -54,7 +52,7 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
     </div>
 
     <?php
-      // El banner debe mostrar las MISMAS convocatorias que la sección de abajo, no otro contenido.
+      // el banner debe mostrar las mismas convocatorias que la sección de abajo
       $hero_acentos = [
         ['#b71c1c', '#7f0000'],
         ['#a87f3d', '#6d5227'],
@@ -64,11 +62,8 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
       if (!empty($convocatorias_db)) {
         $hero_slides = $convocatorias_db;
       } else {
-        // Cartel y PDFs reales (bajados del sitio oficial, que hoy tiene el
-        // certificado SSL vencido -- se hospedan aquí en vez de depender de
-        // ese dominio roto). $hero_conv['imagen_url']/['archivo_url'] pasan
-        // por url_subida(), que ya antepone "../php/" -- por eso aquí solo
-        // se pone el "../" que cancela ese "php/" y deja la ruta en assets/.
+        // hospedados localmente (el sitio oficial tiene el SSL vencido). El
+        // "../" cancela el "php/" que url_subida() antepone, dejándolo en assets/.
         $CONV_BANNER_A2025 = '../assets/img/convocatoria-abierta-a2025.png';
         $hero_slides = [
           ['titulo' => 'Maestría en Gestión Pública', 'ciclo' => 'A-2025', 'programa' => 'program_mgp',
@@ -104,7 +99,11 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
              data-conv-programa="<?= h($hero_conv['programa'] ?? '') ?>"
              data-conv-doc="<?= h(url_subida($hero_conv['archivo_url'] ?? null)) ?>">
           <div class="hero-split-media" style="--tint1:<?= h($par[0]) ?>; --tint2:<?= h($par[1]) ?>">
-            <i class="ti <?= h($icono) ?>"></i>
+            <?php if (!empty($hero_conv['imagen_url'])): ?>
+              <img class="hero-split-media-img" src="<?= h(url_subida($hero_conv['imagen_url'])) ?>" alt="">
+            <?php else: ?>
+              <i class="ti <?= h($icono) ?>"></i>
+            <?php endif; ?>
           </div>
           <div class="hero-split-caption">
             <span class="hero-split-caption-kicker">Convocatoria Abierta</span>
@@ -251,8 +250,7 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
       <?php else: ?>
 
         <?php
-          // Cartel y PDFs reales, bajados del sitio oficial (que hoy tiene el
-          // certificado SSL vencido) y hospedados localmente para que sí carguen.
+          // hospedados localmente (el sitio oficial tiene el SSL vencido)
           $conv_banner_a2025 = '../assets/img/convocatoria-abierta-a2025.png';
           $conv_pdf_base = '../assets/docs/Convocatoria%20';
         ?>
@@ -330,7 +328,22 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
       <?php if (!empty($noticias)): ?>
 
         <?php foreach ($noticias as $noticia): ?>
-          <article class="noticia-card">
+          <?php
+            $modalData = [
+              'img'     => url_subida($noticia['imagen_url'] ?? null),
+              'tag'     => 'Noticia',
+              'title'   => $noticia['titulo'],
+              'fecha'   => !empty($noticia['fecha_evento']) ? $noticia['fecha_evento'] : (!empty($noticia['publicado_en']) ? substr($noticia['publicado_en'], 0, 10) : ''),
+              'lugar'   => $noticia['lugar_evento'] ?? '',
+              'autor'   => !empty($noticia['autor_nombre']) ? 'Por ' . $noticia['autor_nombre'] : '',
+              'resumen' => $noticia['resumen'] ?? '',
+              'cuerpo'  => $noticia['cuerpo'] ?? '',
+            ];
+            $modalJson = modal_json($modalData);
+          ?>
+          <article class="noticia-card noticia-clickable" tabindex="0" role="button"
+                    aria-label="Ver detalle: <?= h($noticia['titulo']) ?>"
+                    data-modal="<?= $modalJson ?>">
             <div class="noticia-img">
               <?php if (!empty($noticia['imagen_url'])): ?>
                 <img src="<?= h(url_subida($noticia['imagen_url'])) ?>"
@@ -346,9 +359,9 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
               <?php if (!empty($noticia['resumen'])): ?>
                 <p><?= h(mb_strimwidth($noticia['resumen'], 0, 110, '…')) ?></p>
               <?php endif; ?>
-              <a href="#blog" class="noticia-leer" data-page="blog">
+              <span class="noticia-leer">
                 Leer más <i class="ti ti-arrow-right"></i>
-              </a>
+              </span>
             </div>
           </article>
         <?php endforeach; ?>
@@ -368,6 +381,22 @@ $anios_posgrado = (int) date('Y') - ANIO_FUNDACION_POSGRADO;
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  document.querySelectorAll('.noticia-clickable[data-modal]').forEach(function (card) {
+    var abrir = function () {
+      var data = {};
+      try { data = JSON.parse(card.dataset.modal || '{}'); } catch (_) {}
+      if (typeof window.openNoticiaModal === 'function') window.openNoticiaModal(data);
+    };
+    card.addEventListener('click', abrir);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+    });
+  });
+})();
+</script>
 
 <!-- ===== NOSOTROS ===== -->
 <section class="seccion seccion-blanca">

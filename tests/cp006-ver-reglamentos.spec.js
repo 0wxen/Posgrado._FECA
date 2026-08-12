@@ -1,7 +1,8 @@
 const path = require('node:path');
 const { test, expect } = require('@playwright/test');
-const { ADMIN_PANEL_URL, PUBLIC_SITE_URL } = require('./config');
+const { ADMIN_PANEL_URL } = require('./config');
 const { loginComoAdmin } = require('./helpers/auth');
+const { irASitio } = require('./helpers/sitio');
 
 test('CP-006: un documento/reglamento publicado se puede descargar desde Transparencia', async ({ page }) => {
   const titulo = `Reglamento de prueba ${Date.now()}`;
@@ -13,10 +14,13 @@ test('CP-006: un documento/reglamento publicado se puede descargar desde Transpa
   await page.selectOption('#f-audiencia', 'alumnado');
   await page.setInputFiles('input[name="archivo_id"]', path.join(__dirname, 'fixtures', 'dummy.pdf'));
   await page.check('#f-es_publicado');
+  page.once('dialog', dialog => dialog.accept());
   await page.click('button.btn-primary');
   await expect(page.locator('.panel-flash--ok')).toBeVisible();
 
-  await page.goto(PUBLIC_SITE_URL.replace('page=inicio', 'page=transparencia'));
+  await irASitio(page, 'transparencia');
+  await expect(page.locator('#contenido h1')).toHaveText('Transparencia');
+
   const enlace = page.getByRole('link', { name: titulo });
   await expect(enlace).toBeVisible();
 

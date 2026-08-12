@@ -11,7 +11,9 @@ $dbPass = getenv('PGPASSWORD') ?: '';
 $pdo = null;
 
 if ($dbPass !== '') {
-    $dsn = sprintf('pgsql:host=%s;port=%s;dbname=%s', $dbHost, $dbPort, $dbName);
+    // connect_timeout: con php -S (una petición a la vez) un Postgres caído
+    // sin esto deja el sitio entero trabado, no solo la página que falló.
+    $dsn = sprintf('pgsql:host=%s;port=%s;dbname=%s;connect_timeout=3', $dbHost, $dbPort, $dbName);
     try {
         $pdo = new PDO($dsn, $dbUser, $dbPass, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

@@ -12,10 +12,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 require_once __DIR__ . '/database.php';
 
-// ─────────────────────────────────────────────────────────────
-// Consultas de estado de sesión
-// ─────────────────────────────────────────────────────────────
-
+// estado de sesión
 function is_admin_logged_in(): bool {
     return !empty($_SESSION['usuario_id'])
         && !empty($_SESSION['usuario_rol'])
@@ -49,10 +46,7 @@ function require_rol(string ...$roles): void {
     }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Login con la tabla usuarios (hash Argon2id / bcrypt)
-// ─────────────────────────────────────────────────────────────
-
+// login (hash Argon2id / bcrypt)
 function attempt_login(string $username, string $password): bool {
     global $pdo;
 
@@ -91,10 +85,7 @@ function attempt_login(string $username, string $password): bool {
     return true;
 }
 
-// ─────────────────────────────────────────────────────────────
-// Logout seguro
-// ─────────────────────────────────────────────────────────────
-
+// logout
 function logout_usuario(): void {
     $_SESSION = [];
     if (ini_get('session.use_cookies')) {

@@ -25,9 +25,7 @@ $tab = $_GET['tab'] ?? 'convocatorias';
 if (!in_array($tab, $tabsValidas, true)) {
   $tab = 'convocatorias';
 }
-// Estos módulos no tienen tab propio: se editan dentro de otra pestaña para
-// no sumar pestañas al menú (Titulación/Campo Laboral -> Oferta, Mensaje
-// Institucional -> Profesores, Publicaciones -> Investigación, FAQ -> Comunidad).
+// módulos sin tab propio -> tab donde se editan
 const TAB_PADRE_DE = [
   'titulacion' => 'oferta', 'campo_laboral' => 'oferta',
   'mensajes' => 'profesores',
@@ -41,7 +39,7 @@ if ($tab === 'usuarios' && !$esControlMaestro) {
   $tab = 'oferta';
 }
 
-// ── Helpers de presentación ─────────────────────────────────────────
+// helpers de presentación
 
 function archivo_info(?int $archivoId): ?array {
   global $pdo;
@@ -130,6 +128,10 @@ function campo_input(array $campo, array $fila, bool $esNuevo): void {
       echo '<input type="' . h($tipoInput) . '" class="form-control" id="' . h($id) . '" name="' . h($nombre) . '" value="' . h((string) ($valor ?? '')) . '"' . ($req ? ' required' : '') . '>';
   }
 
+  if (!empty($campo['ayuda'])) {
+    echo '<small style="color:#999;display:block;margin-top:4px;">' . h($campo['ayuda']) . '</small>';
+  }
+
   echo '</div>';
 }
 
@@ -141,7 +143,7 @@ function tabla_existe(PDO $pdo, string $tabla): bool {
   }
 }
 
-/** Director/Jefe de Posgrado -- se editan arriba del listado de Profesores, no tienen tab propio. */
+// Director/Jefe de Posgrado, arriba del listado de Profesores
 function renderizar_mensajes_institucionales_bloque(): void {
   global $pdo;
   $existe = $pdo === null || tabla_existe($pdo, 'mensajes_institucionales');
@@ -187,7 +189,7 @@ function renderizar_mensajes_institucionales_bloque(): void {
   echo '</div></div>';
 }
 
-/** Titulación y Campo Laboral de un programa -- se editan dentro del formulario del programa, no tienen tab propio. */
+// Titulación y Campo Laboral, dentro del formulario del programa
 function renderizar_subitems_programa(int $programaId): void {
   renderizar_bloque_subitem($programaId, 'programa_titulacion', 'titulacion', 'Modalidades de Titulación', 'ti-file-text');
   renderizar_bloque_subitem($programaId, 'programa_campo_laboral', 'campo_laboral', 'Campo Laboral', 'ti-briefcase');
@@ -255,7 +257,7 @@ function renderizar_bloque_subitem(int $programaId, string $tabla, string $modul
   echo '</div>';
 }
 
-/** Módulo completo (con su propia tabla) incrustado dentro de otra pestaña -- ej. Publicaciones dentro de Investigación, FAQ dentro de Comunidad. Mismo patrón visual (recuadro blanco + botón Agregar) que un módulo de pestaña propia, para no mezclar dos estilos distintos. */
+// módulo con tabla propia incrustado dentro de otra pestaña (Publicaciones, FAQ)
 function renderizar_modulo_secundario(string $moduloClave, string $tabActual): void {
   global $pdo;
   if (!array_key_exists($moduloClave, MODULOS)) return;
@@ -377,19 +379,22 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
   foreach ($definicion['campos'] as $c) {
     if ($campoImagen === null && in_array($c['tipo'], ['imagen', 'documento'], true)) $campoImagen = $c['nombre'];
     if ($campoDesc === null && in_array($c['tipo'], ['textarea', 'html'], true)) $campoDesc = $c['nombre'];
-    // Campos cortos y legibles con solo SELECT * (sin joins) -- fechas, selects
-    // y números. Se excluyen programa_id/profesor_id: sin el join solo se
-    // vería el id numérico, no el nombre, y eso no le sirve a nadie.
+    // excluye programa_id/profesor_id: sin join mostrarían el id, no el nombre
     if (in_array($c['tipo'], ['date', 'select', 'number'], true) && $c['nombre'] !== $definicion['titulo_campo']) {
       $camposTag[] = ['nombre' => $c['nombre'], 'icono' => $iconosPorTipo[$c['tipo']]];
     }
   }
   $camposTag = array_slice($camposTag, 0, 3);
 
-  echo '<div class="admin-grid">';
+  // Convocatorias/Blog/Publicaciones: imagen horizontal a la izquierda
+  $horizontal = !empty($definicion['layout_imagen']) && $definicion['layout_imagen'] === 'horizontal';
+
+  echo '<div class="admin-grid' . ($horizontal ? ' admin-grid--horizontal' : '') . '">';
   foreach ($filas as $fila) {
     $urlEditar = 'panel.php?tab=' . h($modulo) . '&editar=' . (int) $fila['id'] . '#formulario';
-    echo '<div class="admin-card" style="cursor:pointer;" onclick="if(!event.target.closest(\'.admin-card-actions\')) window.location.href=\'' . $urlEditar . '\';">';
+    echo '<div class="admin-card' . ($horizontal ? ' admin-card--horizontal' : '') . '" style="cursor:pointer;" onclick="if(!event.target.closest(\'.admin-card-actions\')) window.location.href=\'' . $urlEditar . '\';">';
+
+    if ($horizontal) echo '<div class="admin-card--horizontal-top">';
 
     $info = $campoImagen ? archivo_info(isset($fila[$campoImagen]) ? (int) $fila[$campoImagen] : null) : null;
     if ($info && db_bool($info['es_imagen'])) {
@@ -425,6 +430,8 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
     }
     echo '</div>';
 
+    if ($horizontal) echo '</div>'; // cierra admin-card--horizontal-top
+
     echo '<div class="admin-card-actions">';
     echo '<a class="admin-btn-edit" href="' . $urlEditar . '"><i class="ti ti-pencil"></i> Editar</a>';
     echo '<form method="post" action="guardar.php" onsubmit="return confirm(\'¿Eliminar este elemento?\');" style="display:inline;">';
@@ -450,7 +457,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-  <link rel="stylesheet" href="assets/admin.css">
+  <link rel="stylesheet" href="assets/admin.css?v=<?= (int) @filemtime(__DIR__ . '/assets/admin.css') ?>">
 </head>
 <body>
 
@@ -651,8 +658,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
           var raw = {};
           try { raw = JSON.parse(localStorage.getItem(STATS_KEY) || '{}'); } catch (_) {}
 
-          // Cada programa visitado (#program_dgo, #program_me...) se suma dentro
-          // de "Oferta Educativa" en vez de aparecer como una fila propia.
+          // programas visitados se agrupan en "Oferta Educativa"
           var agrupado = {};
           Object.keys(raw).forEach(function (clave) {
             var claveFinal = clave.indexOf('program_') === 0 ? 'oferta_educativa' : clave;

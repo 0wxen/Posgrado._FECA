@@ -42,9 +42,14 @@ $items = listar_convocatorias();
               'programa'   => !empty($item['programa_codigo']) ? 'program_' . strtolower($item['programa_codigo']) : '',
               'doc'        => url_subida($item['archivo_url'] ?? null),
             ];
-            $modalJson = h(json_encode($modalData, JSON_UNESCAPED_UNICODE));
+            $modalJson = modal_json($modalData);
           ?>
           <div class="conv-card-vigente" style="cursor:pointer;" data-cierre="<?= h($item['fecha_cierre'] ?? '') ?>" data-modal="<?= $modalJson ?>">
+            <?php if (!empty($item['imagen_url'])): ?>
+              <img class="conv-card-vigente-img" src="<?= h(url_subida($item['imagen_url'])) ?>" alt="<?= h($item['titulo']) ?>">
+            <?php else: ?>
+              <div class="conv-card-vigente-img-placeholder"><i class="ti ti-file-text"></i></div>
+            <?php endif; ?>
             <div class="conv-card-vigente-body">
               <span class="conv-vigente-badge" style="font-size:10px;"><i class="ti ti-circle-filled" style="font-size:7px;"></i> <?= h($item['ciclo'] ?? '') ?></span>
               <h3><?= h($item['titulo']) ?></h3>
@@ -64,7 +69,12 @@ $items = listar_convocatorias();
               </button>
               <?php if (!empty($item['archivo_url'])): ?>
                 <a href="<?= h(url_subida($item['archivo_url'])) ?>" target="_blank" rel="noopener" class="btn-sm-outline">
-                  <i class="ti ti-download"></i> Descargar
+                  <i class="ti ti-download"></i> Descargar PDF
+                </a>
+              <?php endif; ?>
+              <?php if (!empty($item['imagen_url'])): ?>
+                <a href="<?= h(url_subida($item['imagen_url'])) ?>" download target="_blank" rel="noopener" class="btn-sm-outline">
+                  <i class="ti ti-photo-down"></i> Descargar imagen
                 </a>
               <?php endif; ?>
             </div>

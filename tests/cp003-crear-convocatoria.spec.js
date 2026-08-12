@@ -12,6 +12,7 @@ test('CP-003: un administrador puede crear una convocatoria nueva', async ({ pag
   await page.fill('#f-ciclo', 'B-2026');
   await page.fill('#f-descripcion', 'Convocatoria generada automáticamente por Playwright.');
   await page.check('#f-es_publicado');
+  page.once('dialog', dialog => dialog.accept());
   await page.click('button.btn-primary');
 
   await expect(page).toHaveURL(/tab=convocatorias/);

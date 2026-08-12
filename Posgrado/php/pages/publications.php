@@ -23,30 +23,53 @@ $items = listar_publicaciones();
       <h2>Publicaciones y Documentos</h2>
     </div>
 
-    <div class="noticias-grid">
+    <?php if (!empty($items)): ?>
+      <div class="busqueda-filtros-row">
+        <div class="busqueda-box">
+          <i class="ti ti-search"></i>
+          <input type="text" id="publicaciones-buscar" placeholder="Buscar por título, autor o revista…">
+        </div>
+        <div class="busqueda-tabs" id="publicaciones-tabs">
+          <button class="busqueda-tab activo" data-tipo="todos">Todos</button>
+          <button class="busqueda-tab" data-tipo="articulo">Artículo</button>
+          <button class="busqueda-tab" data-tipo="capitulo">Capítulo de libro</button>
+          <button class="busqueda-tab" data-tipo="libro">Libro</button>
+          <button class="busqueda-tab" data-tipo="memoria">Memoria de congreso</button>
+          <button class="busqueda-tab" data-tipo="otro">Otro</button>
+        </div>
+      </div>
+    <?php endif; ?>
+
+    <div class="noticias-grid" id="publicaciones-grid">
       <?php if (!empty($items)): ?>
         <?php foreach ($items as $item): ?>
-          <article class="noticia-card">
-            <div class="noticia-img"><i class="ti ti-book-2"></i></div>
+          <article class="noticia-card noticia-clickable" tabindex="0" role="button"
+                    aria-label="Ver detalle: <?= h($item['titulo']) ?>"
+                    data-tipo="<?= h($item['tipo'] ?? 'otro') ?>"
+                    data-modal="<?= modal_json(modal_data_publicacion($item)) ?>">
+            <div class="noticia-img">
+              <?php if (!empty($item['imagen_url'])): ?>
+                <img src="<?= h(url_subida($item['imagen_url'])) ?>" alt="<?= h($item['titulo']) ?>">
+              <?php else: ?>
+                <i class="ti ti-book-2"></i>
+              <?php endif; ?>
+            </div>
             <div class="noticia-body">
               <span class="noticia-tag"><?= h(ucfirst($item['tipo'] ?? 'Publicación')) ?></span>
               <h3><?= h($item['titulo']) ?></h3>
               <p>
                 <?= h($item['autores_texto']) ?><?php if (!empty($item['revista_editorial'])): ?> · <?= h($item['revista_editorial']) ?><?php endif; ?><?php if (!empty($item['anio'])): ?> · <?= (int) $item['anio'] ?><?php endif; ?>
               </p>
-              <?php if (!empty($item['archivo_url'])): ?>
-                <a href="<?= h(url_subida($item['archivo_url'])) ?>"
-                   target="_blank" rel="noopener" class="noticia-leer">
-                  Descargar <i class="ti ti-download"></i>
-                </a>
-              <?php elseif (!empty($item['url_externo'])): ?>
-                <a href="<?= h($item['url_externo']) ?>" target="_blank" rel="noopener" class="noticia-leer">
-                  Ver publicación <i class="ti ti-external-link"></i>
-                </a>
-              <?php endif; ?>
+              <span class="noticia-leer">
+                Ver detalles <i class="ti ti-arrow-right"></i>
+              </span>
             </div>
           </article>
         <?php endforeach; ?>
+        <div class="busqueda-sin-resultados" id="publicaciones-sin-resultados" hidden>
+          <i class="ti ti-search-off"></i>
+          No hay publicaciones que coincidan con tu búsqueda.
+        </div>
 
       <?php else: ?>
         <div class="admin-empty">
@@ -58,6 +81,53 @@ $items = listar_publicaciones();
 
   </div>
 </section>
+
+<script>
+(function () {
+  document.querySelectorAll('.noticia-clickable[data-modal]').forEach(function (card) {
+    var abrir = function () {
+      var data = {};
+      try { data = JSON.parse(card.dataset.modal || '{}'); } catch (_) {}
+      if (typeof window.openNoticiaModal === 'function') window.openNoticiaModal(data);
+    };
+    card.addEventListener('click', abrir);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+    });
+  });
+
+  var input      = document.getElementById('publicaciones-buscar');
+  var tabs       = document.querySelectorAll('#publicaciones-tabs [data-tipo]');
+  var grid       = document.getElementById('publicaciones-grid');
+  var sinResult  = document.getElementById('publicaciones-sin-resultados');
+  if (!input || !grid) return;
+  var cards = grid.querySelectorAll('.noticia-card[data-tipo]');
+  var tipoActivo = 'todos';
+
+  function aplicarFiltro() {
+    var texto = input.value.trim().toLowerCase();
+    var visibles = 0;
+    cards.forEach(function (card) {
+      var coincideTipo   = tipoActivo === 'todos' || card.dataset.tipo === tipoActivo;
+      var coincideTexto  = texto === '' || card.textContent.toLowerCase().indexOf(texto) !== -1;
+      var visible = coincideTipo && coincideTexto;
+      card.style.display = visible ? '' : 'none';
+      if (visible) visibles++;
+    });
+    if (sinResult) sinResult.hidden = visibles !== 0;
+  }
+
+  input.addEventListener('input', aplicarFiltro);
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabs.forEach(function (b) { b.classList.remove('activo'); });
+      btn.classList.add('activo');
+      tipoActivo = btn.dataset.tipo;
+      aplicarFiltro();
+    });
+  });
+})();
+</script>
 
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">

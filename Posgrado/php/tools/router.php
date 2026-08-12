@@ -1,6 +1,5 @@
 <?php
-// Router para php -S: agrega cabeceras CORS en desarrollo local
-// Permite que Live Server (puerto 5500) pueda hacer fetch al servidor PHP (8001)
+// router de php -S: CORS para que Live Server (5500) haga fetch al PHP (8001)
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, X-Requested-With');

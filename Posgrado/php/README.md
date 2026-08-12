@@ -62,6 +62,7 @@ mensaje por correo a Coordinación General con `mail()` de PHP. En XAMPP/Windows
 requiere configurar un servidor SMTP en `php.ini` para entregar correos de verdad.
 
 **Pendiente / fuera de alcance a propósito:**
-- Las 8 páginas de detalle de programa y las páginas legales (`terms`, `privacy_notice`,
-  `titulacion`) siguen siendo estáticas (`Posgrado/pages/*.html`), sin panel de edición.
+- Las páginas legales y de trámites (`terms`, `privacy_notice`, `titulacion`,
+  `procesos_academicos`, `unidades_aprendizaje`) tienen contenido fijo escrito directo en su
+  `.php` (en `pages/`) -- sin tabla propia ni panel de edición.
 - No hay historial/auditoría de cambios ni forma de deshacer una edición o borrado.

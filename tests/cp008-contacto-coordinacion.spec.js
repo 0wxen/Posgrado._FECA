@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
-const { PUBLIC_SITE_URL } = require('./config');
+const { irASitio } = require('./helpers/sitio');
 
 test('CP-008: el formulario de contacto todavía no guarda el mensaje (pendiente)', async ({ page }) => {
-  await page.goto(PUBLIC_SITE_URL.replace('page=inicio', 'page=contacto'));
+  await irASitio(page, 'contacto');
+  await expect(page.locator('#contenido h1')).toHaveText('Contacto');
 
   await page.fill('#c-nombre', 'Estudiante de Prueba');
   await page.fill('#c-email', 'prueba@ujed.mx');

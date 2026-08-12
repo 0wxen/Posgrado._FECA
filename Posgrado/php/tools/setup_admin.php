@@ -1,15 +1,8 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Script para crear usuarios del panel (control maestro o administrador).
- * Es la ÚNICA forma de dar de alta una cuenta: no hay registro público
- * ni formulario en el panel, a propósito. Ejecutar desde la terminal:
- *
- *   C:\xampp\php\php.exe php/tools/setup_admin.php
- *
- * NO es accesible por navegador.
- */
+// crea usuarios del panel -- única forma, a propósito (sin registro público)
+// uso:  C:\xampp\php\php.exe php/tools/setup_admin.php  (solo CLI)
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);

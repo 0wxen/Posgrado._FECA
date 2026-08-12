@@ -190,6 +190,28 @@ textarea.form-control { resize: vertical; min-height: 110px; line-height: 1.6; }
   color: rgba(255,255,255,0.55); font-size: 38px;
 }
 .admin-card-body { padding: 13px 15px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+
+/* Variante horizontal: una tarjeta por fila (no en grid de columnas), con
+   la imagen -- de formato horizontal, como los carteles de Convocatorias,
+   fotos de Blog o portadas de Publicaciones -- a la izquierda con relación
+   16:9, en vez de recortada arriba y angosta. Así la tarjeta completa queda
+   más ancha que larga, no al revés. */
+.admin-grid--horizontal { grid-template-columns: 1fr; }
+.admin-card--horizontal-top { display: flex; align-items: stretch; }
+.admin-card--horizontal .admin-card-img {
+  width: 320px; aspect-ratio: 16 / 9; height: auto; flex-shrink: 0;
+  object-position: center;
+}
+.admin-card--horizontal .admin-card-img-placeholder {
+  width: 320px; aspect-ratio: 16 / 9; height: auto; flex-shrink: 0;
+  font-size: 46px;
+}
+.admin-card--horizontal .admin-card-body { flex: 1; min-width: 0; }
+@media (max-width: 640px) {
+  .admin-card--horizontal-top { flex-direction: column; }
+  .admin-card--horizontal .admin-card-img,
+  .admin-card--horizontal .admin-card-img-placeholder { width: 100%; aspect-ratio: 16 / 9; }
+}
 .admin-card-title {
   font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700;
   color: var(--gris-texto); line-height: 1.25;

@@ -1,5 +1,5 @@
 <style>
-  /* ===== TITULACIÓN PAGE ===== */
+  /* titulación */
   .tit-aviso {
     background: #fff8e1;
     border: 1px solid #ffe082;

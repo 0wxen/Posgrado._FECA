@@ -1,15 +1,9 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Receptor del formulario de contacto público (POST desde contacto.php).
- * No hay tabla de mensajes (se quitó a propósito para mantener la BD
- * simple) -- en su lugar, el mensaje se envía por correo a Coordinación
- * General con mail(). En XAMPP/Windows, mail() necesita un servidor SMTP
- * configurado en php.ini (sección [mail function], sendmail_path o
- * SMTP=/smtp_port=) para entregar correos de verdad; sin eso, esta
- * función normalmente devuelve error o no entrega nada.
- */
+// receptor del formulario de contacto. Sin tabla de mensajes a propósito --
+// se envía por mail() a Coordinación General. En XAMPP/Windows, mail()
+// necesita SMTP configurado en php.ini o no entrega nada.
 
 const CONTACTO_DESTINO = 'posgradofeca@ujed.mx';
 
@@ -43,9 +37,8 @@ $cuerpo .= "Correo: {$email}\r\n";
 $cuerpo .= 'Programa de interés: ' . ($programa ?: '(no especificado)') . "\r\n\r\n";
 $cuerpo .= "Mensaje:\r\n{$mensaje}\r\n";
 
-// El From debe ser del propio dominio/servidor (muchos relés SMTP rechazan
-// o marcan como spam un From con el correo del visitante); para responder
-// directo al visitante se usa Reply-To en su lugar.
+// From del propio servidor (muchos SMTP rechazan From con correo ajeno);
+// Reply-To lleva al visitante para poder responderle directo.
 $cabeceras = "From: Sitio Posgrado FECA <no-reply@posgradofeca.local>\r\n";
 $cabeceras .= "Reply-To: {$nombre} <{$email}>\r\n";
 $cabeceras .= "MIME-Version: 1.0\r\n";
@@ -56,8 +49,7 @@ $enviado = @mail(CONTACTO_DESTINO, $asuntoCorreo, $cuerpo, $cabeceras);
 if ($enviado) {
     header('Location: /html/htmlcode.html?enviado=1#contacto');
 } else {
-    // Queda en el log del servidor para no perder el mensaje aunque el
-    // correo no se haya podido entregar (típico si falta configurar SMTP).
+    // log para no perder el mensaje si falta configurar SMTP
     error_log(sprintf(
         '[DEP-FECA] mail() falló, mensaje de contacto no entregado: %s <%s> — %s — %s',
         $nombre, $email, $asunto, mb_strimwidth($mensaje, 0, 200, '…')

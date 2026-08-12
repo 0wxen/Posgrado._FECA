@@ -42,9 +42,7 @@ function sanear_html_admin(string $html): string {
   );
 }
 
-// Titulación, Campo Laboral, Publicaciones y Preguntas Frecuentes no tienen
-// pestaña propia: se editan dentro de otra pestaña padre, así que en vez de
-// volver a su tab (que ya no existe en el menú) hay que volver a la del padre.
+// Módulos sin pestaña propia: al guardar, regresan a la pestaña padre.
 const MODULO_TAB_PADRE = [
   'titulacion'     => 'oferta',
   'campo_laboral'  => 'oferta',
@@ -66,14 +64,9 @@ function volverModulo(string $modulo, bool $esSubitemPrograma, ?int $idContexto,
   volver($modulo, $estado, $mensaje);
 }
 
-// Cualquier error de PostgreSQL en lo que sigue (violación de unicidad,
-// restricción, etc.) se convierte en un mensaje legible en vez de un
-// error fatal en blanco.
 try {
 
-// ─────────────────────────────────────────────────────────────
-// MÓDULO: imágenes del sitio (galería de Inicio, organigrama)
-// ─────────────────────────────────────────────────────────────
+// imágenes del sitio (galería de Inicio, organigrama)
 if ($modulo === 'imagenes') {
   $clave = trim($_POST['clave'] ?? '');
   if ($clave === '') {
@@ -96,9 +89,7 @@ if ($modulo === 'imagenes') {
   volver('imagenes', 'ok', 'Imagen actualizada.');
 }
 
-// ─────────────────────────────────────────────────────────────
-// MÓDULO: mensaje institucional (Director / Jefe de Posgrado en Nosotros)
-// ─────────────────────────────────────────────────────────────
+// mensaje institucional (Director / Jefe de Posgrado en Nosotros)
 if ($modulo === 'mensajes') {
   $clave = trim($_POST['clave'] ?? '');
   if (!in_array($clave, ['director', 'jefe'], true)) {
@@ -130,9 +121,7 @@ if ($modulo === 'mensajes') {
   volver('mensajes', 'ok', 'Mensaje institucional actualizado.');
 }
 
-// ─────────────────────────────────────────────────────────────
-// MÓDULO: usuarios (solo control_maestro)
-// ─────────────────────────────────────────────────────────────
+// usuarios (solo control_maestro)
 if ($modulo === 'usuarios') {
   require_rol('control_maestro');
 
@@ -183,9 +172,7 @@ if ($modulo === 'usuarios') {
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// MÓDULOS "NORMALES" registrados en modulos.php
-// ─────────────────────────────────────────────────────────────
+// módulos "normales" registrados en modulos.php
 if (!array_key_exists($modulo, MODULOS)) {
   volver('convocatorias', 'error', 'Módulo no reconocido.');
 }
@@ -193,8 +180,7 @@ if (!array_key_exists($modulo, MODULOS)) {
 $definicion = MODULOS[$modulo];
 $tabla = $definicion['tabla'];
 
-// Solo titulación/campo_laboral están ligados a un programa cuyo formulario
-// debe seguir abierto (&editar=<id>); publicaciones/faq vuelven a su tab tal cual.
+// titulación/campo_laboral vuelven al formulario del programa (&editar=<id>)
 $esSubitemPrograma = in_array($modulo, ['titulacion', 'campo_laboral'], true);
 
 if ($accion === 'eliminar') {
@@ -252,9 +238,7 @@ foreach ($definicion['campos'] as $campo) {
     if (!empty($campo['requerido'])) {
       $erroresRequeridos[] = $campo['etiqueta'];
     } elseif ($accion === 'crear' || !empty($campo['evitar_null'])) {
-      // No se manda la columna: que la BD aplique su propio DEFAULT, o
-      // (en edición) se deja el valor actual sin tocar -- columnas como
-      // orden_display son NOT NULL y no deben quedar en blanco.
+      // deja que la BD aplique su DEFAULT (evita violar NOT NULL)
       continue;
     } else {
       $valores[$nombre] = null;
@@ -272,7 +256,7 @@ if ($erroresRequeridos !== []) {
   volverModulo($modulo, $esSubitemPrograma, $programaIdRedirect, 'error', 'Faltan campos obligatorios: ' . implode(', ', $erroresRequeridos));
 }
 
-// URL amigable automática para el blog si se dejó vacía
+// slug automático si se dejó vacío
 if ($modulo === 'blog' && empty($valores['slug'])) {
   $valores['slug'] = generar_slug((string) ($valores['titulo'] ?? '')) . '-' . substr((string) time(), -5);
 }

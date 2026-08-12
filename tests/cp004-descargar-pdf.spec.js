@@ -1,7 +1,8 @@
 const path = require('node:path');
 const { test, expect } = require('@playwright/test');
-const { ADMIN_PANEL_URL, PUBLIC_SITE_URL } = require('./config');
+const { ADMIN_PANEL_URL } = require('./config');
 const { loginComoAdmin } = require('./helpers/auth');
+const { irASitio } = require('./helpers/sitio');
 
 test('CP-004: se puede descargar el PDF de una convocatoria publicada', async ({ page }) => {
   const titulo = `Convocatoria con PDF ${Date.now()}`;
@@ -11,13 +12,16 @@ test('CP-004: se puede descargar el PDF de una convocatoria publicada', async ({
   await page.fill('#f-titulo', titulo);
   await page.setInputFiles('input[name="archivo_id"]', path.join(__dirname, 'fixtures', 'dummy.pdf'));
   await page.check('#f-es_publicado');
+  page.once('dialog', dialog => dialog.accept());
   await page.click('button.btn-primary');
   await expect(page.locator('.panel-flash--ok')).toBeVisible();
 
-  await page.goto(PUBLIC_SITE_URL.replace('page=inicio', 'page=convocatorias'));
+  await irASitio(page, 'convocatorias');
+  await expect(page.locator('#contenido h1')).toHaveText('Convocatorias');
+
   const enlaceDescarga = page
-    .locator('.noticia-card', { hasText: titulo })
-    .getByRole('link', { name: 'Descargar' });
+    .locator('.conv-card-vigente', { hasText: titulo })
+    .getByRole('link', { name: 'Descargar PDF' });
 
   await expect(enlaceDescarga).toBeVisible();
   const href = await enlaceDescarga.getAttribute('href');

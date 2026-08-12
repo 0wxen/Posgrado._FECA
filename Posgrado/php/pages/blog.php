@@ -26,7 +26,22 @@ $resto     = $items;
     </div>
 
     <?php if ($destacado): ?>
-    <div class="blog-featured">
+    <?php
+      $modalDestacado = [
+        'img'     => url_subida($destacado['imagen_url'] ?? null),
+        'tag'     => 'Blog',
+        'title'   => $destacado['titulo'],
+        'fecha'   => !empty($destacado['fecha_evento']) ? $destacado['fecha_evento'] : (!empty($destacado['publicado_en']) ? substr($destacado['publicado_en'], 0, 10) : ''),
+        'lugar'   => $destacado['lugar_evento'] ?? '',
+        'autor'   => !empty($destacado['autor_nombre']) ? 'Por ' . $destacado['autor_nombre'] : '',
+        'resumen' => $destacado['resumen'] ?? '',
+        'cuerpo'  => $destacado['cuerpo'] ?? '',
+      ];
+      $modalDestacadoJson = modal_json($modalDestacado);
+    ?>
+    <div class="blog-featured noticia-clickable" tabindex="0" role="button"
+         aria-label="Ver detalle: <?= h($destacado['titulo']) ?>"
+         data-modal="<?= $modalDestacadoJson ?>">
       <div class="blog-featured-img">
         <?php if (!empty($destacado['imagen_url'])): ?>
           <img src="<?= h(url_subida($destacado['imagen_url'])) ?>"
@@ -45,6 +60,9 @@ $resto     = $items;
         <?php if (!empty($destacado['autor_nombre'])): ?>
           <p style="font-size:13px;color:#888;">Por <?= h($destacado['autor_nombre']) ?></p>
         <?php endif; ?>
+        <span class="noticia-leer">
+          Leer la nota completa <i class="ti ti-arrow-right"></i>
+        </span>
       </div>
     </div>
     <?php else: ?>
@@ -64,11 +82,35 @@ $resto     = $items;
       <h2>Todas las Entradas</h2>
     </div>
 
-    <div class="noticias-grid">
+    <?php if (!empty($resto)): ?>
+      <div class="busqueda-filtros-row">
+        <div class="busqueda-box">
+          <i class="ti ti-search"></i>
+          <input type="text" id="blog-buscar" placeholder="Buscar por título o resumen…">
+        </div>
+      </div>
+    <?php endif; ?>
+
+    <div class="noticias-grid" id="blog-grid">
 
       <?php if (!empty($resto)): ?>
         <?php foreach ($resto as $item): ?>
-          <article class="noticia-card">
+          <?php
+            $modalItem = [
+              'img'     => url_subida($item['imagen_url'] ?? null),
+              'tag'     => 'Blog',
+              'title'   => $item['titulo'],
+              'fecha'   => !empty($item['fecha_evento']) ? $item['fecha_evento'] : (!empty($item['publicado_en']) ? substr($item['publicado_en'], 0, 10) : ''),
+              'lugar'   => $item['lugar_evento'] ?? '',
+              'autor'   => !empty($item['autor_nombre']) ? 'Por ' . $item['autor_nombre'] : '',
+              'resumen' => $item['resumen'] ?? '',
+              'cuerpo'  => $item['cuerpo'] ?? '',
+            ];
+            $modalItemJson = modal_json($modalItem);
+          ?>
+          <article class="noticia-card noticia-clickable" tabindex="0" role="button"
+                    aria-label="Ver detalle: <?= h($item['titulo']) ?>"
+                    data-modal="<?= $modalItemJson ?>">
             <div class="noticia-img">
               <?php if (!empty($item['imagen_url'])): ?>
                 <img src="<?= h(url_subida($item['imagen_url'])) ?>"
@@ -83,12 +125,16 @@ $resto     = $items;
               <?php if (!empty($item['resumen'])): ?>
                 <p><?= h(mb_strimwidth($item['resumen'], 0, 100, '…')) ?></p>
               <?php endif; ?>
-              <a href="#" class="noticia-leer">
+              <span class="noticia-leer">
                 Leer más <i class="ti ti-arrow-right"></i>
-              </a>
+              </span>
             </div>
           </article>
         <?php endforeach; ?>
+        <div class="busqueda-sin-resultados" id="blog-sin-resultados" hidden>
+          <i class="ti ti-search-off"></i>
+          No hay entradas que coincidan con tu búsqueda.
+        </div>
 
       <?php else: ?>
         <div class="admin-empty">
@@ -100,6 +146,39 @@ $resto     = $items;
 
   </div>
 </section>
+
+<script>
+(function () {
+  document.querySelectorAll('.noticia-clickable[data-modal]').forEach(function (card) {
+    var abrir = function () {
+      var data = {};
+      try { data = JSON.parse(card.dataset.modal || '{}'); } catch (_) {}
+      if (typeof window.openNoticiaModal === 'function') window.openNoticiaModal(data);
+    };
+    card.addEventListener('click', abrir);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+    });
+  });
+
+  var input     = document.getElementById('blog-buscar');
+  var grid      = document.getElementById('blog-grid');
+  var sinResult = document.getElementById('blog-sin-resultados');
+  if (!input || !grid) return;
+  var cards = grid.querySelectorAll('.noticia-card');
+
+  input.addEventListener('input', function () {
+    var texto = input.value.trim().toLowerCase();
+    var visibles = 0;
+    cards.forEach(function (card) {
+      var visible = texto === '' || card.textContent.toLowerCase().indexOf(texto) !== -1;
+      card.style.display = visible ? '' : 'none';
+      if (visible) visibles++;
+    });
+    if (sinResult) sinResult.hidden = visibles !== 0;
+  });
+})();
+</script>
 
 <!-- ===== NAVEGACIÓN INFERIOR ===== -->
 <nav class="page-nav-bottom">

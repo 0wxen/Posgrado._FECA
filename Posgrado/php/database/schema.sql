@@ -1,3 +1,41 @@
+-- ============================================================================
+-- Esquema completo · Sitio de la División de Estudios de Posgrado FECA UJED
+-- ============================================================================
+-- Notas de diseño (para quien retome este archivo más adelante):
+--
+-- · Todas las tablas usan clave primaria SERIAL (id) salvo las de "espacios
+--   fijos" (imagenes_sitio, mensajes_institucionales), que usan una clave
+--   natural (clave VARCHAR) porque representan un conjunto cerrado y conocido
+--   de filas que solo se editan, nunca se crean ni se borran desde el sitio.
+--
+-- · `archivos` es la única tabla de almacenamiento de archivos subidos
+--   (imágenes y documentos). El resto de las tablas la referencian por id
+--   en vez de guardar rutas repetidas -- evita datos huérfanos y permite
+--   reusar el mismo archivo desde más de un lugar si hiciera falta.
+--
+-- · Todas las tablas de contenido editable tienen creado_en/actualizado_en
+--   con un trigger que mantiene actualizado_en al día automáticamente.
+--
+-- · Los campos que en el panel de administración son "select" (opciones
+--   fijas) tienen su CHECK correspondiente aquí -- así la restricción no
+--   depende solo del formulario PHP, también la aplica la base de datos.
+--
+-- · publicaciones.autores_texto se deja como texto libre a propósito, NO
+--   normalizado en una tabla de autores. Es una decisión, no un descuido:
+--   el formato de una cita académica varía mucho (orden de apellidos,
+--   iniciales, "et al.", etc.) y el caso de uso real de este sitio es
+--   mostrar la cita tal como se quiere que se lea, no consultar "todas las
+--   publicaciones de tal autor" (esa función no existe en ninguna página).
+--   Normalizarlo agregaría una tabla, un formulario de subelementos y
+--   lógica de reconstrucción de la cita sin resolver ningún caso de uso
+--   real del sitio -- sería normalizar por normalizar.
+--
+-- · convocatorias tiene UNIQUE(programa_id, ciclo): evita crear dos
+--   convocatorias del mismo programa en el mismo ciclo por accidente
+--   (fue un problema real detectado en producción -- ver 03_contenido_relleno.sql
+--   y el historial de la sesión donde se depuraron duplicadas).
+-- ============================================================================
+
 CREATE OR REPLACE FUNCTION set_actualizado_en()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -5,6 +43,11 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- ============================================================================
+-- USUARIOS DEL PANEL Y ARCHIVOS SUBIDOS
+-- ============================================================================
 
 CREATE TABLE usuarios (
     id              SERIAL PRIMARY KEY,
@@ -27,7 +70,7 @@ CREATE TABLE archivos (
     ruta_relativa   VARCHAR(500) NOT NULL,
     tipo_mime       VARCHAR(100) NOT NULL,
     extension       VARCHAR(10),
-    tamano_bytes    BIGINT,
+    tamano_bytes    BIGINT CHECK (tamano_bytes IS NULL OR tamano_bytes > 0),
     es_imagen       BOOLEAN NOT NULL DEFAULT FALSE,
     ancho_px        INT,
     alto_px         INT,
@@ -57,11 +100,16 @@ INSERT INTO imagenes_sitio (clave, etiqueta) VALUES
     ('galeria_5',   'Inicio · Galería, imagen 5'),
     ('organigrama', 'Nosotros · Organigrama');
 
+
+-- ============================================================================
+-- CONTENIDO INSTITUCIONAL (Nosotros)
+-- ============================================================================
+
 CREATE TABLE profesores (
     id                  SERIAL PRIMARY KEY,
     nombre              VARCHAR(200) NOT NULL,
+    titulo_cargo        VARCHAR(150) NOT NULL,
     grado_academico     VARCHAR(100),
-    titulo_cargo        VARCHAR(150),
     especialidad        VARCHAR(200),
     email               VARCHAR(150),
     telefono_extension  VARCHAR(50),
@@ -102,12 +150,19 @@ Nuestros programas están diseñados para responder a los retos actuales del ent
 
 Contamos con un equipo de docentes altamente calificados, comprometidos con la generación y aplicación del conocimiento, así como con programas reconocidos a nivel nacional por el Sistema Nacional de Posgrados (SNP) del CONAHCYT. Los invitamos a descubrir la herramienta para el futuro que tú deseas.', 20);
 
+
+-- ============================================================================
+-- OFERTA EDUCATIVA (programas y sus sub-elementos)
+-- ============================================================================
+
 CREATE TABLE programas (
     id                  SERIAL PRIMARY KEY,
-    codigo              VARCHAR(20) UNIQUE,
+    codigo              VARCHAR(20) UNIQUE NOT NULL,
     nombre              VARCHAR(200) NOT NULL,
-    nivel               VARCHAR(50),
-    modalidad           VARCHAR(50),
+    nivel               VARCHAR(50) NOT NULL
+                        CHECK (nivel IN ('especialidad', 'maestria', 'doctorado')),
+    modalidad           VARCHAR(50) NOT NULL
+                        CHECK (modalidad IN ('presencial', 'virtual', 'mixta')),
     duracion_semestres  INT,
     creditos            INT,
     descripcion         TEXT,
@@ -158,6 +213,11 @@ CREATE TRIGGER trg_programa_campo_laboral_actualizado
     BEFORE UPDATE ON programa_campo_laboral
     FOR EACH ROW EXECUTE FUNCTION set_actualizado_en();
 
+
+-- ============================================================================
+-- CONVOCATORIAS
+-- ============================================================================
+
 CREATE TABLE convocatorias (
     id                  SERIAL PRIMARY KEY,
     programa_id         INT REFERENCES programas(id) ON DELETE RESTRICT,
@@ -174,7 +234,9 @@ CREATE TABLE convocatorias (
     destacado           BOOLEAN NOT NULL DEFAULT FALSE,
     creado_por          INT REFERENCES usuarios(id) ON DELETE SET NULL,
     creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW(),
+    CHECK (fecha_inicio IS NULL OR fecha_cierre IS NULL OR fecha_cierre >= fecha_inicio),
+    UNIQUE (programa_id, ciclo)
 );
 CREATE INDEX idx_convocatorias_programa_id ON convocatorias(programa_id);
 CREATE INDEX idx_convocatorias_archivo_id ON convocatorias(archivo_id);
@@ -183,6 +245,11 @@ CREATE INDEX idx_convocatorias_creado_por ON convocatorias(creado_por);
 CREATE TRIGGER trg_convocatorias_actualizado
     BEFORE UPDATE ON convocatorias
     FOR EACH ROW EXECUTE FUNCTION set_actualizado_en();
+
+
+-- ============================================================================
+-- BLOG / NOTICIAS
+-- ============================================================================
 
 CREATE TABLE blog (
     id                  SERIAL PRIMARY KEY,
@@ -208,9 +275,17 @@ CREATE TRIGGER trg_blog_actualizado
     BEFORE UPDATE ON blog
     FOR EACH ROW EXECUTE FUNCTION set_actualizado_en();
 
+
+-- ============================================================================
+-- PUBLICACIONES ACADÉMICAS
+-- ============================================================================
+-- Ficha bibliográfica -- ver nota de diseño al inicio del archivo sobre por
+-- qué autores_texto es texto libre y no una tabla normalizada de autores.
+
 CREATE TABLE publicaciones (
     id                  SERIAL PRIMARY KEY,
-    tipo                VARCHAR(50),
+    tipo                VARCHAR(50) NOT NULL
+                        CHECK (tipo IN ('articulo', 'capitulo', 'libro', 'memoria', 'otro')),
     titulo              VARCHAR(300) NOT NULL,
     autores_texto       TEXT NOT NULL,
     anio                INT,
@@ -221,14 +296,21 @@ CREATE TABLE publicaciones (
     url_externo         VARCHAR(500),
     resumen             TEXT,
     archivo_id          INT REFERENCES archivos(id) ON DELETE SET NULL,
+    imagen_id           INT REFERENCES archivos(id) ON DELETE SET NULL,
     es_publicado        BOOLEAN NOT NULL DEFAULT TRUE,
     creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
     actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_publicaciones_archivo_id ON publicaciones(archivo_id);
+CREATE INDEX idx_publicaciones_imagen_id ON publicaciones(imagen_id);
 CREATE TRIGGER trg_publicaciones_actualizado
     BEFORE UPDATE ON publicaciones
     FOR EACH ROW EXECUTE FUNCTION set_actualizado_en();
+
+
+-- ============================================================================
+-- INVESTIGACIÓN Y COMUNIDAD
+-- ============================================================================
 
 CREATE TABLE grupos_disciplinares (
     id                  SERIAL PRIMARY KEY,
@@ -245,8 +327,10 @@ CREATE TRIGGER trg_grupos_disciplinares_actualizado
 
 CREATE TABLE documentos (
     id              SERIAL PRIMARY KEY,
-    categoria       VARCHAR(100),
-    audiencia       VARCHAR(100),
+    categoria       VARCHAR(100) NOT NULL
+                    CHECK (categoria IN ('reglamento', 'formato', 'calendario', 'plan_estudios', 'guia', 'plantilla', 'informe', 'otro')),
+    audiencia       VARCHAR(100) NOT NULL
+                    CHECK (audiencia IN ('todos', 'alumnado', 'profesorado')),
     titulo          VARCHAR(200) NOT NULL,
     descripcion     TEXT,
     archivo_id      INT NOT NULL REFERENCES archivos(id) ON DELETE RESTRICT,
@@ -279,4 +363,3 @@ INSERT INTO preguntas_frecuentes (pregunta, respuesta, orden_display) VALUES
     ('¿Cuáles son las modalidades de titulación disponibles?', 'La División ofrece titulación por Certificación y por Trabajo Terminal. Ambas guías están disponibles en la pestaña Alumnado.', 30),
     ('¿Cómo funciona el proceso de tutorías?', 'Consulta el detalle en Procesos Académicos, donde también podrás descargar el formato correspondiente.', 40),
     ('¿A quién contacto si tengo dudas sobre mi programa?', 'Puedes comunicarte directamente con la Coordinación Académica de tu programa desde la sección de Contacto.', 50);
-

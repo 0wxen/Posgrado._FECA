@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-const { SITE_URL } = require('./config');
+const { irASitio } = require('./helpers/sitio');
 
 test('CP-001: el botón SUMA+ enlaza al control escolar en pestaña nueva', async ({ page }) => {
-  await page.goto(SITE_URL);
+  await irASitio(page);
 
   const enlaceSuma = page.locator('a.topbar-suma-link');
   await expect(enlaceSuma).toBeVisible();

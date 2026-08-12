@@ -3,25 +3,17 @@ declare(strict_types=1);
 
 /**
  * REST API · DEP FECA UJED · v1
- * ─────────────────────────────────────────────────────────────
- * Endpoints públicos (GET):
- *   /php/api/v1/index.php?r=programas
- *   /php/api/v1/index.php?r=blog
- *   /php/api/v1/index.php?r=blog&id=5
- *   /php/api/v1/index.php?r=convocatorias
- *   /php/api/v1/index.php?r=publicaciones
- *   /php/api/v1/index.php?r=profesores
- * ─────────────────────────────────────────────────────────────
+ * Endpoints públicos (GET): ?r=programas | blog | blog&id=5 | convocatorias
+ * | publicaciones | profesores
  */
 
-// Cabeceras CORS y tipo de respuesta
 header('Content-Type: application/json; charset=UTF-8');
 header('X-Content-Type-Options: nosniff');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Preflight
+// preflight CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
@@ -29,10 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../../config/database.php';
 
-// ─────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────
-
+// helpers
 function api_ok(mixed $data, int $status = 200): never {
     http_response_code($status);
     echo json_encode(
@@ -51,10 +40,7 @@ function api_error(string $message, int $status = 400): never {
 $recurso = $_GET['r'] ?? '';
 $id      = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
-// ─────────────────────────────────────────────────────────────
-// Router
-// ─────────────────────────────────────────────────────────────
-
+// router
 match ($recurso) {
     'programas'     => r_programas(),
     'blog'          => r_blog(),
@@ -64,9 +50,7 @@ match ($recurso) {
     default         => api_error('Recurso no encontrado.', 404),
 };
 
-// ─────────────────────────────────────────────────────────────
-// PROGRAMAS  GET /api/v1/?r=programas[&nivel=maestria]
-// ─────────────────────────────────────────────────────────────
+// programas: ?r=programas[&nivel=maestria]
 function r_programas(): never {
     global $pdo, $id;
 
@@ -100,9 +84,7 @@ function r_programas(): never {
     api_ok($stmt->fetchAll());
 }
 
-// ─────────────────────────────────────────────────────────────
-// BLOG  GET /api/v1/?r=blog[&limite=10]
-// ─────────────────────────────────────────────────────────────
+// blog: ?r=blog[&limite=10]
 function r_blog(): never {
     global $pdo, $id;
 
@@ -135,9 +117,7 @@ function r_blog(): never {
     api_ok($stmt->fetchAll());
 }
 
-// ─────────────────────────────────────────────────────────────
-// CONVOCATORIAS  GET /api/v1/?r=convocatorias[&vigentes=1]
-// ─────────────────────────────────────────────────────────────
+// convocatorias: ?r=convocatorias[&vigentes=1]
 function r_convocatorias(): never {
     global $pdo;
 
@@ -163,9 +143,7 @@ function r_convocatorias(): never {
     api_ok($stmt->fetchAll());
 }
 
-// ─────────────────────────────────────────────────────────────
-// PUBLICACIONES  GET /api/v1/?r=publicaciones[&tipo=articulo&anio=2024]
-// ─────────────────────────────────────────────────────────────
+// publicaciones: ?r=publicaciones[&tipo=articulo&anio=2024]
 function r_publicaciones(): never {
     global $pdo;
 
@@ -194,9 +172,7 @@ function r_publicaciones(): never {
     api_ok($stmt->fetchAll());
 }
 
-// ─────────────────────────────────────────────────────────────
-// PROFESORES  GET /api/v1/?r=profesores
-// ─────────────────────────────────────────────────────────────
+// profesores: ?r=profesores
 function r_profesores(): never {
     global $pdo;
 

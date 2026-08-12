@@ -7,22 +7,32 @@ function h(?string $value): string {
   return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-/**
- * PDO_PGSQL devuelve las columnas BOOLEAN como los strings 't'/'f',
- * no como bool de PHP -- (bool) 'f' es TRUE, así que hay que
- * interpretarlas explícitamente en vez de castear directo.
- */
+// data-modal="<json>" de las tarjetas del modal de detalle. Sanea UTF-8
+// inválido antes de json_encode() (falla en silencio con ñ/acentos mal
+// cargados) -- si no, la tarjeta deja de abrir sin ningún error visible.
+function modal_json(array $datos): string {
+  array_walk_recursive($datos, function (&$valor) {
+    if (is_string($valor) && !mb_check_encoding($valor, 'UTF-8')) {
+      $convertido = @mb_convert_encoding($valor, 'UTF-8', 'Windows-1252');
+      $valor = $convertido !== false ? $convertido : mb_convert_encoding($valor, 'UTF-8', 'UTF-8');
+    }
+  });
+  $json = json_encode($datos, JSON_UNESCAPED_UNICODE);
+  if ($json === false) {
+    error_log('[DEP-FECA] modal_json: json_encode falló (' . json_last_error_msg() . ') con datos: ' . print_r($datos, true));
+    $json = '{}';
+  }
+  return h($json);
+}
+
+// PDO_PGSQL da BOOLEAN como 't'/'f' -- (bool) 'f' sería TRUE si se castea directo
 function db_bool(mixed $valor): bool {
   if (is_bool($valor)) return $valor;
   if ($valor === null) return false;
   return in_array(strtolower(trim((string) $valor)), ['t', 'true', '1', 'yes'], true);
 }
 
-/**
- * Ejecuta una consulta de listado y devuelve [] en vez de tumbar la página
- * si la tabla todavía no existe (migración pendiente) -- mismo criterio que
- * ya usa $pdo === null: si no se puede leer, se muestra vacío, no un error.
- */
+// [] en vez de tumbar la página si la tabla no existe (migración pendiente)
 function listado_seguro(callable $consulta): array {
   global $pdo;
   if ($pdo === null) return [];
@@ -34,25 +44,16 @@ function listado_seguro(callable $consulta): array {
   }
 }
 
-/**
- * Convierte una ruta_relativa de `archivos` (ej. "uploads/xxx.png", relativa
- * a la carpeta php/) en la URL que necesita el sitio público. Las páginas
- * públicas se inyectan como HTML dentro de html/htmlcode.html -- el navegador
- * resuelve las rutas relativas contra ESA URL, no contra la del script PHP
- * que las generó -- por eso hace falta el "php/" extra que no lleva la ruta
- * guardada en la BD.
- */
+// ruta_relativa de `archivos` -> URL pública. El navegador resuelve rutas
+// relativas contra htmlcode.html, no contra el script PHP que las generó,
+// por eso el "php/" extra que la BD no guarda.
 function url_subida(?string $rutaRelativa): string {
   if ($rutaRelativa === null || $rutaRelativa === '') return '';
   if (preg_match('#^https?://#i', $rutaRelativa) === 1) return $rutaRelativa;
   return '../php/' . ltrim($rutaRelativa, '/');
 }
 
-// ─────────────────────────────────────────────────────────────
-// LISTADOS PÚBLICOS
-// Todas devuelven [] si no hay conexión, para que las páginas
-// puedan caer de vuelta a su contenido estático.
-// ─────────────────────────────────────────────────────────────
+// listados públicos
 
 function listar_profesores(): array {
   global $pdo;
@@ -199,17 +200,82 @@ function listar_campo_laboral_programa(int $programaId): array {
 function listar_publicaciones(int $limite = 20): array {
   global $pdo;
   if ($pdo === null) return [];
-  $stmt = $pdo->prepare(
-    'SELECT pb.*, a.ruta_relativa AS archivo_url
-     FROM publicaciones pb
-     LEFT JOIN archivos a ON a.id = pb.archivo_id
-     WHERE pb.es_publicado = TRUE
-     ORDER BY pb.anio DESC NULLS LAST, pb.titulo
-     LIMIT ?'
-  );
-  $stmt->bindValue(1, $limite, PDO::PARAM_INT);
-  $stmt->execute();
-  return $stmt->fetchAll();
+  // imagen_id es columna nueva -- listado_seguro por si falta la migración
+  return listado_seguro(function () use ($pdo, $limite) {
+    $stmt = $pdo->prepare(
+      'SELECT pb.*, a.ruta_relativa AS archivo_url, img.ruta_relativa AS imagen_url
+       FROM publicaciones pb
+       LEFT JOIN archivos a ON a.id = pb.archivo_id
+       LEFT JOIN archivos img ON img.id = pb.imagen_id
+       WHERE pb.es_publicado = TRUE
+       ORDER BY pb.anio DESC NULLS LAST, pb.titulo
+       LIMIT ?'
+    );
+    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  });
+}
+
+// a diferencia de listar_publicaciones() (orden por año), esta ordena por
+// cuándo se dio de alta -- para "Recientes" en Investigación
+function listar_publicaciones_recientes(int $limite = 6): array {
+  global $pdo;
+  if ($pdo === null) return [];
+  return listado_seguro(function () use ($pdo, $limite) {
+    $stmt = $pdo->prepare(
+      'SELECT pb.*, a.ruta_relativa AS archivo_url, img.ruta_relativa AS imagen_url
+       FROM publicaciones pb
+       LEFT JOIN archivos a ON a.id = pb.archivo_id
+       LEFT JOIN archivos img ON img.id = pb.imagen_id
+       WHERE pb.es_publicado = TRUE
+       ORDER BY pb.creado_en DESC
+       LIMIT ?'
+    );
+    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  });
+}
+
+// datos del modal de detalle a partir de una fila de `publicaciones` --
+// es una ficha bibliográfica, así que el "cuerpo" se arma con la cita
+// (revista, volumen, DOI) en vez de un artículo con fotos
+function modal_data_publicacion(array $pub): array {
+  $detalles = [];
+  if (!empty($pub['revista_editorial'])) {
+    $detalles[] = '<li><strong>Revista / editorial:</strong> ' . h($pub['revista_editorial']) . '</li>';
+  }
+  if (!empty($pub['volumen_numero'])) {
+    $detalles[] = '<li><strong>Volumen / número:</strong> ' . h($pub['volumen_numero']) . '</li>';
+  }
+  if (!empty($pub['paginas'])) {
+    $detalles[] = '<li><strong>Páginas:</strong> ' . h($pub['paginas']) . '</li>';
+  }
+  if (!empty($pub['doi'])) {
+    $detalles[] = '<li><strong>DOI:</strong> <a href="https://doi.org/' . h($pub['doi']) . '" target="_blank" rel="noopener">'
+      . h($pub['doi']) . '</a></li>';
+  }
+  $cuerpo = $detalles !== [] ? '<h3>Detalles de la publicación</h3><ul>' . implode('', $detalles) . '</ul>' : '';
+
+  $archivoUrl = !empty($pub['archivo_url']) ? url_subida($pub['archivo_url']) : '';
+  $urlExterno = $pub['url_externo'] ?? '';
+  $ctaUrl   = $archivoUrl !== '' ? $archivoUrl : $urlExterno;
+  $ctaLabel = $archivoUrl !== '' ? 'Descargar PDF' : ($urlExterno !== '' ? 'Ver publicación' : '');
+
+  return [
+    'icon'     => 'ti-book-2',
+    'img'      => !empty($pub['imagen_url']) ? url_subida($pub['imagen_url']) : '',
+    'tag'      => ucfirst($pub['tipo'] ?? 'Publicación'),
+    'title'    => $pub['titulo'],
+    'fecha'    => !empty($pub['anio']) ? (string) $pub['anio'] : '',
+    'lugar'    => '',
+    'autor'    => $pub['autores_texto'] ?? '',
+    'resumen'  => $pub['resumen'] ?? '',
+    'cuerpo'   => $cuerpo,
+    'ctaUrl'   => $ctaUrl,
+    'ctaLabel' => $ctaLabel,
+  ];
 }
 
 function listar_grupos_disciplinares(): array {
@@ -223,10 +289,7 @@ function listar_grupos_disciplinares(): array {
   return $stmt->fetchAll();
 }
 
-/**
- * Imágenes de secciones fijas (galería de Inicio, organigrama de Nosotros),
- * indexadas por clave. Devuelve solo las que ya tienen un archivo asignado.
- */
+// imágenes de secciones fijas (galería de Inicio, organigrama), por clave
 function listar_imagenes_sitio(): array {
   global $pdo;
   if ($pdo === null) return [];

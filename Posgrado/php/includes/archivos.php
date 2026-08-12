@@ -7,11 +7,7 @@ require_once __DIR__ . '/../config/app.php';
 const ARCHIVOS_EXTENSIONES_PERMITIDAS = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'png', 'jpg', 'jpeg', 'gif', 'webp'];
 const ARCHIVOS_TAMANO_MAXIMO = 8 * 1024 * 1024; // 8 MB
 
-/**
- * Sube un archivo de $_FILES[$campo] (si viene) y crea su registro
- * en la tabla `archivos`. Devuelve el id nuevo, o null si no se
- * mandó archivo. Lanza RuntimeException si el archivo es inválido.
- */
+// sube $_FILES[$campo] si viene; null si no se mandó archivo
 function archivo_subir_si_viene(string $campo, ?int $usuarioId): ?int {
   global $pdo;
 
@@ -68,7 +64,9 @@ function archivo_subir_si_viene(string $campo, ?int $usuarioId): ?int {
     'mime'     => $mimeType,
     'ext'      => $extension,
     'tam'      => $fileSize,
-    'es_imagen' => $esImagen,
+    // PDO con emulate_prepares=false convierte bool false a '' al enlazarlo,
+    // y Postgres no acepta '' como boolean -- se manda como texto 'true'/'false'.
+    'es_imagen' => $esImagen ? 'true' : 'false',
     'ancho'    => $anchoPx,
     'alto'     => $altoPx,
     'usuario'  => $usuarioId,

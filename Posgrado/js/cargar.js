@@ -50,7 +50,10 @@ function registrarVisita(pageId) {
 async function fetchContenido(nombre) {
   const [archivo, query] = nombre.split('?');
   const url = PHP_PAGES + archivo + '.php' + (query ? '?' + query : '');
-  const r = await fetch(url);
+  // no-store: cada sección se genera dinámicamente (PHP + BD) -- si el
+  // navegador la cachea, un cambio en el servidor no se refleja aunque se
+  // recargue la página, solo con un hard refresh. No queremos depender de eso.
+  const r = await fetch(url, { cache: 'no-store' });
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return await r.text();
 }
