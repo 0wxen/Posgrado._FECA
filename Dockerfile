@@ -1,6 +1,11 @@
 FROM php:8.2-cli
 
-RUN docker-php-ext-install pdo pdo_pgsql mbstring
+# pdo_pgsql y mbstring necesitan estas librerías del sistema para compilar
+# (php:8.2-cli no las trae por defecto).
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libpq-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_pgsql mbstring \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY Posgrado/ /app/
