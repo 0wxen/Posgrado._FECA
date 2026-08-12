@@ -32,3 +32,5 @@ services:
         fromDatabase:
           name: posgrado-feca-db
           property: password
+      - key: PGSSLMODE
+        value: require

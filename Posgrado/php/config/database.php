@@ -6,6 +6,7 @@ $dbPort = getenv('PGPORT')     ?: '5432';
 $dbName = getenv('PGDATABASE') ?: 'FECA';
 $dbUser = getenv('PGUSER')     ?: 'postgres';
 $dbPass = getenv('PGPASSWORD') ?: '';
+$dbSslMode = getenv('PGSSLMODE') ?: ''; // Render (y otros hosts gestionados) exigen 'require'; local no lo necesita.
 
 // La conexión es opcional: si no hay BD el sitio muestra contenido estático.
 $pdo = null;
@@ -14,6 +15,9 @@ if ($dbPass !== '') {
     // connect_timeout: con php -S (una petición a la vez) un Postgres caído
     // sin esto deja el sitio entero trabado, no solo la página que falló.
     $dsn = sprintf('pgsql:host=%s;port=%s;dbname=%s;connect_timeout=3', $dbHost, $dbPort, $dbName);
+    if ($dbSslMode !== '') {
+        $dsn .= ';sslmode=' . $dbSslMode;
+    }
     try {
         $pdo = new PDO($dsn, $dbUser, $dbPass, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
