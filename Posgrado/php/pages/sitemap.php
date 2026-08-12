@@ -64,8 +64,8 @@
             </a>
           </li>
           <li>
-            <a href="http://feca.ujed.mx" target="_blank" rel="noopener">
-              <i class="ti ti-external-link"></i> Portal FECA
+            <a href="#inicio" data-page="inicio">
+              <i class="ti ti-home"></i> Portal FECA
             </a>
           </li>
           <li>

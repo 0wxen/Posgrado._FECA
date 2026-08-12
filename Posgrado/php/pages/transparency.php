@@ -44,12 +44,12 @@ $documentos_db = listar_documentos();
         </div>
       </a>
 
-      <a class="recurso-card" href="http://feca.ujed.mx" target="_blank" rel="noopener">
+      <a class="recurso-card" href="#inicio" data-page="inicio">
         <div class="recurso-icon tipo-link"><i class="ti ti-building"></i></div>
         <div class="recurso-info">
           <h4>Página Principal FECA</h4>
           <p>Consulta la normatividad y demás información institucional en el sitio oficial de la FECA UJED.</p>
-          <span class="recurso-info-link"><i class="ti ti-external-link"></i> Ir al sitio de la FECA</span>
+          <span class="recurso-info-link"><i class="ti ti-home"></i> Ir a Inicio</span>
         </div>
       </a>
 
