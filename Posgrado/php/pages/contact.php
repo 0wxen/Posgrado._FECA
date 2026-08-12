@@ -208,7 +208,7 @@
 
     <div style="width:100%; aspect-ratio:16/6; border-radius:4px; overflow:hidden;">
       <iframe
-        src="https://maps.google.com/maps?q=Fanny+Anitua+s%2Fn+Los+Angeles+Durango+Mexico&output=embed&hl=es&z=16"
+        src="https://maps.google.com/maps?q=UJED+-+Facultad+de+Economia,+Contaduria+y+Administracion&ll=24.0234569,-104.6793856&z=17&output=embed&hl=es"
         width="100%"
         height="100%"
         style="border:0; display:block;"
@@ -220,13 +220,13 @@
     </div>
 
     <div style="margin-top:20px; display:flex; gap:14px; flex-wrap:wrap;">
-      <a href="https://maps.google.com/?q=Fanny+Anitua+s%2Fn+Los+Angeles+Durango+Mexico"
+      <a href="https://maps.app.goo.gl/nXJxduaTtp1vpBgR9"
          target="_blank" rel="noopener" class="btn-sm-rojo">
         <i class="ti ti-map-pin"></i> Abrir en Google Maps
       </a>
-      <a href="https://www.ujed.mx" target="_blank" rel="noopener"
+      <a href="#inicio" data-page="inicio"
          class="btn-sm-outline">
-        <i class="ti ti-external-link"></i> Portal UJED
+        <i class="ti ti-home"></i> Portal Posgrado
       </a>
     </div>
 

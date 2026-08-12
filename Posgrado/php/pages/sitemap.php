@@ -59,8 +59,8 @@
         </div>
         <ul>
           <li>
-            <a href="https://ujed.mx" target="_blank" rel="noopener">
-              <i class="ti ti-external-link"></i> Portal UJED
+            <a href="#inicio" data-page="inicio">
+              <i class="ti ti-home"></i> Portal Posgrado
             </a>
           </li>
           <li>
@@ -69,7 +69,7 @@
             </a>
           </li>
           <li>
-            <a href="https://www.google.com/maps/search/?api=1&query=Fanny+Anitua+s%2Fn%2C+Los+%C3%81ngeles%2C+34000+Durango%2C+Dgo."
+            <a href="https://maps.app.goo.gl/nXJxduaTtp1vpBgR9"
                target="_blank" rel="noopener">
               <i class="ti ti-map-pin"></i> Cómo llegar
             </a>
