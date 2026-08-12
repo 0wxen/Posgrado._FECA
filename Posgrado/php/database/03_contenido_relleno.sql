@@ -74,14 +74,14 @@ VALUES
      'Se examinan estrategias contables y de planeación fiscal aplicadas por pequeñas y medianas empresas de la región para mejorar su sostenibilidad financiera en contextos de incertidumbre económica.',
      TRUE),
 
-    ('capitulo_libro',
+    ('capitulo',
      'Gestión del talento humano en instituciones hospitalarias públicas',
      'Sosa Álvarez, M. C.; Reyes Reyes, E. J.',
      2024, 'Perspectivas de la Administración en Salud (compilación)', 'Cap. 6', 'pp. 89-104',
      'Capítulo que analiza modelos de gestión del talento humano aplicables a instituciones hospitalarias públicas, con énfasis en la mejora de la calidad del servicio y el desarrollo profesional del personal.',
      TRUE),
 
-    ('ponencia',
+    ('memoria',
      'Comportamiento del consumidor en entornos digitales: evidencia regional',
      'Gurrola Pérez, C. A.; Sosa Álvarez, M. C.',
      2025, 'Congreso Nacional de Investigación en Ciencias Económico-Administrativas', NULL, NULL,
