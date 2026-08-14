@@ -770,6 +770,7 @@
         border-top: 1px solid #f0f0f0;
         display: flex;
         gap: 8px;
+        flex-wrap: wrap;
       }
       .conv-proximas-list {
         display: flex;
@@ -2173,6 +2174,18 @@
       .comunidad-tab-title.activo {
         color: var(--rojo);
         border-bottom-color: var(--rojo);
+      }
+      /* en vez de desbordar la página cuando no caben todas las pestañas,
+         se deslizan horizontalmente (como un tab-bar de app móvil) */
+      @media (max-width: 900px) {
+        .comunidad-tab-header {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          flex-wrap: nowrap;
+        }
+        .comunidad-tab-title {
+          flex-shrink: 0;
+        }
       }
 
       /* ===== Buscador de tarjetas (Publicaciones, Blog) ===== */

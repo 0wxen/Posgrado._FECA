@@ -168,7 +168,7 @@ $items = listar_convocatorias();
       <div class="conv-section-title" style="margin-bottom:20px;">
         <h3>Requisitos y Condiciones de Admisión</h3>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
 
         <div style="background:#fff; border:1px solid rgba(0,0,0,0.07); border-radius:6px; padding:24px;">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dorado);margin-bottom:14px;">
