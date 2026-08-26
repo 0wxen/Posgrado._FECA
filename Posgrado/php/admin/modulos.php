@@ -66,7 +66,7 @@ const MODULOS = [
       ['nombre' => 'codigo',             'etiqueta' => 'Código (Ej. DGO, ME)',        'tipo' => 'text',   'requerido' => true],
       ['nombre' => 'nombre',             'etiqueta' => 'Nombre completo',             'tipo' => 'text',   'requerido' => true],
       ['nombre' => 'nivel',              'etiqueta' => 'Nivel',                       'tipo' => 'select', 'opciones' => ['especialidad' => 'Especialidad', 'maestria' => 'Maestría', 'doctorado' => 'Doctorado'], 'requerido' => true],
-      ['nombre' => 'modalidad',          'etiqueta' => 'Modalidad',                   'tipo' => 'select', 'opciones' => ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Mixta'], 'requerido' => true],
+      ['nombre' => 'modalidad',          'etiqueta' => 'Modalidad',                   'tipo' => 'select', 'opciones' => ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Híbrida'], 'requerido' => true],
       ['nombre' => 'duracion_semestres', 'etiqueta' => 'Duración (semestres)',        'tipo' => 'number'],
       ['nombre' => 'creditos',           'etiqueta' => 'Créditos',                    'tipo' => 'number'],
       ['nombre' => 'campo_formacion',    'etiqueta' => 'Campo de formación',          'tipo' => 'text'],

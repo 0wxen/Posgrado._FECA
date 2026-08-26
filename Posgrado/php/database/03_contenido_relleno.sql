@@ -16,10 +16,6 @@
 --     Inventar fechas y costos para los otros 5 programas sería publicar
 --     información falsa de admisión, así que se quedan sin convocatoria
 --     hasta que la coordinación confirme sus propios ciclos.
---   • "Semana FECA": mencionada por el usuario pero sin contenido ni
---     rastro en el historial del proyecto; no se rellena con datos
---     inventados. Ver recomendación de ubicación (tabla blog, usando
---     fecha_evento/lugar_evento) pendiente de que el usuario aporte texto.
 
 -- ── BLOG ──────────────────────────────────────────────────────────────────
 INSERT INTO blog (titulo, slug, resumen, cuerpo, fecha_evento, lugar_evento, autor_profesor_id, destacado, es_publicado, publicado_en)

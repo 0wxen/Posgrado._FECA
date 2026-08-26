@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/content.php';
 
 const NIVEL_CLASE_DET    = ['doctorado' => 'level-doc', 'especialidad' => 'level-esp', 'maestria' => ''];
 const NIVEL_ETIQUETA_DET = ['doctorado' => 'Doctorado', 'especialidad' => 'Especialidad', 'maestria' => 'Maestría'];
-const MODALIDAD_ETIQUETA_DET = ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Mixta'];
+const MODALIDAD_ETIQUETA_DET = ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Híbrida'];
 
 $codigo   = strtoupper(trim((string) ($_GET['codigo'] ?? '')));
 $programa = $codigo !== '' ? obtener_programa_por_codigo($codigo) : null;

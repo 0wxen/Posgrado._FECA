@@ -5,7 +5,7 @@ $programas = listar_programas();
 const NIVEL_CLASE = ['doctorado' => 'level-doc', 'especialidad' => 'level-esp', 'maestria' => ''];
 const NIVEL_ETIQUETA = ['doctorado' => 'Doctorado', 'especialidad' => 'Especialidad', 'maestria' => 'Maestría'];
 const MODALIDAD_ICONO = ['presencial' => 'ti-building', 'virtual' => 'ti-device-laptop', 'mixta' => 'ti-building-community'];
-const MODALIDAD_ETIQUETA = ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Mixta'];
+const MODALIDAD_ETIQUETA = ['presencial' => 'Presencial', 'virtual' => 'Virtual', 'mixta' => 'Híbrida'];
 ?>
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
