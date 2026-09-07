@@ -41,7 +41,7 @@ function getPageFile(pagina) {
 
 function registrarVisita(pageId) {
   try {
-    var stats = JSON.parse(localStorage.getItem('dep_stats_v1') || '{}');
+    const stats = JSON.parse(localStorage.getItem('dep_stats_v1') || '{}');
     stats[pageId] = (stats[pageId] || 0) + 1;
     localStorage.setItem('dep_stats_v1', JSON.stringify(stats));
   } catch (_) {}
@@ -58,7 +58,7 @@ async function fetchContenido(nombre) {
   return await r.text();
 }
 
-var PG_FRASES = [
+const PG_FRASES = [
   'Tu futuro académico está a un paso…',
   'El conocimiento que buscas está en camino.',
   'Los grandes logros requieren un poco de paciencia.',
@@ -84,7 +84,7 @@ function cargarPagina(nombre) {
   const contenido = document.getElementById('contenido');
   if (!contenido) return;
 
-  var fraseInicial = pgFraseAleatoria();
+  const fraseInicial = pgFraseAleatoria();
   contenido.innerHTML =
     '<div class="pg-loading">' +
       '<span class="pg-spinner"></span>' +
@@ -92,13 +92,13 @@ function cargarPagina(nombre) {
       '<p class="pg-frase-sub">Un momento por favor&hellip;</p>' +
     '</div>';
 
-  var fraseIdx = PG_FRASES.indexOf(fraseInicial);
-  var fraseTimer = setInterval(function () {
-    var el = document.getElementById('pg-frase-txt');
+  let fraseIdx = PG_FRASES.indexOf(fraseInicial);
+  const fraseTimer = setInterval(function () {
+    const el = document.getElementById('pg-frase-txt');
     if (!el) { clearInterval(fraseTimer); return; }
     el.style.opacity = '0';
     setTimeout(function () {
-      var el2 = document.getElementById('pg-frase-txt');
+      const el2 = document.getElementById('pg-frase-txt');
       if (!el2) return;
       fraseIdx = (fraseIdx + 1) % PG_FRASES.length;
       el2.textContent = PG_FRASES[fraseIdx];
@@ -113,11 +113,11 @@ function cargarPagina(nombre) {
       clearInterval(fraseTimer);
       contenido.innerHTML = html;
       // Registrar visita usando el hash actual de la URL
-      var pageId = window.location.hash.replace('#', '') || 'inicio';
+      const pageId = window.location.hash.replace('#', '') || 'inicio';
       registrarVisita(pageId);
       // Los scripts inyectados via innerHTML no se ejecutan; hay que recrearlos
       contenido.querySelectorAll('script').forEach(function (viejo) {
-        var nuevo = document.createElement('script');
+        const nuevo = document.createElement('script');
         Array.from(viejo.attributes).forEach(function (a) {
           nuevo.setAttribute(a.name, a.value);
         });

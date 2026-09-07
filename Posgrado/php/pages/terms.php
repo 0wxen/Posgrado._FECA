@@ -76,7 +76,7 @@
         <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a> ·
         (618) 827 12 00 ext. 5430
       </p>
-      <p style="color:#888; font-size:13px;">Última actualización: Junio 2025</p>
+      <p style="color:#888; font-size:13px;">Última actualización: Septiembre 2026</p>
     </div>
 
   </div>

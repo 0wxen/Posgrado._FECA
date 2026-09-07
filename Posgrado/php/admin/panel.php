@@ -273,6 +273,8 @@ function renderizar_modulo_secundario(string $moduloClave, string $tabActual): v
     return;
   }
 
+  // {$tabla}/{$definicion['orden']} nunca vienen de $_GET/$_POST -- salen de
+  // MODULOS (modulos.php), una lista fija en código. No es SQL injection.
   $filas = listado_seguro(fn() => $pdo->query("SELECT * FROM {$tabla} ORDER BY {$definicion['orden']}")->fetchAll());
   $paramEditar = 'editar_' . $moduloClave;
   $paramNuevo = 'nuevo_' . $moduloClave;
@@ -530,6 +532,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
     <?php if (array_key_exists($tab, MODULOS)):
       $definicion = MODULOS[$tab];
       $tablaExiste = $pdo === null || tabla_existe($pdo, $definicion['tabla']);
+      // mismo caso que arriba: $definicion sale de MODULOS, no de la petición.
       $filas = $tablaExiste ? listado_seguro(fn() => $pdo->query("SELECT * FROM {$definicion['tabla']} ORDER BY {$definicion['orden']}")->fetchAll()) : [];
       if (!$tablaExiste): ?>
         <div class="panel-flash panel-flash--error">

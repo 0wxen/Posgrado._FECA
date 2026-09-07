@@ -80,7 +80,7 @@
       <h2>Cambios al Aviso de Privacidad</h2>
       <p>Nos reservamos el derecho de modificar este aviso de privacidad en cualquier
       momento. Los cambios serán publicados en este mismo portal.</p>
-      <p style="color:#888; font-size:13px;">Última actualización: Junio 2025</p>
+      <p style="color:#888; font-size:13px;">Última actualización: Septiembre 2026</p>
     </div>
 
   </div>
