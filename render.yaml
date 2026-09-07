@@ -36,3 +36,5 @@ services:
         value: require
       - key: APP_ENV
         value: production
+      - key: ALUMNOS_PASSWORD
+        value: AlumnosDEP2026

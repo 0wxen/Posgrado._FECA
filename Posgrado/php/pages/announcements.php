@@ -231,6 +231,12 @@ $items = listar_convocatorias();
         </div>
 
       </div>
+
+      <div style="margin-top:20px;">
+        <a href="../assets/docs/Procedimiento-Admision-Aspirantes.docx" target="_blank" rel="noopener" class="btn-sm-outline">
+          <i class="ti ti-download"></i> Descargar el procedimiento oficial completo de Admisión
+        </a>
+      </div>
     </div>
 
     <!-- ===== CRONOGRAMA (genérico, mismos pasos institucionales cada semestre) ===== -->

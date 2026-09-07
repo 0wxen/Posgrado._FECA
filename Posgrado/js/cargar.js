@@ -24,8 +24,10 @@ const PAGE_FILE_MAP = {
   publicaciones:       'publications',
   grupos_disciplinares:'disciplinary_groups',
   titulacion:          'titulacion',
+  trabajo_terminal:    'trabajo_terminal',
   procesos_academicos: 'procesos_academicos',
   unidades_aprendizaje: 'unidades_aprendizaje',
+  alumnos:             'alumnos',
 };
 
 function getPageFile(pagina) {

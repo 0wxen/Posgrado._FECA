@@ -48,12 +48,22 @@ $faq = listar_faq();
         </a>
 
         <!-- Trabajo Terminal destacado -->
-        <a class="recurso-card recurso-destacado" href="#" style="border-left:3px solid var(--rojo); background:#fff;">
+        <a class="recurso-card recurso-destacado" href="#trabajo_terminal" data-page="trabajo_terminal" style="border-left:3px solid var(--rojo); background:#fff;">
           <div class="recurso-icon" style="background:rgba(149,24,35,0.08); color:var(--rojo-oscuro);"><i class="ti ti-notebook"></i></div>
           <div class="recurso-info">
             <h4>Titulación por Trabajo Terminal — Guía Oficial</h4>
             <p>Requisitos, etapas y documentación necesaria para concluir tu proceso de grado mediante la modalidad de Trabajo Terminal ante la División y la UJED.</p>
             <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ver guía completa</span>
+          </div>
+        </a>
+
+        <!-- Área de Alumnos destacada -->
+        <a class="recurso-card recurso-destacado" href="#alumnos" data-page="alumnos" style="border-left:3px solid var(--dorado); background:#fff;">
+          <div class="recurso-icon" style="background:rgba(168,127,61,0.1); color:var(--dorado);"><i class="ti ti-lock"></i></div>
+          <div class="recurso-info">
+            <h4>Área de Alumnos — Formatos y Trámites</h4>
+            <p>Solicitudes de baja, asignación de director de tesis y formatos de titulación, en un espacio exclusivo para alumnado inscrito (pide la clave a tu Coordinación Académica).</p>
+            <span class="recurso-info-link"><i class="ti ti-arrow-right"></i> Ir al área de Alumnos</span>
           </div>
         </a>
 

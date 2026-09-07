@@ -33,5 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
+// los documentos del área de Alumnos solo se sirven a través de
+// alumnos_descargar.php (que sí revisa la clave de acceso) -- si alguien
+// pide la ruta real directo, aunque la adivine, no se le entrega nada.
+$uri = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
+if (strpos($uri, '/php/uploads/alumnos/') === 0) {
+    http_response_code(403);
+    exit('Acceso no permitido.');
+}
+
 // Retornar false le dice al servidor PHP que procese el archivo normalmente
 return false;
