@@ -74,7 +74,7 @@
       <p>Para consultas relacionadas con estos términos, comuníquese a:</p>
       <p>
         <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a> ·
-        (618) 827 12 00 ext. 5430
+        618 827 1366 (Coordinación Académica)
       </p>
       <p style="color:#888; font-size:13px;">Última actualización: Septiembre 2026</p>
     </div>
