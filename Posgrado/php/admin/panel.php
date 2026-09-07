@@ -163,6 +163,7 @@ function renderizar_mensajes_institucionales_bloque(): void {
 
   if ($filaMsg !== null) {
     echo '<form method="post" action="guardar.php" enctype="multipart/form-data" style="margin-bottom:20px;" onsubmit="return confirm(\'¿Guardar los cambios en este mensaje institucional?\');">';
+    echo csrf_campo();
     echo '<input type="hidden" name="modulo" value="mensajes">';
     echo '<input type="hidden" name="clave" value="' . h($filaMsg['clave']) . '">';
     echo '<div class="form-group"><label class="form-label">Nombre completo</label><input type="text" class="form-control" name="nombre" value="' . h($filaMsg['nombre']) . '" required></div>';
@@ -232,6 +233,7 @@ function renderizar_bloque_subitem(int $programaId, string $tabla, string $modul
       echo '<div class="admin-card-actions">';
       echo '<a class="admin-btn-edit" href="panel.php?tab=oferta&editar=' . $programaId . '&editar_' . h($modulo) . '=' . (int) $it['id'] . '#sub-' . h($modulo) . '"><i class="ti ti-pencil"></i> Editar</a>';
       echo '<form method="post" action="guardar.php" onsubmit="return confirm(\'¿Eliminar este elemento?\');" style="display:inline;">';
+      echo csrf_campo();
       echo '<input type="hidden" name="modulo" value="' . h($modulo) . '"><input type="hidden" name="accion" value="eliminar"><input type="hidden" name="id" value="' . (int) $it['id'] . '">';
       echo '<button type="submit" class="admin-btn-delete" title="Eliminar"><i class="ti ti-trash"></i></button></form>';
       echo '</div></div>';
@@ -242,6 +244,7 @@ function renderizar_bloque_subitem(int $programaId, string $tabla, string $modul
   }
 
   echo '<form method="post" action="guardar.php" id="sub-' . h($modulo) . '" onsubmit="return confirm(\'' . ($filaSub ? '¿Guardar los cambios?' : '¿Agregar este elemento?') . '\');">';
+  echo csrf_campo();
   echo '<input type="hidden" name="modulo" value="' . h($modulo) . '">';
   echo '<input type="hidden" name="accion" value="' . ($filaSub ? 'editar' : 'crear') . '">';
   if ($filaSub) echo '<input type="hidden" name="id" value="' . (int) $filaSub['id'] . '">';
@@ -296,6 +299,7 @@ function renderizar_modulo_secundario(string $moduloClave, string $tabActual): v
       ? '¿Agregar ' . h($definicion['etiqueta_item']) . '?'
       : '¿Guardar los cambios en ' . h($definicion['etiqueta_item']) . '?';
     echo '<form method="post" action="guardar.php" enctype="multipart/form-data" style="margin-top:16px;" onsubmit="return confirm(\'' . $mensajeConfirmar . '\');">';
+    echo csrf_campo();
     echo '<input type="hidden" name="modulo" value="' . h($moduloClave) . '">';
     echo '<input type="hidden" name="accion" value="' . ($esNuevoReal ? 'crear' : 'editar') . '">';
     if (!$esNuevoReal) echo '<input type="hidden" name="id" value="' . (int) $filaForm['id'] . '">';
@@ -317,6 +321,7 @@ function renderizar_modulo_secundario(string $moduloClave, string $tabActual): v
     echo '<div class="admin-card-actions">';
     echo '<a class="admin-btn-edit" href="' . $urlEditar . '"><i class="ti ti-pencil"></i> Editar</a>';
     echo '<form method="post" action="guardar.php" onsubmit="return confirm(\'¿Eliminar este elemento?\');" style="display:inline;">';
+    echo csrf_campo();
     echo '<input type="hidden" name="modulo" value="' . h($moduloClave) . '"><input type="hidden" name="accion" value="eliminar"><input type="hidden" name="id" value="' . (int) $fila['id'] . '">';
     echo '<button type="submit" class="admin-btn-delete" title="Eliminar"><i class="ti ti-trash"></i></button></form>';
     echo '</div></div>';
@@ -336,6 +341,7 @@ function renderizar_formulario(string $modulo, array $definicion, array $fila, b
     ? '¿Agregar ' . h($definicion['etiqueta_item']) . '?'
     : '¿Guardar los cambios en ' . h($definicion['etiqueta_item']) . '?';
   echo '<form method="post" action="guardar.php" enctype="multipart/form-data" onsubmit="return confirm(\'' . $mensajeConfirmar . '\');">';
+  echo csrf_campo();
   echo '<input type="hidden" name="modulo" value="' . h($modulo) . '">';
   echo '<input type="hidden" name="accion" value="' . ($esNuevo ? 'crear' : 'editar') . '">';
   if (!$esNuevo) {
@@ -437,6 +443,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
     echo '<div class="admin-card-actions">';
     echo '<a class="admin-btn-edit" href="' . $urlEditar . '"><i class="ti ti-pencil"></i> Editar</a>';
     echo '<form method="post" action="guardar.php" onsubmit="return confirm(\'¿Eliminar este elemento?\');" style="display:inline;">';
+    echo csrf_campo();
     echo '<input type="hidden" name="modulo" value="' . h($modulo) . '">';
     echo '<input type="hidden" name="accion" value="eliminar">';
     echo '<input type="hidden" name="id" value="' . (int) $fila['id'] . '">';
@@ -586,6 +593,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
             <div class="admin-card-body">
               <div class="admin-card-title"><?= h($img['etiqueta']) ?></div>
               <form method="post" action="guardar.php" enctype="multipart/form-data" style="margin-top:10px;">
+                <?= csrf_campo() ?>
                 <input type="hidden" name="modulo" value="imagenes">
                 <input type="hidden" name="clave" value="<?= h($img['clave']) ?>">
                 <input type="file" name="imagen" accept="image/*" required style="width:100%;">
@@ -725,6 +733,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
         <div class="admin-card" style="padding:20px 22px;margin-bottom:26px;" id="formulario">
           <h3 style="margin-top:0;font-family:'Barlow Condensed',sans-serif;color:var(--rojo-oscuro);"><?= $editarId ? 'Editar' : 'Agregar' ?> usuario</h3>
           <form method="post" action="guardar.php">
+            <?= csrf_campo() ?>
             <input type="hidden" name="modulo" value="usuarios">
             <input type="hidden" name="accion" value="<?= $editarId ? 'editar' : 'crear' ?>">
             <?php if ($editarId): ?><input type="hidden" name="id" value="<?= (int) $filaForm['id'] ?>"><?php endif; ?>
@@ -773,6 +782,7 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
                 <a class="admin-btn-edit" href="panel.php?tab=usuarios&editar=<?= (int) $u['id'] ?>#formulario"><i class="ti ti-pencil"></i> Editar</a>
                 <?php if ((int) $u['id'] !== (int) $usuario['id']): ?>
                   <form method="post" action="guardar.php" onsubmit="return confirm('¿Eliminar este usuario?');" style="display:inline;">
+                    <?= csrf_campo() ?>
                     <input type="hidden" name="modulo" value="usuarios">
                     <input type="hidden" name="accion" value="eliminar">
                     <input type="hidden" name="id" value="<?= (int) $u['id'] ?>">

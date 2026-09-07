@@ -112,6 +112,10 @@ function cargarPagina(nombre) {
     .then(html => {
       clearInterval(fraseTimer);
       contenido.innerHTML = html;
+      // <title> por página (SPA: sin esto, todas las páginas comparten el
+      // mismo título) -- se toma del <h1> real, así nunca queda desincronizado.
+      const h1 = contenido.querySelector('h1');
+      document.title = (h1 && h1.textContent.trim() ? h1.textContent.trim() + ' · ' : '') + 'FECA UJED · División de Estudios de Posgrado';
       // Registrar visita usando el hash actual de la URL
       const pageId = window.location.hash.replace('#', '') || 'inicio';
       registrarVisita(pageId);

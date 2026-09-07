@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  El sitio es una SPA con rutas por #hash (#nosotros, #convocatorias...),
+  y los buscadores no indexan fragmentos como URLs distintas -- solo se
+  puede listar la página de entrada real. Para SEO por sección haría
+  falta enrutamiento por ruta (no #hash), que no se cambió aquí.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://posgrado-feca.onrender.com/html/htmlcode.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

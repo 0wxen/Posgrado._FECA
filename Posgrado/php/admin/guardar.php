@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   exit;
 }
 
+csrf_validar();
+
 $usuarioActual = usuario_actual();
 $usuarioId = (int) ($usuarioActual['id'] ?? 0);
 $modulo = $_POST['modulo'] ?? '';

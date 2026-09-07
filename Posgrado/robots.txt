@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /php/admin/
+Disallow: /php/tools/
+Disallow: /php/uploads/
+Disallow: /php/api/
+
+Sitemap: https://posgrado-feca.onrender.com/sitemap.xml
