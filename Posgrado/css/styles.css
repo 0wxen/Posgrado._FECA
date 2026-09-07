@@ -3922,3 +3922,154 @@
         .admin-grid-conv,.admin-grid-person,.admin-grid-oferta,
         .admin-grid-invest,.admin-grid-comunidad,.admin-grid-blog { grid-template-columns:1fr; }
       }
+
+      /* ===== Titulación por Certificación (antes <style> propio de la página) ===== */
+      .tit-aviso {
+        background: #fff8e1;
+        border: 1px solid #ffe082;
+        border-left: 4px solid #e67e00;
+        border-radius: 6px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        max-width: 820px;
+        margin: 0 auto;
+      }
+      .tit-aviso > i { color: #e67e00; font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+      .tit-aviso strong { color: #5d4037; font-size: 15px; display: block; margin-bottom: 5px; }
+      .tit-aviso p { color: #6d4c0e; margin: 0; font-size: 13px; line-height: 1.65; }
+
+      .tit-pasos { display: flex; flex-direction: column; gap: 30px; }
+
+      .tit-paso {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .tit-paso-num {
+        width: 58px; height: 58px;
+        background: var(--rojo-oscuro);
+        color: #fff;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 28px; font-weight: 700;
+        flex-shrink: 0;
+      }
+      .tit-paso-content { padding-top: 6px; }
+      .tit-paso-titulo {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 23px; font-weight: 700;
+        color: var(--rojo-oscuro);
+        margin: 0 0 8px;
+        letter-spacing: 0.02em;
+      }
+      .tit-paso-desc { color: #555; font-size: 14px; margin: 0 0 16px; line-height: 1.55; }
+
+      .tit-costos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 14px;
+      }
+      .tit-costo-card {
+        background: #fff;
+        border: 1px solid #e8e6e1;
+        border-top: 3px solid var(--rojo);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .tit-costo-card--compacta { max-width: 180px; flex-shrink: 0; }
+      .tit-costo-monto {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 30px; font-weight: 700;
+        color: var(--rojo-oscuro);
+        line-height: 1; margin-bottom: 6px;
+      }
+      .tit-costo-monto span { font-size: 13px; font-weight: 500; color: #888; }
+      .tit-costo-nombre { font-weight: 600; font-size: 13px; color: #333; margin-bottom: 4px; }
+      .tit-costo-nota { font-size: 12px; color: #888; line-height: 1.4; }
+
+      .tit-doc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+      .tit-doc-list li {
+        display: flex; align-items: flex-start; gap: 10px;
+        font-size: 14px; color: #444; line-height: 1.55;
+      }
+      .tit-doc-list li i { color: var(--rojo); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+      .tit-flujo { display: flex; flex-direction: column; gap: 0; }
+      .tit-flujo-paso {
+        display: flex; align-items: flex-start; gap: 14px;
+        background: #fff;
+        border: 1px solid #e8e6e1;
+        border-radius: 8px;
+        padding: 16px 18px;
+      }
+      .tit-flujo-paso > i { font-size: 26px; color: var(--rojo-oscuro); flex-shrink: 0; margin-top: 2px; }
+      .tit-flujo-paso strong { font-size: 15px; color: #222; display: block; margin-bottom: 5px; }
+      .tit-flujo-paso p { font-size: 13px; color: #555; margin: 0 0 6px; line-height: 1.55; }
+      .tit-flujo-paso p:last-child { margin-bottom: 0; }
+      .tit-nota-inline {
+        display: flex; align-items: flex-start; gap: 7px;
+        background: #fff8e1; border: 1px solid #ffe082;
+        border-radius: 4px; padding: 8px 11px;
+        font-size: 12px; color: #6d4c0e; line-height: 1.5; margin-top: 8px;
+      }
+      .tit-nota-inline i { font-size: 14px; color: #e67e00; flex-shrink: 0; margin-top: 1px; }
+      .tit-flujo-arrow {
+        display: flex; align-items: center; padding: 4px 0 4px 22px;
+        color: var(--rojo); font-size: 20px;
+      }
+
+      .tit-finales-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      .tit-final-card {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 8px; padding: 28px 22px; text-align: center;
+      }
+      .tit-final-num {
+        width: 46px; height: 46px;
+        background: var(--rojo); color: #fff;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 22px; font-weight: 700; margin: 0 auto 14px;
+      }
+      .tit-final-icon { font-size: 38px; color: var(--dorado-claro); display: block; margin-bottom: 12px; }
+      .tit-final-card h4 {
+        color: #fff; margin: 0 0 10px;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 18px; font-weight: 700;
+        letter-spacing: 0.04em; text-transform: uppercase;
+      }
+      .tit-final-card p { color: rgba(255,255,255,0.72); font-size: 13px; line-height: 1.65; margin: 0; }
+
+      /* estilos que estaban en línea en titulacion.php */
+      .tit-intro-box { max-width: 760px; margin: 0 auto; text-align: center; }
+      .tit-contacto-box { max-width: 700px; margin: 0 auto; text-align: center; }
+      .kicker--dorado-claro { color: var(--dorado-claro); }
+      .tit-intro-titulo { color: #fff; margin: 10px 0 16px; }
+      .tit-final-titulo { color: #fff; }
+      .tit-contacto-titulo { margin: 10px 0 12px; }
+      .tit-intro-texto { color: rgba(255,255,255,0.78); line-height: 1.75; margin-bottom: 26px; }
+      .tit-intro-texto strong { color: #fff; }
+      .tit-botones-center { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+      .btn-sm-outline--oscuro { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.75); }
+      .seccion--compacta { padding-top: 28px; padding-bottom: 28px; }
+      .tit-paso2-layout { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; margin-top: 12px; }
+      .tit-paso2-indicaciones { flex: 1; min-width: 260px; }
+      .tit-paso2-subtitulo { font-weight: 600; margin: 0 0 10px; color: var(--rojo-oscuro); font-size: 14px; }
+      .tit-paso2-lista { margin: 0; padding-left: 18px; line-height: 1.9; color: #555; font-size: 14px; }
+      .tit-paso2-lista small { color: #888; }
+      .tit-contacto-texto { color: #555; margin-bottom: 24px; line-height: 1.65; }
+
+      @media (max-width: 600px) {
+        .tit-paso { grid-template-columns: 44px 1fr; gap: 12px; }
+        .tit-paso-num { width: 44px; height: 44px; font-size: 21px; }
+        .tit-costos-grid { grid-template-columns: 1fr 1fr; }
+      }

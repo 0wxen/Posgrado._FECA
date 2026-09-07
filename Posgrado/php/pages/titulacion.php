@@ -1,136 +1,3 @@
-<style>
-  /* titulación */
-  .tit-aviso {
-    background: #fff8e1;
-    border: 1px solid #ffe082;
-    border-left: 4px solid #e67e00;
-    border-radius: 6px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    max-width: 820px;
-    margin: 0 auto;
-  }
-  .tit-aviso > i { color: #e67e00; font-size: 26px; flex-shrink: 0; margin-top: 2px; }
-  .tit-aviso strong { color: #5d4037; font-size: 15px; display: block; margin-bottom: 5px; }
-  .tit-aviso p { color: #6d4c0e; margin: 0; font-size: 13px; line-height: 1.65; }
-
-  .tit-pasos { display: flex; flex-direction: column; gap: 30px; }
-
-  .tit-paso {
-    display: grid;
-    grid-template-columns: 58px 1fr;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  .tit-paso-num {
-    width: 58px; height: 58px;
-    background: var(--rojo-oscuro);
-    color: #fff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px; font-weight: 700;
-    flex-shrink: 0;
-  }
-  .tit-paso-content { padding-top: 6px; }
-  .tit-paso-titulo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 23px; font-weight: 700;
-    color: var(--rojo-oscuro);
-    margin: 0 0 8px;
-    letter-spacing: 0.02em;
-  }
-  .tit-paso-desc { color: #555; font-size: 14px; margin: 0 0 16px; line-height: 1.55; }
-
-  .tit-costos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 14px;
-  }
-  .tit-costo-card {
-    background: #fff;
-    border: 1px solid #e8e6e1;
-    border-top: 3px solid var(--rojo);
-    border-radius: 8px;
-    padding: 16px;
-  }
-  .tit-costo-monto {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 30px; font-weight: 700;
-    color: var(--rojo-oscuro);
-    line-height: 1; margin-bottom: 6px;
-  }
-  .tit-costo-monto span { font-size: 13px; font-weight: 500; color: #888; }
-  .tit-costo-nombre { font-weight: 600; font-size: 13px; color: #333; margin-bottom: 4px; }
-  .tit-costo-nota { font-size: 12px; color: #888; line-height: 1.4; }
-
-  .tit-doc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-  .tit-doc-list li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; color: #444; line-height: 1.55;
-  }
-  .tit-doc-list li i { color: var(--rojo); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
-
-  .tit-flujo { display: flex; flex-direction: column; gap: 0; }
-  .tit-flujo-paso {
-    display: flex; align-items: flex-start; gap: 14px;
-    background: #fff;
-    border: 1px solid #e8e6e1;
-    border-radius: 8px;
-    padding: 16px 18px;
-  }
-  .tit-flujo-paso > i { font-size: 26px; color: var(--rojo-oscuro); flex-shrink: 0; margin-top: 2px; }
-  .tit-flujo-paso strong { font-size: 15px; color: #222; display: block; margin-bottom: 5px; }
-  .tit-flujo-paso p { font-size: 13px; color: #555; margin: 0 0 6px; line-height: 1.55; }
-  .tit-flujo-paso p:last-child { margin-bottom: 0; }
-  .tit-nota-inline {
-    display: flex; align-items: flex-start; gap: 7px;
-    background: #fff8e1; border: 1px solid #ffe082;
-    border-radius: 4px; padding: 8px 11px;
-    font-size: 12px; color: #6d4c0e; line-height: 1.5; margin-top: 8px;
-  }
-  .tit-nota-inline i { font-size: 14px; color: #e67e00; flex-shrink: 0; margin-top: 1px; }
-  .tit-flujo-arrow {
-    display: flex; align-items: center; padding: 4px 0 4px 22px;
-    color: var(--rojo); font-size: 20px;
-  }
-
-  .tit-finales-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-  }
-  .tit-final-card {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 8px; padding: 28px 22px; text-align: center;
-  }
-  .tit-final-num {
-    width: 46px; height: 46px;
-    background: var(--rojo); color: #fff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px; font-weight: 700; margin: 0 auto 14px;
-  }
-  .tit-final-icon { font-size: 38px; color: var(--dorado-claro); display: block; margin-bottom: 12px; }
-  .tit-final-card h4 {
-    color: #fff; margin: 0 0 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px; font-weight: 700;
-    letter-spacing: 0.04em; text-transform: uppercase;
-  }
-  .tit-final-card p { color: rgba(255,255,255,0.72); font-size: 13px; line-height: 1.65; margin: 0; }
-
-  @media (max-width: 600px) {
-    .tit-paso { grid-template-columns: 44px 1fr; gap: 12px; }
-    .tit-paso-num { width: 44px; height: 44px; font-size: 21px; }
-    .tit-costos-grid { grid-template-columns: 1fr 1fr; }
-  }
-</style>
-
 <!-- ===== BANNER ===== -->
 <section class="page-banner">
   <div class="page-banner-inner">
@@ -145,22 +12,21 @@
 <!-- ===== INTRO ===== -->
 <section class="seccion seccion-oscura">
   <div class="inner">
-    <div style="max-width:760px; margin:0 auto; text-align:center;">
-      <span class="kicker" style="color:var(--dorado-claro);">Proceso de graduación</span>
-      <h2 style="color:#fff; margin:10px 0 16px;">¿Qué es la Titulación por Certificación?</h2>
-      <p style="color:rgba(255,255,255,0.78); line-height:1.75; margin-bottom:26px;">
+    <div class="tit-intro-box">
+      <span class="kicker kicker--dorado-claro">Proceso de graduación</span>
+      <h2 class="tit-intro-titulo">¿Qué es la Titulación por Certificación?</h2>
+      <p class="tit-intro-texto">
         Los estudiantes que concluyan satisfactoriamente el plan de estudios podrán obtener el grado de maestría
-        mediante la <strong style="color:#fff;">certificación de competencias profesionales</strong> ante el Consejo
+        mediante la <strong>certificación de competencias profesionales</strong> ante el Consejo
         Nacional de Normalización y Certificación de Competencias Laborales (CONOCER), a través del Centro de
         Innovación, Investigación, Emprendimiento y Desarrollo Organizacional (CIIEDO) de la FECA, conforme a
         estándares de competencia alineados al perfil del programa.
       </p>
-      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <div class="tit-botones-center">
         <a href="../assets/docs/Titulacion-Certificacion.pdf" target="_blank" rel="noopener" class="btn-sm-rojo">
           <i class="ti ti-download"></i> Descargar guía en PDF
         </a>
-        <a href="#contacto" data-page="contacto" class="btn-sm-outline"
-           style="border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.75);">
+        <a href="#contacto" data-page="contacto" class="btn-sm-outline btn-sm-outline--oscuro">
           <i class="ti ti-mail"></i> Contactar a la División
         </a>
       </div>
@@ -169,7 +35,7 @@
 </section>
 
 <!-- ===== AVISO DE DURACIÓN ===== -->
-<section class="seccion seccion-blanca" style="padding-top:28px; padding-bottom:28px;">
+<section class="seccion seccion-blanca seccion--compacta">
   <div class="inner">
     <div class="tit-aviso">
       <i class="ti ti-clock"></i>
@@ -232,20 +98,20 @@
         <div class="tit-paso-num">2</div>
         <div class="tit-paso-content">
           <h3 class="tit-paso-titulo">Renta de Toga y Birrete</h3>
-          <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; margin-top:12px;">
-            <div class="tit-costo-card" style="max-width:180px; flex-shrink:0;">
+          <div class="tit-paso2-layout">
+            <div class="tit-costo-card tit-costo-card--compacta">
               <div class="tit-costo-monto">~$200 <span>MXN</span></div>
               <div class="tit-costo-nombre">Costo aproximado de renta</div>
             </div>
-            <div style="flex:1; min-width:260px;">
-              <p style="font-weight:600; margin:0 0 10px; color:var(--rojo-oscuro); font-size:14px;">Indicaciones importantes:</p>
-              <ul style="margin:0; padding-left:18px; line-height:1.9; color:#555; font-size:14px;">
+            <div class="tit-paso2-indicaciones">
+              <p class="tit-paso2-subtitulo">Indicaciones importantes:</p>
+              <ul class="tit-paso2-lista">
                 <li>Toga y birrete <strong>NEGROS</strong>, borla <strong>ROJA</strong>.</li>
                 <li>Se recomienda rentar <strong>próximo a la fecha</strong> de la Ceremonia Protocolaria.</li>
-                <li>Sugerencia: <em>ENCANTADOS – Renta de Disfraces y Togas</em>, Felipe Pescador esq. Laureano Roncal. <small style="color:#888;">(Solo referencia; la elección es del alumno.)</small></li>
+                <li>Sugerencia: <em>ENCANTADOS – Renta de Disfraces y Togas</em>, Felipe Pescador esq. Laureano Roncal. <small>(Solo referencia; la elección es del alumno.)</small></li>
                 <li>Mencionar que la renta es para <em>entrega de Cartas de la FECA</em>.</li>
                 <li>La toga y el birrete se recogen <strong>un día antes</strong> de la ceremonia.</li>
-                <li>Garantía requerida al recoger: INE o ~$500 en efectivo <small style="color:#888;">(se devuelve al día siguiente al entregar la indumentaria)</small>.</li>
+                <li>Garantía requerida al recoger: INE o ~$500 en efectivo <small>(se devuelve al día siguiente al entregar la indumentaria)</small>.</li>
               </ul>
             </div>
           </div>
@@ -303,8 +169,8 @@
 <section class="seccion seccion-oscura">
   <div class="inner">
     <div class="seccion-header">
-      <span class="kicker" style="color:var(--dorado-claro);">Cierre del proceso</span>
-      <h2 style="color:#fff;">Etapas Finales</h2>
+      <span class="kicker kicker--dorado-claro">Cierre del proceso</span>
+      <h2 class="tit-final-titulo">Etapas Finales</h2>
     </div>
     <div class="tit-finales-grid">
 
@@ -335,14 +201,14 @@
 
 <!-- ===== CONTACTO ===== -->
 <section class="seccion seccion-blanca">
-  <div class="inner" style="max-width:700px; margin:0 auto; text-align:center;">
+  <div class="inner tit-contacto-box">
     <span class="kicker">¿Tienes dudas?</span>
-    <h2 style="margin:10px 0 12px;">Contacta a la Coordinación Académica</h2>
-    <p style="color:#555; margin-bottom:24px; line-height:1.65;">
+    <h2 class="tit-contacto-titulo">Contacta a la Coordinación Académica</h2>
+    <p class="tit-contacto-texto">
       Para iniciar tu proceso de titulación o resolver dudas sobre el trámite, comunícate directamente
       con la Coordinación Académica de la División de Estudios de Posgrado FECA UJED.
     </p>
-    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <div class="tit-botones-center">
       <a href="mailto:academicaposgrado.feca@ujed.mx" class="btn-sm-rojo">
         <i class="ti ti-mail"></i> academicaposgrado.feca@ujed.mx
       </a>
