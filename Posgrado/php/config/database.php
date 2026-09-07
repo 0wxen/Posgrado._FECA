@@ -1,6 +1,14 @@
 <?php
 declare(strict_types=1);
 
+// PGSSLMODE solo se define en producción (Render); ahí se ocultan errores de
+// PHP en pantalla (rutas, stack traces) y se dejan solo en el log del server.
+// Local no lo define -- sigue mostrando errores igual que siempre para depurar.
+$esProduccion = getenv('PGSSLMODE') !== false;
+ini_set('display_errors', $esProduccion ? '0' : '1');
+ini_set('display_startup_errors', $esProduccion ? '0' : '1');
+error_reporting(E_ALL);
+
 $dbHost = getenv('PGHOST')     ?: '127.0.0.1';
 $dbPort = getenv('PGPORT')     ?: '5432';
 $dbName = getenv('PGDATABASE') ?: 'FECA';
