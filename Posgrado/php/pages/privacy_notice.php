@@ -62,7 +62,7 @@
       una solicitud a:</p>
       <p>
         <strong>Correo:</strong> <a href="mailto:posgradofeca@ujed.mx">posgradofeca@ujed.mx</a><br>
-        <strong>Teléfono:</strong> 618 827 1366 (Coordinación Académica)<br>
+        <strong>Teléfono:</strong> 618 827 1266<br>
         <strong>Horario:</strong> Lunes a Viernes, 8:00 a.m. – 8:00 p.m. · Sábados, 9:00 a.m. – 2:00 p.m.
       </p>
       <p>La solicitud deberá incluir su nombre completo, una descripción clara del derecho
