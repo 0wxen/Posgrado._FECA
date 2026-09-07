@@ -46,8 +46,8 @@ function bullets_desde_texto(?string $texto): array {
 <section class="page-banner">
   <div class="page-banner-inner">
     <span class="page-banner-kicker">FECA UJED · División de Estudios de Posgrado</span>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
-      <span class="program-level <?= h($nivelClase) ?>" style="font-size:12px;padding:5px 14px;"><?= h($nivelEtiqueta) ?></span>
+    <div class="program-detalle-tags-row">
+      <span class="program-level program-level--lg <?= h($nivelClase) ?>"><?= h($nivelEtiqueta) ?></span>
       <?php if (!empty($programa['acreditacion'])): ?>
         <span class="program-pnpc"><i class="ti ti-award"></i> <?= h($programa['acreditacion']) ?></span>
       <?php endif; ?>
@@ -62,17 +62,17 @@ function bullets_desde_texto(?string $texto): array {
 <!-- ===== OBJETIVO ===== -->
 <section class="seccion seccion-blanca">
   <div class="inner">
-    <div style="display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:start;">
+    <div class="program-detalle-objetivo-grid">
       <div>
-        <div class="seccion-header" style="margin-bottom:20px;">
+        <div class="seccion-header seccion-header--sm">
           <span class="kicker">Objetivo General</span>
           <h2>¿Qué busca este programa?</h2>
         </div>
-        <p style="font-size:16px;color:#555;line-height:1.8;">
+        <p class="program-detalle-objetivo-texto">
           <?= !empty($programa['objetivo']) ? nl2br(h($programa['objetivo'])) : 'Información próximamente disponible.' ?>
         </p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="program-detalle-info-list">
         <?php if (!empty($programa['duracion_semestres'])): ?>
           <div class="directorio-item">
             <div class="directorio-icon"><i class="ti ti-clock"></i></div>
@@ -164,7 +164,7 @@ function bullets_desde_texto(?string $texto): array {
         <?php endforeach; ?>
       </div>
     <?php endif; ?>
-    <p style="font-size:11px;color:#aaa;margin-top:18px;line-height:1.7;border-top:1px solid #eee;padding-top:14px;">* Los estudiantes que concluyan satisfactoriamente el plan de estudios podrán obtener el grado mediante elaboración de trabajo terminal (tesis) o a través de la certificación de competencias profesionales ante el Consejo Nacional de Normalización y Certificación de Competencias Laborales (CONOCER), que ofrece el Centro de Innovación, Investigación, Emprendimiento y Desarrollo Organizacional (CIIEDO) de la Facultad de Economía, Contaduría y Administración, conforme a estándares de competencia alineados al perfil del programa.</p>
+    <p class="program-detalle-nota">* Los estudiantes que concluyan satisfactoriamente el plan de estudios podrán obtener el grado mediante elaboración de trabajo terminal (tesis) o a través de la certificación de competencias profesionales ante el Consejo Nacional de Normalización y Certificación de Competencias Laborales (CONOCER), que ofrece el Centro de Innovación, Investigación, Emprendimiento y Desarrollo Organizacional (CIIEDO) de la Facultad de Economía, Contaduría y Administración, conforme a estándares de competencia alineados al perfil del programa.</p>
   </div>
 </section>
 
@@ -200,22 +200,22 @@ function bullets_desde_texto(?string $texto): array {
       <span class="kicker">Admisión</span>
       <h2>Proceso de Inscripción</h2>
     </div>
-    <div class="directorio-grid" style="margin-bottom:32px;">
-      <div class="directorio-item" style="background:#2a2a2a;border-left-color:var(--rojo);">
-        <div class="directorio-icon" style="background:rgba(227,19,19,0.15);color:var(--rojo);font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;">1</div>
-        <div><div class="directorio-nombre" style="color:#fff;">Documentación</div><div class="directorio-cargo" style="color:#aaa;">Presentar la documentación de registro que la División solicite, entre esta poseer el grado de estudios profesionales.</div></div>
+    <div class="directorio-grid program-detalle-pasos-grid">
+      <div class="directorio-item program-detalle-paso program-detalle-paso--rojo">
+        <div class="directorio-icon program-detalle-paso-num program-detalle-paso-num--rojo">1</div>
+        <div><div class="directorio-nombre program-detalle-paso-titulo">Documentación</div><div class="directorio-cargo program-detalle-paso-desc">Presentar la documentación de registro que la División solicite, entre esta poseer el grado de estudios profesionales.</div></div>
       </div>
-      <div class="directorio-item" style="background:#2a2a2a;border-left-color:var(--dorado);">
-        <div class="directorio-icon" style="background:rgba(168,127,61,0.15);color:var(--dorado);font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;">2</div>
-        <div><div class="directorio-nombre" style="color:#fff;">Pago</div><div class="directorio-cargo" style="color:#aaa;">Realizar el pago correspondiente al proceso de admisión.</div></div>
+      <div class="directorio-item program-detalle-paso program-detalle-paso--dorado">
+        <div class="directorio-icon program-detalle-paso-num program-detalle-paso-num--dorado">2</div>
+        <div><div class="directorio-nombre program-detalle-paso-titulo">Pago</div><div class="directorio-cargo program-detalle-paso-desc">Realizar el pago correspondiente al proceso de admisión.</div></div>
       </div>
-      <div class="directorio-item" style="background:#2a2a2a;border-left-color:var(--dorado);">
-        <div class="directorio-icon" style="background:rgba(168,127,61,0.15);color:var(--dorado);font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;">3</div>
-        <div><div class="directorio-nombre" style="color:#fff;">Admisión</div><div class="directorio-cargo" style="color:#aaa;">Acreditar: <?= h($programa['admision_nota'] ?: 'Curso propedéutico · Entrevista.') ?></div></div>
+      <div class="directorio-item program-detalle-paso program-detalle-paso--dorado">
+        <div class="directorio-icon program-detalle-paso-num program-detalle-paso-num--dorado">3</div>
+        <div><div class="directorio-nombre program-detalle-paso-titulo">Admisión</div><div class="directorio-cargo program-detalle-paso-desc">Acreditar: <?= h($programa['admision_nota'] ?: 'Curso propedéutico · Entrevista.') ?></div></div>
       </div>
     </div>
-    <p style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:18px;line-height:1.7;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;">* Los estudiantes que concluyan satisfactoriamente el plan de estudios podrán obtener el grado mediante elaboración de trabajo terminal (tesis) o a través de la certificación de competencias profesionales ante el Consejo Nacional de Normalización y Certificación de Competencias Laborales (CONOCER), que ofrece el Centro de Innovación, Investigación, Emprendimiento y Desarrollo Organizacional (CIIEDO) de la Facultad de Economía, Contaduría y Administración, conforme a estándares de competencia alineados al perfil del programa.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+    <p class="program-detalle-nota program-detalle-nota--oscura">* Los estudiantes que concluyan satisfactoriamente el plan de estudios podrán obtener el grado mediante elaboración de trabajo terminal (tesis) o a través de la certificación de competencias profesionales ante el Consejo Nacional de Normalización y Certificación de Competencias Laborales (CONOCER), que ofrece el Centro de Innovación, Investigación, Emprendimiento y Desarrollo Organizacional (CIIEDO) de la Facultad de Economía, Contaduría y Administración, conforme a estándares de competencia alineados al perfil del programa.</p>
+    <div class="program-detalle-acciones">
       <a href="#convocatorias" class="btn-primary" data-page="convocatorias"><i class="ti ti-file-description"></i> Ver Convocatorias</a>
       <a href="mailto:posgradofeca@ujed.mx" class="btn-outline-white"><i class="ti ti-mail"></i> posgradofeca@ujed.mx</a>
     </div>

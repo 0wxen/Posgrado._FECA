@@ -2115,6 +2115,38 @@
       }
       .program-level.level-doc  { background: var(--rojo); }
       .program-level.level-esp  { background: #546e7a; }
+      .program-level--lg { font-size: 12px; padding: 5px 14px; }
+
+      /* ===== Detalle de programa ===== */
+      .seccion-header--sm { margin-bottom: 20px; }
+      .program-detalle-tags-row {
+        display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap;
+      }
+      .program-detalle-objetivo-grid {
+        display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start;
+      }
+      .program-detalle-objetivo-texto { font-size: 16px; color: #555; line-height: 1.8; }
+      .program-detalle-info-list { display: flex; flex-direction: column; gap: 12px; }
+      .program-detalle-nota {
+        font-size: 11px; color: #aaa; margin-top: 18px; line-height: 1.7;
+        border-top: 1px solid #eee; padding-top: 14px;
+      }
+      .program-detalle-nota--oscura {
+        color: rgba(255,255,255,0.45); margin-top: 0; margin-bottom: 18px;
+        border-top-color: rgba(255,255,255,0.1);
+      }
+      .program-detalle-pasos-grid { margin-bottom: 32px; }
+      .program-detalle-paso { background: #2a2a2a; }
+      .program-detalle-paso--rojo { border-left-color: var(--rojo); }
+      .program-detalle-paso--dorado { border-left-color: var(--dorado); }
+      .program-detalle-paso-num {
+        font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700;
+      }
+      .program-detalle-paso-num--rojo { background: rgba(227,19,19,0.15); color: var(--rojo); }
+      .program-detalle-paso-num--dorado { background: rgba(168,127,61,0.15); color: var(--dorado); }
+      .program-detalle-paso-titulo { color: #fff; }
+      .program-detalle-paso-desc { color: #aaa; }
+      .program-detalle-acciones { display: flex; gap: 14px; flex-wrap: wrap; }
       .program-pnpc {
         position: relative;
         z-index: 1;
