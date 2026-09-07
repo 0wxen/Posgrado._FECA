@@ -2659,6 +2659,16 @@
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 16px;
       }
+      .recursos-grid--mb44 { margin-bottom: 44px; }
+
+      /* ===== Área de Alumnos ===== */
+      .alumnos-candado-box { max-width: 440px; margin: 0 auto; }
+      .alumnos-candado-nota { color: #777; font-size: 13.5px; margin: -8px 0 18px; }
+      .alumnos-aviso-error {
+        margin-bottom: 16px; padding: 10px 14px; border-radius: 4px;
+        background: #fdecec; color: #951823; font-size: 13px; font-weight: 600;
+      }
+      .alumnos-salir-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
       .recurso-card {
         background: #fff;
         border: 1px solid rgba(0,0,0,0.08);

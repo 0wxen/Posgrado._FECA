@@ -17,14 +17,14 @@ require_once __DIR__ . '/../includes/alumnos.php';
 
   <!-- ===== CANDADO DE ACCESO ===== -->
   <section class="seccion seccion-gris">
-    <div class="inner" style="max-width:440px; margin:0 auto;">
+    <div class="inner alumnos-candado-box">
       <div class="contacto-form-card">
         <h3>Acceso para Alumnos</h3>
-        <p style="color:#777; font-size:13.5px; margin:-8px 0 18px;">
+        <p class="alumnos-candado-nota">
           Pide la clave de acceso a la Coordinación Académica de tu programa.
         </p>
 
-        <div id="alumnos-aviso" hidden style="margin-bottom:16px;padding:10px 14px;border-radius:4px;background:#fdecec;color:#951823;font-size:13px;font-weight:600;">
+        <div id="alumnos-aviso" hidden class="alumnos-aviso-error">
           La clave no es correcta. Vuelve a intentarlo.
         </div>
 
@@ -54,7 +54,7 @@ require_once __DIR__ . '/../includes/alumnos.php';
   <section class="seccion seccion-blanca">
     <div class="inner">
 
-      <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+      <div class="alumnos-salir-row">
         <a href="/php/tools/alumnos_logout.php" class="btn-sm-outline"><i class="ti ti-logout"></i> Salir del área de Alumnos</a>
       </div>
 
@@ -63,7 +63,7 @@ require_once __DIR__ . '/../includes/alumnos.php';
         <h2>Trámite ante tu Coordinación Académica</h2>
         <p>El procedimiento completo y la carta compromiso que firma el director propuesto.</p>
       </div>
-      <div class="recursos-grid" style="margin-bottom:44px;">
+      <div class="recursos-grid recursos-grid--mb44">
         <a class="recurso-card" href="/php/tools/alumnos_descargar.php?f=asignacion_director_procedimiento">
           <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
           <div class="recurso-info"><h4>Procedimiento de Asignación</h4><p>Criterios y pasos para que se te asigne director de tesis.</p><span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span></div>
@@ -81,7 +81,7 @@ require_once __DIR__ . '/../includes/alumnos.php';
         ante tu Coordinación Académica. La baja temporal procede por causa justificada (salud, laboral, personal)
         y no puede exceder los periodos consecutivos que marca el Reglamento de Estudios de Posgrado.</p>
       </div>
-      <div class="recursos-grid" style="margin-bottom:44px;">
+      <div class="recursos-grid recursos-grid--mb44">
         <a class="recurso-card" href="/php/tools/alumnos_descargar.php?f=baja_solicitud_definitiva">
           <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
           <div class="recurso-info"><h4>Solicitud de Baja Definitiva</h4><p>Para dar por concluida tu inscripción al programa.</p><span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span></div>
@@ -99,7 +99,7 @@ require_once __DIR__ . '/../includes/alumnos.php';
         en <a href="#titulacion" data-page="titulacion">Titulación por Certificación</a> y
         <a href="#trabajo_terminal" data-page="trabajo_terminal">Titulación por Trabajo Terminal</a>.</p>
       </div>
-      <div class="recursos-grid" style="margin-bottom:44px;">
+      <div class="recursos-grid recursos-grid--mb44">
         <a class="recurso-card" href="/php/tools/alumnos_descargar.php?f=titulacion_certificacion_procedimiento">
           <div class="recurso-icon tipo-doc"><i class="ti ti-file-text"></i></div>
           <div class="recurso-info"><h4>Procedimiento — Titulación por Certificación</h4><p>Documento oficial del trámite completo.</p><span class="recurso-info-link"><i class="ti ti-download"></i> Descargar</span></div>
