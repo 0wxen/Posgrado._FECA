@@ -57,8 +57,8 @@ CREATE TABLE usuarios (
     rol             VARCHAR(30)  NOT NULL DEFAULT 'administrador'
                     CHECK (rol IN ('control_maestro', 'administrador')),
     activo          BOOLEAN      NOT NULL DEFAULT TRUE,
-    creado_en       TIMESTAMP    NOT NULL DEFAULT NOW(),
-    actualizado_en  TIMESTAMP    NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+    actualizado_en  TIMESTAMPTZ    NOT NULL DEFAULT NOW()
 );
 CREATE TRIGGER trg_usuarios_actualizado
     BEFORE UPDATE ON usuarios
@@ -77,7 +77,7 @@ CREATE TABLE archivos (
     alt_texto       VARCHAR(255),
     subido_por      INT REFERENCES usuarios(id) ON DELETE SET NULL,
     es_publico      BOOLEAN NOT NULL DEFAULT TRUE,
-    creado_en       TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_archivos_subido_por ON archivos(subido_por);
 
@@ -85,7 +85,7 @@ CREATE TABLE imagenes_sitio (
     clave           VARCHAR(40) PRIMARY KEY,
     etiqueta        VARCHAR(120) NOT NULL,
     imagen_id       INT REFERENCES archivos(id) ON DELETE SET NULL,
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_imagenes_sitio_imagen_id ON imagenes_sitio(imagen_id);
 CREATE TRIGGER trg_imagenes_sitio_actualizado
@@ -118,8 +118,8 @@ CREATE TABLE profesores (
     foto_id             INT REFERENCES archivos(id) ON DELETE SET NULL,
     activo              BOOLEAN NOT NULL DEFAULT TRUE,
     orden_display       INT DEFAULT 0,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_profesores_foto_id ON profesores(foto_id);
 CREATE TRIGGER trg_profesores_actualizado
@@ -133,7 +133,7 @@ CREATE TABLE mensajes_institucionales (
     mensaje         TEXT,
     foto_id         INT REFERENCES archivos(id) ON DELETE SET NULL,
     orden_display   INT DEFAULT 0,
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_mensajes_institucionales_foto_id ON mensajes_institucionales(foto_id);
 CREATE TRIGGER trg_mensajes_institucionales_actualizado
@@ -175,8 +175,8 @@ CREATE TABLE programas (
     activo              BOOLEAN NOT NULL DEFAULT TRUE,
     imagen_id           INT REFERENCES archivos(id) ON DELETE SET NULL,
     orden_display       INT DEFAULT 0,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_programas_imagen_id ON programas(imagen_id);
 CREATE TRIGGER trg_programas_actualizado
@@ -190,8 +190,8 @@ CREATE TABLE programa_titulacion (
     titulo          VARCHAR(150) NOT NULL,
     descripcion     TEXT,
     orden_display   INT DEFAULT 0,
-    creado_en       TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_programa_titulacion_programa_id ON programa_titulacion(programa_id);
 CREATE TRIGGER trg_programa_titulacion_actualizado
@@ -205,8 +205,8 @@ CREATE TABLE programa_campo_laboral (
     titulo          VARCHAR(150) NOT NULL,
     descripcion     TEXT,
     orden_display   INT DEFAULT 0,
-    creado_en       TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_programa_campo_laboral_programa_id ON programa_campo_laboral(programa_id);
 CREATE TRIGGER trg_programa_campo_laboral_actualizado
@@ -233,8 +233,8 @@ CREATE TABLE convocatorias (
     es_publicado        BOOLEAN NOT NULL DEFAULT FALSE,
     destacado           BOOLEAN NOT NULL DEFAULT FALSE,
     creado_por          INT REFERENCES usuarios(id) ON DELETE SET NULL,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW(),
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CHECK (fecha_inicio IS NULL OR fecha_cierre IS NULL OR fecha_cierre >= fecha_inicio),
     UNIQUE (programa_id, ciclo)
 );
@@ -263,10 +263,10 @@ CREATE TABLE blog (
     autor_profesor_id   INT REFERENCES profesores(id) ON DELETE SET NULL,
     destacado           BOOLEAN NOT NULL DEFAULT FALSE,
     es_publicado        BOOLEAN NOT NULL DEFAULT FALSE,
-    publicado_en        TIMESTAMP,
+    publicado_en        TIMESTAMPTZ,
     creado_por          INT REFERENCES usuarios(id) ON DELETE SET NULL,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_blog_imagen_id ON blog(imagen_id);
 CREATE INDEX idx_blog_autor_profesor_id ON blog(autor_profesor_id);
@@ -298,8 +298,8 @@ CREATE TABLE publicaciones (
     archivo_id          INT REFERENCES archivos(id) ON DELETE SET NULL,
     imagen_id           INT REFERENCES archivos(id) ON DELETE SET NULL,
     es_publicado        BOOLEAN NOT NULL DEFAULT TRUE,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_publicaciones_archivo_id ON publicaciones(archivo_id);
 CREATE INDEX idx_publicaciones_imagen_id ON publicaciones(imagen_id);
@@ -318,8 +318,8 @@ CREATE TABLE grupos_disciplinares (
     descripcion         TEXT,
     area_conocimiento   VARCHAR(150),
     activo              BOOLEAN NOT NULL DEFAULT TRUE,
-    creado_en           TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en      TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE TRIGGER trg_grupos_disciplinares_actualizado
     BEFORE UPDATE ON grupos_disciplinares
@@ -336,8 +336,8 @@ CREATE TABLE documentos (
     archivo_id      INT NOT NULL REFERENCES archivos(id) ON DELETE RESTRICT,
     es_publicado    BOOLEAN NOT NULL DEFAULT TRUE,
     orden_display   INT DEFAULT 0,
-    creado_en       TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_documentos_archivo_id ON documentos(archivo_id);
 CREATE TRIGGER trg_documentos_actualizado
@@ -350,8 +350,8 @@ CREATE TABLE preguntas_frecuentes (
     respuesta       TEXT NOT NULL,
     orden_display   INT DEFAULT 0,
     activo          BOOLEAN NOT NULL DEFAULT TRUE,
-    creado_en       TIMESTAMP NOT NULL DEFAULT NOW(),
-    actualizado_en  TIMESTAMP NOT NULL DEFAULT NOW()
+    creado_en       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE TRIGGER trg_preguntas_frecuentes_actualizado
     BEFORE UPDATE ON preguntas_frecuentes
