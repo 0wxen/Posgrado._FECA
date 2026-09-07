@@ -12,7 +12,7 @@
 </section>
 
 <!-- ===== AVISO DE ENVÍO (según ?enviado=1 / ?error=campos|servidor en la URL) ===== -->
-<div id="contacto-aviso" hidden style="max-width:900px;margin:24px auto 0;padding:14px 18px;border-radius:4px;font-weight:600;"></div>
+<div id="contacto-aviso" hidden class="contacto-aviso"></div>
 <script>
 (function () {
   var params = new URLSearchParams(window.location.search);
@@ -29,8 +29,7 @@
   if (!clave || !mensajes[clave]) return;
 
   aviso.textContent = mensajes[clave].texto;
-  aviso.style.background = mensajes[clave].tipo === 'ok' ? '#e6f7ec' : '#fdecec';
-  aviso.style.color = mensajes[clave].tipo === 'ok' ? '#1f7a3a' : '#951823';
+  aviso.classList.add(mensajes[clave].tipo === 'ok' ? 'contacto-aviso--ok' : 'contacto-aviso--error');
   aviso.hidden = false;
 })();
 </script>
@@ -41,85 +40,81 @@
     <div class="contacto-grid">
 
       <!-- Columna izquierda: información -->
-      <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="contacto-info-col">
 
         <!-- Panel Coordinación General -->
-        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-          <div style="background:var(--rojo);padding:16px 22px;display:flex;align-items:center;gap:10px;">
-            <i class="ti ti-headset" style="font-size:20px;color:#fff;opacity:.9;"></i>
-            <span style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;">Coordinación General</span>
+        <div class="contacto-panel">
+          <div class="contacto-panel-header">
+            <i class="ti ti-headset"></i>
+            <span>Coordinación General</span>
           </div>
-          <div style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
-            <a href="tel:+526188271266" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;padding:12px 14px;border-radius:6px;background:#fafafa;border:1px solid #f0f0f0;">
-              <span style="width:38px;height:38px;border-radius:50%;background:rgba(227,19,19,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="ti ti-phone" style="font-size:17px;color:var(--rojo);"></i>
+          <div class="contacto-panel-body">
+            <a href="tel:+526188271266" class="contacto-item-link">
+              <span class="contacto-item-icon">
+                <i class="ti ti-phone"></i>
               </span>
               <div>
-                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:2px;">Teléfono</div>
-                <div style="font-size:16px;font-weight:700;color:#222;">618 827 1266</div>
+                <div class="contacto-item-label">Teléfono</div>
+                <div class="contacto-item-valor">618 827 1266</div>
               </div>
             </a>
-            <a href="mailto:posgradofeca@ujed.mx" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;padding:12px 14px;border-radius:6px;background:#fafafa;border:1px solid #f0f0f0;">
-              <span style="width:38px;height:38px;border-radius:50%;background:rgba(227,19,19,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="ti ti-mail" style="font-size:17px;color:var(--rojo);"></i>
+            <a href="mailto:posgradofeca@ujed.mx" class="contacto-item-link">
+              <span class="contacto-item-icon">
+                <i class="ti ti-mail"></i>
               </span>
               <div>
-                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:2px;">Correo electrónico</div>
-                <div style="font-size:15px;font-weight:600;color:#222;">posgradofeca@ujed.mx</div>
+                <div class="contacto-item-label">Correo electrónico</div>
+                <div class="contacto-item-valor contacto-item-valor--sm">posgradofeca@ujed.mx</div>
               </div>
             </a>
           </div>
         </div>
 
         <!-- Panel Ubicación y horario -->
-        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-          <div style="background:var(--dorado);padding:16px 22px;display:flex;align-items:center;gap:10px;">
-            <i class="ti ti-map-pin" style="font-size:20px;color:#fff;opacity:.9;"></i>
-            <span style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;">Dónde encontrarnos</span>
+        <div class="contacto-panel">
+          <div class="contacto-panel-header contacto-panel-header--dorado">
+            <i class="ti ti-map-pin"></i>
+            <span>Dónde encontrarnos</span>
           </div>
-          <div style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="width:38px;height:38px;border-radius:50%;background:rgba(168,127,61,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
-                <i class="ti ti-building-community" style="font-size:17px;color:var(--dorado);"></i>
+          <div class="contacto-panel-body">
+            <div class="contacto-item-row">
+              <span class="contacto-item-icon contacto-item-icon--dorado">
+                <i class="ti ti-building-community"></i>
               </span>
               <div>
-                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:4px;">Dirección</div>
-                <div style="font-size:14px;color:#333;line-height:1.6;">Fanny Anitua s/n<br>Col. Los Ángeles · C.P. 34000<br><span style="color:#888;font-size:13px;">Durango, Dgo.</span></div>
+                <div class="contacto-item-label">Dirección</div>
+                <div class="contacto-item-texto">Fanny Anitua s/n<br>Col. Los Ángeles · C.P. 34000<br><span class="contacto-item-texto-sub">Durango, Dgo.</span></div>
               </div>
             </div>
-            <div style="height:1px;background:#f0f0f0;"></div>
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="width:38px;height:38px;border-radius:50%;background:rgba(168,127,61,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
-                <i class="ti ti-clock" style="font-size:17px;color:var(--dorado);"></i>
+            <div class="contacto-divider"></div>
+            <div class="contacto-item-row">
+              <span class="contacto-item-icon contacto-item-icon--dorado">
+                <i class="ti ti-clock"></i>
               </span>
               <div>
-                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:4px;">Horario de atención</div>
-                <div style="font-size:14px;color:#333;line-height:1.6;">Lunes a Viernes<br><strong>8:00 a.m. — 8:00 p.m.</strong><br>Sábados<br><strong>9:00 a.m. — 2:00 p.m.</strong></div>
+                <div class="contacto-item-label">Horario de atención</div>
+                <div class="contacto-item-texto">Lunes a Viernes<br><strong>8:00 a.m. — 8:00 p.m.</strong><br>Sábados<br><strong>9:00 a.m. — 2:00 p.m.</strong></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Panel Redes sociales -->
-        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-          <div style="padding:18px 22px;">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#aaa;margin-bottom:12px;">Síguenos en redes</div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" title="Facebook"
-                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
-                <i class="ti ti-brand-facebook" style="font-size:18px;"></i> Facebook
+        <div class="contacto-panel">
+          <div class="contacto-panel-body contacto-panel-body--social">
+            <div class="contacto-social-titulo">Síguenos en redes</div>
+            <div class="contacto-social-row">
+              <a href="https://www.facebook.com/FECAUJEDMX" target="_blank" rel="noopener" title="Facebook" class="contacto-social-link">
+                <i class="ti ti-brand-facebook"></i> Facebook
               </a>
-              <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" title="X / Twitter"
-                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
-                <i class="ti ti-brand-x" style="font-size:18px;"></i> X
+              <a href="https://x.com/fecaujedmx" target="_blank" rel="noopener" title="X / Twitter" class="contacto-social-link">
+                <i class="ti ti-brand-x"></i> X
               </a>
-              <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" title="Instagram"
-                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
-                <i class="ti ti-brand-instagram" style="font-size:18px;"></i> Instagram
+              <a href="https://www.instagram.com/fecaujedmx" target="_blank" rel="noopener" title="Instagram" class="contacto-social-link">
+                <i class="ti ti-brand-instagram"></i> Instagram
               </a>
-              <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" title="TikTok"
-                 style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:6px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:600;">
-                <i class="ti ti-brand-tiktok" style="font-size:18px;"></i> TikTok
+              <a href="https://www.tiktok.com/@fecaujed.mx" target="_blank" rel="noopener" title="TikTok" class="contacto-social-link">
+                <i class="ti ti-brand-tiktok"></i> TikTok
               </a>
             </div>
           </div>
@@ -206,12 +201,11 @@
       <p>División de Estudios de Posgrado · FECA · UJED · Campus Universitario, Durango</p>
     </div>
 
-    <div style="width:100%; aspect-ratio:16/6; border-radius:4px; overflow:hidden;">
+    <div class="contacto-mapa-wrap">
       <iframe
         src="https://maps.google.com/maps?q=UJED+-+Facultad+de+Economia,+Contaduria+y+Administracion&ll=24.0234569,-104.6793856&z=17&output=embed&hl=es"
         width="100%"
         height="100%"
-        style="border:0; display:block;"
         allowfullscreen
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
@@ -219,7 +213,7 @@
       ></iframe>
     </div>
 
-    <div style="margin-top:20px; display:flex; gap:14px; flex-wrap:wrap;">
+    <div class="contacto-mapa-acciones">
       <a href="https://maps.app.goo.gl/nXJxduaTtp1vpBgR9"
          target="_blank" rel="noopener" class="btn-sm-rojo">
         <i class="ti ti-map-pin"></i> Abrir en Google Maps

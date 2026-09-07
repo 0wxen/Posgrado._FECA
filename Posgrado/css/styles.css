@@ -2471,6 +2471,74 @@
         gap: 40px;
         align-items: start;
       }
+
+      /* ===== Aviso de envío (según ?enviado=1 / ?error=...) ===== */
+      .contacto-aviso {
+        max-width: 900px; margin: 24px auto 0; padding: 14px 18px;
+        border-radius: 4px; font-weight: 600;
+      }
+      .contacto-aviso--ok { background: #e6f7ec; color: #1f7a3a; }
+      .contacto-aviso--error { background: #fdecec; color: #951823; }
+
+      /* ===== Columna de información ===== */
+      .contacto-info-col { display: flex; flex-direction: column; gap: 20px; }
+      .contacto-panel {
+        background: #fff; border-radius: 8px; overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      }
+      .contacto-panel-header {
+        background: var(--rojo); padding: 16px 22px;
+        display: flex; align-items: center; gap: 10px;
+      }
+      .contacto-panel-header--dorado { background: var(--dorado); }
+      .contacto-panel-header i { font-size: 20px; color: #fff; opacity: 0.9; }
+      .contacto-panel-header span {
+        font-size: 13px; font-weight: 700; letter-spacing: 0.07em;
+        text-transform: uppercase; color: #fff;
+      }
+      .contacto-panel-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+      .contacto-panel-body--social { padding: 18px 22px; }
+
+      .contacto-item-link {
+        display: flex; align-items: center; gap: 14px; text-decoration: none;
+        color: inherit; padding: 12px 14px; border-radius: 6px;
+        background: #fafafa; border: 1px solid #f0f0f0;
+      }
+      .contacto-item-row { display: flex; align-items: flex-start; gap: 14px; }
+      .contacto-item-icon {
+        width: 38px; height: 38px; border-radius: 50%; background: rgba(227,19,19,0.1);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+      .contacto-item-icon--dorado { background: rgba(168,127,61,0.1); margin-top: 2px; }
+      .contacto-item-icon i { font-size: 17px; color: var(--rojo); }
+      .contacto-item-icon--dorado i { color: var(--dorado); }
+      .contacto-item-label {
+        font-size: 11px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.06em; color: #999; margin-bottom: 4px;
+      }
+      .contacto-item-valor { font-size: 16px; font-weight: 700; color: #222; }
+      .contacto-item-valor--sm { font-size: 15px; font-weight: 600; }
+      .contacto-item-texto { font-size: 14px; color: #333; line-height: 1.6; }
+      .contacto-item-texto-sub { color: #888; font-size: 13px; }
+      .contacto-divider { height: 1px; background: #f0f0f0; }
+
+      .contacto-social-titulo {
+        font-size: 12px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.07em; color: #aaa; margin-bottom: 12px;
+      }
+      .contacto-social-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .contacto-social-link {
+        display: flex; align-items: center; gap: 8px; padding: 9px 16px;
+        border-radius: 6px; background: #f5f5f5; text-decoration: none;
+        color: #333; font-size: 13px; font-weight: 600;
+      }
+      .contacto-social-link i { font-size: 18px; }
+
+      /* ===== Mapa ===== */
+      .contacto-mapa-wrap { width: 100%; aspect-ratio: 16/6; border-radius: 4px; overflow: hidden; }
+      .contacto-mapa-wrap iframe { border: 0; display: block; }
+      .contacto-mapa-acciones { margin-top: 20px; display: flex; gap: 14px; flex-wrap: wrap; }
+
       /* Formulario */
       .contacto-form-card {
         background: #fff;
