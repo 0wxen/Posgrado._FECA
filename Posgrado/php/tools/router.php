@@ -21,7 +21,7 @@ if (getenv('APP_ENV') === 'production') {
         "Content-Security-Policy: default-src 'self'; " .
         "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " .
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; " .
-        "font-src 'self' https://fonts.gstatic.com; " .
+        "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; " .
         "img-src 'self' data:; " .
         "frame-src https://maps.google.com https://www.google.com; " .
         "connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
@@ -40,6 +40,16 @@ $uri = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
 if (strpos($uri, '/php/uploads/alumnos/') === 0) {
     http_response_code(403);
     exit('Acceso no permitido.');
+}
+
+// htmlcode.html es estático -- "return false" hace que php -S lo sirva por
+// su cuenta SIN los headers de arriba (solo un archivo .php que de verdad
+// se ejecuta los conserva). Como es el punto de entrada de todo el sitio
+// público, sin esto el CSP nunca llegaba a aplicarse ahí.
+if ($uri === '/html/htmlcode.html') {
+    header('Content-Type: text/html; charset=UTF-8');
+    readfile(__DIR__ . '/../../html/htmlcode.html');
+    exit;
 }
 
 // Retornar false le dice al servidor PHP que procese el archivo normalmente
