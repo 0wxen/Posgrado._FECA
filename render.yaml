@@ -34,3 +34,5 @@ services:
           property: password
       - key: PGSSLMODE
         value: require
+      - key: APP_ENV
+        value: production

@@ -4,9 +4,12 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, X-Requested-With');
 
-// headers de seguridad -- solo en producción (Render). Local no los pone
-// para no arriesgar romper Live Server / herramientas de depuración.
-if (getenv('PGSSLMODE') !== false) {
+// headers de seguridad -- solo en producción (APP_ENV=production). Local no
+// los pone para no arriesgar romper Live Server / herramientas de depuración.
+// OJO: esto solo corre si el sitio se sirve con "php -S ... router.php"
+// (como en Render/Docker); si en la VM se usa nginx+php-fpm en vez de esto,
+// estos headers hay que ponerlos en la config de nginx, no aquí.
+if (getenv('APP_ENV') === 'production') {
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: geolocation=(), microphone=(), camera=()');

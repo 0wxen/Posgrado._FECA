@@ -1,10 +1,13 @@
 <?php
 declare(strict_types=1);
 
-// PGSSLMODE solo se define en producción (Render); ahí se ocultan errores de
-// PHP en pantalla (rutas, stack traces) y se dejan solo en el log del server.
-// Local no lo define -- sigue mostrando errores igual que siempre para depurar.
-$esProduccion = getenv('PGSSLMODE') !== false;
+// APP_ENV=production se define explícitamente en cada servidor real
+// (Render, la VM de Ubuntu, etc.) -- ahí se ocultan errores de PHP en
+// pantalla (rutas, stack traces) y se dejan solo en el log del server.
+// Local no lo define -- sigue mostrando errores igual que siempre para
+// depurar. OJO: no se infiere de PGSSLMODE ni de ninguna otra variable de
+// BD -- una BD local en la misma VM no necesita SSL y aun así es producción.
+$esProduccion = getenv('APP_ENV') === 'production';
 ini_set('display_errors', $esProduccion ? '0' : '1');
 ini_set('display_startup_errors', $esProduccion ? '0' : '1');
 error_reporting(E_ALL);

@@ -2,12 +2,13 @@
 declare(strict_types=1);
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    // Secure solo en producción (Render, sirve por HTTPS) -- local corre por
-    // HTTP plano y con Secure activado el navegador ni guardaría la cookie.
+    // Secure solo en producción (APP_ENV=production, sirve por HTTPS) --
+    // local corre por HTTP plano y con Secure activado el navegador ni
+    // guardaría la cookie.
     session_start([
         'cookie_httponly' => true,
         'cookie_samesite' => 'Lax',
-        'cookie_secure'   => getenv('PGSSLMODE') !== false,
+        'cookie_secure'   => getenv('APP_ENV') === 'production',
         'use_strict_mode' => true,
         'gc_maxlifetime'  => 7200,  // 2 horas de inactividad
     ]);
