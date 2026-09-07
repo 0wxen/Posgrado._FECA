@@ -8,6 +8,9 @@ const PHP_SERVER = 'http://127.0.0.1:8001';
 const PHP_PAGES  = (location.port === '8001' || location.port === '80' || location.port === '')
                      ? '/php/pages/'
                      : PHP_SERVER + '/php/pages/';
+const PHP_TOOLS  = (location.port === '8001' || location.port === '80' || location.port === '')
+                     ? '/php/tools/'
+                     : PHP_SERVER + '/php/tools/';
 
 const PAGE_FILE_MAP = {
   inicio:              'home',
@@ -41,12 +44,17 @@ function getPageFile(pagina) {
   return PAGE_FILE_MAP[pagina] ?? pagina;
 }
 
+// Antes se guardaba en localStorage -- solo reflejaba el navegador de quien
+// abriera el panel, no las visitas reales. Ahora se manda al servidor
+// (sin esperar respuesta) para que el conteo sea el mismo para cualquiera
+// que vea el panel, sin importar desde qué dispositivo entren los visitantes.
 function registrarVisita(pageId) {
-  try {
-    const stats = JSON.parse(localStorage.getItem('dep_stats_v1') || '{}');
-    stats[pageId] = (stats[pageId] || 0) + 1;
-    localStorage.setItem('dep_stats_v1', JSON.stringify(stats));
-  } catch (_) {}
+  fetch(PHP_TOOLS + 'registrar_visita.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'pagina=' + encodeURIComponent(pageId),
+    keepalive: true,
+  }).catch(function () {});
 }
 
 async function fetchContenido(nombre) {

@@ -123,6 +123,14 @@ if ($modulo === 'mensajes') {
   volver('mensajes', 'ok', 'Mensaje institucional actualizado.');
 }
 
+// estadísticas de visitas: solo se puede reiniciar el conteo
+if ($modulo === 'estadisticas') {
+  if ($accion === 'reiniciar') {
+    $pdo->exec('TRUNCATE estadisticas_visitas');
+  }
+  volver('estadisticas', 'ok', 'Estadísticas reiniciadas.');
+}
+
 // usuarios (solo control_maestro)
 if ($modulo === 'usuarios') {
   require_rol('control_maestro');

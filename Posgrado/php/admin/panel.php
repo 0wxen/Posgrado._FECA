@@ -625,94 +625,83 @@ function renderizar_grid(string $modulo, array $definicion, array $filas): void 
         .stats-empty p { font-size:13px; color:#bbb; }
       </style>
 
+      <?php
+      // etiquetas legibles; lo que no esté aquí se muestra tal cual (clave cruda)
+      $statsEtiquetas = [
+        'inicio' => 'Inicio', 'nosotros' => 'Nosotros', 'oferta_educativa' => 'Oferta Educativa',
+        'investigacion' => 'Investigación', 'comunidad' => 'Comunidad', 'blog' => 'Blog / Noticias',
+        'contacto' => 'Contacto', 'convocatorias' => 'Convocatorias', 'publicaciones' => 'Publicaciones',
+        'transparencia' => 'Transparencia', 'titulacion' => 'Titulación',
+        'trabajo_terminal' => 'Titulación por Trabajo Terminal', 'alumnos' => 'Área de Alumnos',
+        'grupos_disciplinares' => 'Grupos Disciplinares',
+      ];
+
+      $filasStats = listado_seguro(fn() => $pdo->query('SELECT pagina, visitas FROM estadisticas_visitas')->fetchAll());
+
+      // los programas (#program_dgo, #program_me...) se agrupan en Oferta Educativa
+      $agrupado = [];
+      foreach ($filasStats as $f) {
+        $clave = str_starts_with($f['pagina'], 'program_') ? 'oferta_educativa' : $f['pagina'];
+        $agrupado[$clave] = ($agrupado[$clave] ?? 0) + (int) $f['visitas'];
+      }
+      arsort($agrupado);
+      $totalVisitas = array_sum($agrupado);
+      $maxVisitas = $agrupado === [] ? 1 : max($agrupado);
+      $topClave = $agrupado === [] ? null : array_key_first($agrupado);
+      ?>
+
       <div class="admin-panel-hdr">
         <div style="display:flex;align-items:center;gap:12px;">
           <h3>Estadísticas de Uso</h3>
-          <span style="font-size:11px;font-weight:600;color:#aaa;padding:3px 8px;background:#f5f5f5;border-radius:99px;">Este dispositivo</span>
+          <span style="font-size:11px;font-weight:600;color:#aaa;padding:3px 8px;background:#f5f5f5;border-radius:99px;">Sitio completo</span>
         </div>
-        <button class="btn-sm-outline" onclick="statsReset()" style="color:#e31313;border-color:#e31313;">
-          <i class="ti ti-trash"></i> Borrar datos
-        </button>
+        <form method="post" action="guardar.php" onsubmit="return confirm('¿Borrar las estadísticas de visitas de todo el sitio? No se puede deshacer.');" style="display:inline;">
+          <?= csrf_campo() ?>
+          <input type="hidden" name="modulo" value="estadisticas">
+          <input type="hidden" name="accion" value="reiniciar">
+          <button type="submit" class="btn-sm-outline" style="color:#e31313;border-color:#e31313;">
+            <i class="ti ti-trash"></i> Borrar datos
+          </button>
+        </form>
       </div>
 
-      <div class="stats-kpis" id="stats-kpis"></div>
+      <div class="stats-kpis">
+        <div class="stats-kpi"><div class="stats-kpi-num"><?= $totalVisitas ?></div><div class="stats-kpi-lbl">Visitas totales</div></div>
+        <div class="stats-kpi"><div class="stats-kpi-num"><?= count($agrupado) ?></div><div class="stats-kpi-lbl">Secciones visitadas</div></div>
+        <?php if ($topClave !== null): ?>
+          <div class="stats-kpi stats-kpi--top">
+            <div class="stats-kpi-num" style="font-size:20px;line-height:1.2;"><?= h($statsEtiquetas[$topClave] ?? $topClave) ?></div>
+            <div class="stats-kpi-lbl">Más visitada</div>
+            <div class="stats-kpi-sub"><?= $agrupado[$topClave] ?> visita<?= $agrupado[$topClave] !== 1 ? 's' : '' ?></div>
+          </div>
+        <?php endif; ?>
+      </div>
 
       <div class="stats-chart-wrap">
         <div class="stats-chart-ttl">
           <i class="ti ti-chart-bar" style="font-size:14px;"></i>
           Visitas por sección · ordenadas de mayor a menor
         </div>
-        <div id="stats-bars"></div>
+        <div>
+          <?php if ($agrupado === []): ?>
+            <div class="stats-empty">
+              <i class="ti ti-chart-bar-off"></i>
+              <p>Sin datos todavía.<br>Navega por las secciones del sitio público para que aparezcan aquí.</p>
+            </div>
+          <?php else: $i = 0; foreach ($agrupado as $clave => $visitas): $pct = max(4, (int) round($visitas / $maxVisitas * 100)); ?>
+            <div class="stats-bar-row">
+              <div class="stats-bar-lbl"><?= h($statsEtiquetas[$clave] ?? $clave) ?></div>
+              <div class="stats-bar-track"><div class="stats-bar-fill<?= $i === 0 ? ' stats-bar-fill--top' : '' ?>" style="width:<?= $pct ?>%;"></div></div>
+              <div class="stats-bar-num"><?= $visitas ?></div>
+            </div>
+          <?php $i++; endforeach; endif; ?>
+        </div>
       </div>
 
       <p style="font-size:11px;color:#bbb;margin-top:12px;font-style:italic;display:flex;align-items:center;gap:5px;">
         <i class="ti ti-info-circle" style="font-size:13px;color:var(--dorado);"></i>
-        Los datos se almacenan en este navegador (localStorage), tomados de las visitas reales al sitio público. Solo reflejan este dispositivo.
+        Conteo real de visitas al sitio público, para cualquiera que entre por la liga -- ya no depende de este navegador.
       </p>
-
-      <script>
-      (function () {
-        var STATS_KEY = 'dep_stats_v1';
-        var STATS_LABELS = {
-          inicio: 'Inicio', nosotros: 'Nosotros', oferta_educativa: 'Oferta Educativa',
-          investigacion: 'Investigación', comunidad: 'Comunidad', blog: 'Blog / Noticias',
-          contacto: 'Contacto', convocatorias: 'Convocatorias', publicaciones: 'Publicaciones',
-          transparencia: 'Transparencia', titulacion: 'Titulación',
-          grupos_disciplinares: 'Grupos Disciplinares',
-        };
-
-        function etiquetaStat(clave) {
-          return STATS_LABELS[clave] || clave;
-        }
-
-        function render() {
-          var raw = {};
-          try { raw = JSON.parse(localStorage.getItem(STATS_KEY) || '{}'); } catch (_) {}
-
-          // programas visitados se agrupan en "Oferta Educativa"
-          var agrupado = {};
-          Object.keys(raw).forEach(function (clave) {
-            var claveFinal = clave.indexOf('program_') === 0 ? 'oferta_educativa' : clave;
-            agrupado[claveFinal] = (agrupado[claveFinal] || 0) + raw[clave];
-          });
-
-          var entradas = Object.entries(agrupado).sort(function (a, b) { return b[1] - a[1]; });
-          var total = entradas.reduce(function (s, e) { return s + e[1]; }, 0);
-          var maximo = entradas.length ? entradas[0][1] : 1;
-          var top = entradas.length ? entradas[0] : null;
-
-          var kpisEl = document.getElementById('stats-kpis');
-          kpisEl.innerHTML =
-            '<div class="stats-kpi"><div class="stats-kpi-num">' + total + '</div><div class="stats-kpi-lbl">Visitas totales</div></div>' +
-            '<div class="stats-kpi"><div class="stats-kpi-num">' + entradas.length + '</div><div class="stats-kpi-lbl">Secciones visitadas</div></div>' +
-            (top
-              ? '<div class="stats-kpi stats-kpi--top"><div class="stats-kpi-num" style="font-size:20px;line-height:1.2;">' + etiquetaStat(top[0]) + '</div><div class="stats-kpi-lbl">Más visitada</div><div class="stats-kpi-sub">' + top[1] + ' visita' + (top[1] !== 1 ? 's' : '') + '</div></div>'
-              : '');
-
-          var barsEl = document.getElementById('stats-bars');
-          if (entradas.length === 0) {
-            barsEl.innerHTML = '<div class="stats-empty"><i class="ti ti-chart-bar-off"></i><p>Sin datos todavía.<br>Navega por las secciones del sitio público para que aparezcan aquí.</p></div>';
-            return;
-          }
-          barsEl.innerHTML = entradas.map(function (e, i) {
-            var pct = Math.max(4, Math.round((e[1] / maximo) * 100));
-            return '<div class="stats-bar-row">' +
-              '<div class="stats-bar-lbl">' + etiquetaStat(e[0]) + '</div>' +
-              '<div class="stats-bar-track"><div class="stats-bar-fill' + (i === 0 ? ' stats-bar-fill--top' : '') + '" style="width:' + pct + '%;"></div></div>' +
-              '<div class="stats-bar-num">' + e[1] + '</div>' +
-            '</div>';
-          }).join('');
-        }
-
-        window.statsReset = function () {
-          if (!confirm('¿Borrar las estadísticas de visitas de este navegador? No se puede deshacer.')) return;
-          localStorage.removeItem(STATS_KEY);
-          render();
-        };
-
-        render();
-      })();
-      </script>
 
     <?php elseif ($tab === 'usuarios' && $esControlMaestro):
       $usuarios = $pdo !== null ? $pdo->query('SELECT id, nombre_completo, nombre_usuario, rol, activo, creado_en FROM usuarios ORDER BY nombre_completo')->fetchAll() : [];

@@ -363,3 +363,14 @@ INSERT INTO preguntas_frecuentes (pregunta, respuesta, orden_display) VALUES
     ('¿Cuáles son las modalidades de titulación disponibles?', 'La División ofrece titulación por Certificación y por Trabajo Terminal. Ambas guías están disponibles en la pestaña Alumnado.', 30),
     ('¿Cómo funciona el proceso de tutorías?', 'Consulta el detalle en Procesos Académicos, donde también podrás descargar el formato correspondiente.', 40),
     ('¿A quién contacto si tengo dudas sobre mi programa?', 'Puedes comunicarte directamente con la Coordinación Académica de tu programa desde la sección de Contacto.', 50);
+
+
+-- ============================================================================
+-- ESTADÍSTICAS DE VISITAS (contador agregado, no por visitante)
+-- ============================================================================
+
+CREATE TABLE estadisticas_visitas (
+    pagina          VARCHAR(60) PRIMARY KEY,
+    visitas         INT NOT NULL DEFAULT 0,
+    actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
