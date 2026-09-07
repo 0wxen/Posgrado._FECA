@@ -2024,6 +2024,10 @@
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 16px;
       }
+      /* Directorio de Nosotros específicamente: 3 por fila fijo, nunca "las
+         que quepan" -- ojo, .directorio-grid se reutiliza en Campo Laboral y
+         Proceso de Inscripción con cantidades variables, no tocar la base. */
+      .directorio-grid--fijo3 { grid-template-columns: repeat(3, 1fr); }
       .directorio-item {
         display: flex;
         align-items: center;
@@ -2869,6 +2873,7 @@
         .mensaje-grid { grid-template-columns: 1fr; }
         .mv-grid { grid-template-columns: 1fr; }
         .contacto-grid { grid-template-columns: 1fr; }
+        .directorio-grid--fijo3 { grid-template-columns: repeat(2, 1fr); }
         .page-nav-bottom .inner { flex-wrap: wrap; gap: 12px; }
       }
       @media (max-width: 640px) {

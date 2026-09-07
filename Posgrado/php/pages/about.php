@@ -83,7 +83,7 @@ $mensajes_institucionales = listar_mensajes_institucionales();
       <p>Estructura de la División de Estudios de Posgrado FECA UJED.</p>
     </div>
 
-    <div class="directorio-grid">
+    <div class="directorio-grid directorio-grid--fijo3">
       <?php if (!empty($directivos_db)): ?>
         <?php foreach ($directivos_db as $d): ?>
           <div class="directorio-item">
